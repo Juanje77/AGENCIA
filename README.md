@@ -13,10 +13,54 @@ Corre en la computadora de la agencia. No manda datos a ningún lado.
 
 ## Puesta en marcha
 
+Hay dos maneras de usarlo y el sistema funciona igual en las dos.
+
+### Publicado en Vercel
+
+1. Entrá a [vercel.com](https://vercel.com), creá una cuenta e importá este
+   repositorio ("Add New… → Project").
+2. Vercel detecta la configuración solo. Dale **Deploy** y esperá un minuto.
+3. Te queda una dirección para entrar desde cualquier lado, también del celular.
+
+**Ponele una clave antes de cargar facturas reales.** En Vercel, en
+*Settings → Environment Variables*, agregá:
+
+| Nombre | Valor |
+|---|---|
+| `AGENCIA_CLAVE` | la contraseña que quieras |
+
+Sin esa variable, cualquiera con el link entra. Después de agregarla hay que
+volver a hacer *Deploy* para que tome efecto. La primera vez que entres te la
+va a pedir.
+
+En Vercel el disco no se puede escribir, así que **la configuración de
+mayoristas la guarda tu navegador**. Eso tiene una ventaja: los datos de la
+agencia quedan en tu computadora, no en el servidor. Y una consecuencia: si
+entrás desde otra computadora o borrás los datos del navegador, hay que
+cargarlos de nuevo.
+
+Lo que no anda en Vercel: las **facturas escaneadas**. El reconocimiento de
+texto necesita un programa del sistema operativo (Tesseract) que Vercel no deja
+instalar. Esas facturas se cargan a mano, o le pedís al mayorista el PDF
+original. El sistema te lo avisa en pantalla.
+
+### En una computadora
+
 ```bash
-pip install -r requirements.txt     # opcional: el núcleo funciona sin dependencias
-python -m agencia.web               # abrir http://127.0.0.1:8000
+pip install -r requirements.txt
+python iniciar.py
 ```
+
+En Windows y Mac alcanza con hacer doble clic en `iniciar.bat` o
+`iniciar.command`: instalan lo que falte, levantan el sistema y abren el
+navegador solos.
+
+Así sí funcionan las facturas escaneadas, instalando además el OCR
+(ver más abajo).
+
+---
+
+## Primeros pasos
 
 La primera vez, entrá a **Mayoristas** y cargá:
 
@@ -147,6 +191,17 @@ Se prueban en orden y se usa el primero disponible: `pymupdf`, `pdfplumber`,
 
 ---
 
+## Variables de entorno
+
+| Variable | Para qué |
+|---|---|
+| `AGENCIA_CLAVE` | Clave de acceso. Si está vacía, el sistema queda abierto. |
+| `AGENCIA_PUERTO` | Puerto del servidor local (8000 por defecto). |
+| `AGENCIA_SOLO_LECTURA` | Fuerza el modo sin disco. Se detecta solo en Vercel. |
+| `AGENCIA_CONFIG_DIR` | Otra carpeta de configuración. |
+
+---
+
 ## Línea de comandos
 
 ```bash
@@ -201,13 +256,15 @@ confirmes con tu contador y saques la marca.
 ## Desarrollo
 
 ```bash
-python -m pytest              # 207 tests
+python -m pytest              # 225 tests
 python herramientas/generar_factura_ejemplo.py ejemplos/
 ```
 
 Estructura:
 
 ```
+api/index.py              punto de entrada de Vercel (WSGI)
+iniciar.py                arranque local, sin instalar nada
 src/agencia/
   liquidador.py           liquidación del período (IVA e IIBB)
   liquidaciones/
@@ -217,7 +274,10 @@ src/agencia/
   presupuestos/
     cotizacion.py         cotizador por opciones
   impuestos/              motor fiscal: IVA, IIBB, retenciones
-  web/                    servidor e interfaz
+  web/
+    rutas.py              las rutas, compartidas por los dos entornos
+    servidor.py           servidor local (http.server)
+    informes.py           salidas imprimibles
   cli.py
 ```
 
@@ -229,9 +289,16 @@ falsa.
 
 ## Privacidad
 
-Las facturas traen nombres de pasajeros, CUIT y números de documento. El
-`.gitignore` excluye `facturas/`, `liquidaciones/` y `salidas/` para que no
-terminen en el repositorio. Los archivos de `ejemplos/` son generados, no reales.
+Las facturas traen nombres de pasajeros, CUIT y números de documento.
+
+- El `.gitignore` excluye `facturas/`, `liquidaciones/` y `salidas/` para que no
+  terminen en el repositorio. Los archivos de `ejemplos/` son generados, no reales.
+- El sistema **no guarda las facturas**: las lee, extrae los importes y borra el
+  archivo temporal. Nada queda en el servidor.
+- Los datos de la agencia y de los mayoristas se guardan en tu navegador cuando
+  corre en Vercel, y en `config/mayoristas.json` cuando corre en tu computadora.
+- Si lo publicás en internet, **poné `AGENCIA_CLAVE`**. Sin eso, cualquiera con
+  el link puede subir y ver facturas.
 
 ---
 

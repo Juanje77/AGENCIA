@@ -39,8 +39,10 @@ class Mayorista:
     alias: list[str] = field(default_factory=list)
 
     def __post_init__(self) -> None:
-        self.comision_pct = dec(self.comision_pct)
-        self.iva_pct = dec(self.iva_pct)
+        # Se normalizan a dos decimales: si no, el mismo porcentaje se guarda
+        # como "5" o "5.00" segun como lo haya tipeado el operador.
+        self.comision_pct = redondear(dec(self.comision_pct))
+        self.iva_pct = redondear(dec(self.iva_pct))
 
     @property
     def cuit_normalizado(self) -> str:
@@ -76,7 +78,7 @@ class DatosAgencia:
     alicuota_iibb: Decimal = Decimal("3.50")
 
     def __post_init__(self) -> None:
-        self.alicuota_iibb = dec(self.alicuota_iibb)
+        self.alicuota_iibb = redondear(dec(self.alicuota_iibb))
 
 
 @dataclass

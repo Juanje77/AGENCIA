@@ -20,11 +20,38 @@ const esc = (t) =>
   String(t ?? "").replace(/[&<>"']/g, (c) =>
     ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
 
-async function api(ruta, datos, metodo = "POST") {
-  const opciones = { method: metodo, headers: { "Content-Type": "application/json" } };
+const GUARDADO = "agencia-config-v1";
+
+function recordar(clave, valor) {
+  try { localStorage.setItem(clave, JSON.stringify(valor)); } catch (e) { /* sin storage */ }
+}
+function recordado(clave) {
+  try { return JSON.parse(localStorage.getItem(clave) || "null"); } catch (e) { return null; }
+}
+
+function claveDeAcceso() {
+  try { return sessionStorage.getItem("agencia-clave") || ""; } catch (e) { return ""; }
+}
+function guardarClave(valor) {
+  try { sessionStorage.setItem("agencia-clave", valor); } catch (e) { /* sin storage */ }
+}
+
+async function api(ruta, datos, metodo = "POST", reintento = false) {
+  const opciones = {
+    method: metodo,
+    headers: { "Content-Type": "application/json", "X-Clave": claveDeAcceso() },
+  };
   if (datos !== undefined) opciones.body = JSON.stringify(datos);
+
   const r = await fetch(ruta, opciones);
   const tipo = r.headers.get("Content-Type") || "";
+
+  if (r.status === 401 && !reintento) {
+    const clave = prompt("Clave de acceso al sistema:");
+    if (clave === null) throw new Error("Hace falta la clave para continuar.");
+    guardarClave(clave.trim());
+    return api(ruta, datos, metodo, true);
+  }
   if (!r.ok) {
     const detalle = tipo.includes("json") ? (await r.json()).error : await r.text();
     throw new Error(detalle || `Error ${r.status}`);
@@ -319,7 +346,11 @@ $("#procesar").onclick = async () => {
     const archivos = await Promise.all(
       ARCHIVOS.map(async (f) => ({ nombre: f.name, contenido: await leerBase64(f) })));
     const r = await api("/api/facturas", {
-      archivos, cuit_agencia: $("#a-cuit").value, servicio_propio_pct: 0,
+      archivos,
+      cuit_agencia: $("#a-cuit").value,
+      servicio_propio_pct: 0,
+      // En un hosting sin disco, el padron lo tiene el navegador.
+      padron: padronActual(),
     });
     r.operaciones.forEach((o) => OPERACIONES.push({ ...o, id: o.id || uid() }));
     ARCHIVOS = [];
@@ -500,22 +531,31 @@ $("#nuevo-mayorista").onclick = () => {
   pintarMayoristas();
 };
 
+function padronActual() {
+  return {
+    agencia: {
+      razon_social: $("#a-razon").value,
+      cuit: $("#a-cuit").value,
+      jurisdiccion: $("#a-jurisdiccion").value,
+      alicuota_iibb: num($("#a-alicuota").value),
+    },
+    mayoristas: MAYORISTAS,
+  };
+}
+
 $("#guardar-mayoristas").onclick = async () => {
   const estado = $("#estado-mayoristas");
   estado.textContent = "Guardando...";
   try {
-    const d = await api("/api/mayoristas", {
-      agencia: {
-        razon_social: $("#a-razon").value, cuit: $("#a-cuit").value,
-        jurisdiccion: $("#a-jurisdiccion").value,
-        alicuota_iibb: num($("#a-alicuota").value),
-      },
-      mayoristas: MAYORISTAS,
-    });
+    const d = await api("/api/mayoristas", padronActual());
     MAYORISTAS = d.mayoristas;
     pintarMayoristas();
-    estado.textContent = "Guardado.";
-    setTimeout(() => (estado.textContent = ""), 2500);
+    // Siempre queda copia en el navegador; en el servidor, solo si hay disco.
+    recordar(GUARDADO, { agencia: d.agencia, mayoristas: d.mayoristas });
+    estado.textContent = d.guardado_en_disco
+      ? "Guardado."
+      : "Guardado en este navegador.";
+    setTimeout(() => (estado.textContent = ""), 3000);
   } catch (e) { estado.textContent = "No se pudo guardar: " + e.message; }
 };
 
@@ -530,8 +570,11 @@ async function iniciar() {
     return;
   }
 
-  MAYORISTAS = PARAMS.mayoristas || [];
-  const a = PARAMS.agencia || {};
+  // Lo que guardo el navegador manda sobre los valores que trae el servidor:
+  // en un hosting sin disco, es la unica copia de la configuracion.
+  const guardado = recordado(GUARDADO);
+  MAYORISTAS = (guardado && guardado.mayoristas) || PARAMS.mayoristas || [];
+  const a = (guardado && guardado.agencia) || PARAMS.agencia || {};
   $("#a-razon").value = a.razon_social || "";
   $("#a-cuit").value = a.cuit || "";
   $("#a-jurisdiccion").value = a.jurisdiccion || "LA_PAMPA";
@@ -555,6 +598,19 @@ async function iniciar() {
     }).join("")}</tbody></table></div>
     ${bloqueAvisos(PARAMS.advertencias)}
     <div class="avisos">${esc(PARAMS.aviso || "")}</div>`;
+
+  if (!PARAMS.hay_ocr) {
+    $("#zona").insertAdjacentHTML("afterend",
+      `<div class="avisos"><strong>Facturas escaneadas</strong><br>
+       En este servidor no está disponible el reconocimiento de texto (OCR), así
+       que las facturas que son una foto o un escaneo no se pueden leer solas.
+       Cargalas a mano con “+ Cargar una a mano”, o pedile al mayorista el PDF
+       original, que ya trae el texto adentro.</div>`);
+  }
+  if (PARAMS.solo_lectura) {
+    $("#estado-mayoristas").textContent =
+      "La configuración se guarda en este navegador.";
+  }
 
   OPCIONES = [nuevaOpcion()];
   pintarOpciones();

@@ -1,0 +1,8 @@
+tests/
+herramientas/
+ejemplos/
+docs/
+iniciar.bat
+iniciar.command
+.pytest_cache/
+__pycache__/
