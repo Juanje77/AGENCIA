@@ -39,10 +39,16 @@ agencia quedan en tu computadora, no en el servidor. Y una consecuencia: si
 entrás desde otra computadora o borrás los datos del navegador, hay que
 cargarlos de nuevo.
 
-Lo que no anda en Vercel: las **facturas escaneadas**. El reconocimiento de
-texto necesita un programa del sistema operativo (Tesseract) que Vercel no deja
-instalar. Esas facturas se cargan a mano, o le pedís al mayorista el PDF
-original. El sistema te lo avisa en pantalla.
+En Vercel no se puede instalar el reconocimiento de texto propio (Tesseract es
+un programa del sistema operativo), así que **las facturas escaneadas se leen
+con IA**. Para habilitarla, agregá también:
+
+| Nombre | Valor |
+|---|---|
+| `ANTHROPIC_API_KEY` | tu clave de [console.anthropic.com](https://console.anthropic.com) |
+
+Sin esa clave el sistema funciona igual, pero las facturas escaneadas hay que
+cargarlas a mano.
 
 ### En una computadora
 
@@ -170,19 +176,46 @@ Después **controla que los importes cierren contra el total**. Si no cierran, o
 si algún dato se dedujo en vez de leerse, la factura queda marcada y lo dice.
 Ese control es lo que permite confiar en lo que se leyó.
 
-### PDF escaneados
+### Las que el lector no entiende
 
-Si la factura es una imagen, se lee con OCR:
+Hay tres caminos, y el sistema los prueba en orden:
 
-```bash
-pip install pytesseract pillow pymupdf
-apt install tesseract-ocr tesseract-ocr-spa
+1. **El lector de reglas.** No cuesta nada y responde en centésimas de segundo.
+   Es el que se usa siempre que alcance.
+2. **OCR** (`pytesseract` + Tesseract), para escaneos, si está instalado.
+3. **IA**, si hay una `ANTHROPIC_API_KEY` cargada.
+
+La IA **solo entra cuando los dos anteriores no llegaron**: un formato
+desconocido, un escaneo sin OCR, o importes que no cierran contra el total. Si
+el lector de reglas acierta —como pasa con la mayoría de las facturas— no se
+gasta nada.
+
+Lo que devuelve el modelo **pasa por el mismo control aritmético** que el
+lector de reglas: si los importes no suman el total, la factura queda marcada
+igual. Un modelo puede equivocarse en un dígito, y eso en una liquidación no
+puede pasar inadvertido. Además, toda factura leída con IA queda señalada para
+que revises los importes, y si el modelo avisa que algo estaba borroso, también
+se registra.
+
+Podés desactivarla desde la pantalla de liquidación, o por código:
+
+```python
+leer_factura(ruta, usar_ia="nunca")    # solo reglas, sin costo ni envío a terceros
+leer_factura(ruta, usar_ia="auto")     # reglas primero, IA si hace falta (por defecto)
+leer_factura(ruta, usar_ia="siempre")  # directo a la IA
 ```
 
-Las facturas leídas por OCR quedan siempre marcadas para revisar: el
-reconocimiento confunde dígitos y un 8 por un 6 cambia la liquidación.
+**Qué cuesta.** Con `claude-opus-5`, leer una factura ronda los USD 0,03
+(estimado sobre ~3.000 tokens de entrada y ~600 de salida, a USD 5 y USD 25 por
+millón). Si de cada diez facturas hay que mandar dos al modelo, son unos USD
+0,06 por mes cada diez facturas. Se puede abaratar con un modelo más chico:
 
-Sin OCR instalado, el sistema explica las tres alternativas en vez de fallar.
+```
+AGENCIA_MODELO_IA=claude-haiku-4-5
+```
+
+**Qué se manda.** La factura entera, con los nombres de los pasajeros y los
+CUIT. Si eso no te sirve, usá `usar_ia="nunca"` o el OCR local.
 
 ### Motores de PDF
 
@@ -199,6 +232,8 @@ Se prueban en orden y se usa el primero disponible: `pymupdf`, `pdfplumber`,
 | `AGENCIA_PUERTO` | Puerto del servidor local (8000 por defecto). |
 | `AGENCIA_SOLO_LECTURA` | Fuerza el modo sin disco. Se detecta solo en Vercel. |
 | `AGENCIA_CONFIG_DIR` | Otra carpeta de configuración. |
+| `ANTHROPIC_API_KEY` | Habilita la lectura con IA. Sin ella, solo el lector de reglas. |
+| `AGENCIA_MODELO_IA` | Qué modelo usar (`claude-opus-5` por defecto). |
 
 ---
 
@@ -256,7 +291,7 @@ confirmes con tu contador y saques la marca.
 ## Desarrollo
 
 ```bash
-python -m pytest              # 225 tests
+python -m pytest              # 242 tests
 python herramientas/generar_factura_ejemplo.py ejemplos/
 ```
 
@@ -269,6 +304,7 @@ src/agencia/
   liquidador.py           liquidación del período (IVA e IIBB)
   liquidaciones/
     factura.py            lectura de facturas argentinas
+    lectura_ia.py         respaldo con un modelo de visión
     lectores/pdf_texto.py extracción de texto multi-motor y OCR
     conciliacion.py       control de planillas contra el recálculo
   presupuestos/
@@ -295,6 +331,9 @@ Las facturas traen nombres de pasajeros, CUIT y números de documento.
   terminen en el repositorio. Los archivos de `ejemplos/` son generados, no reales.
 - El sistema **no guarda las facturas**: las lee, extrae los importes y borra el
   archivo temporal. Nada queda en el servidor.
+- La lectura con IA **sí manda la factura** a la API de Anthropic para que la
+  interprete. Se usa solo cuando el lector de reglas no llega, y se puede
+  desactivar desde la pantalla de liquidación.
 - Los datos de la agencia y de los mayoristas se guardan en tu navegador cuando
   corre en Vercel, y en `config/mayoristas.json` cuando corre en tu computadora.
 - Si lo publicás en internet, **poné `AGENCIA_CLAVE`**. Sin eso, cualquiera con

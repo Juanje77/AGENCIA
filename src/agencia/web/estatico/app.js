@@ -351,6 +351,7 @@ $("#procesar").onclick = async () => {
       servicio_propio_pct: 0,
       // En un hosting sin disco, el padron lo tiene el navegador.
       padron: padronActual(),
+      usar_ia: $("#usar-ia").checked ? "auto" : "nunca",
     });
     r.operaciones.forEach((o) => OPERACIONES.push({ ...o, id: o.id || uid() }));
     ARCHIVOS = [];
@@ -599,13 +600,21 @@ async function iniciar() {
     ${bloqueAvisos(PARAMS.advertencias)}
     <div class="avisos">${esc(PARAMS.aviso || "")}</div>`;
 
-  if (!PARAMS.hay_ocr) {
+  if (PARAMS.hay_ia) {
+    $("#opcion-ia").classList.remove("oculto");
+  }
+  if (!PARAMS.hay_ocr && !PARAMS.hay_ia) {
     $("#zona").insertAdjacentHTML("afterend",
       `<div class="avisos"><strong>Facturas escaneadas</strong><br>
        En este servidor no está disponible el reconocimiento de texto (OCR), así
        que las facturas que son una foto o un escaneo no se pueden leer solas.
        Cargalas a mano con “+ Cargar una a mano”, o pedile al mayorista el PDF
        original, que ya trae el texto adentro.</div>`);
+  } else if (!PARAMS.hay_ocr && PARAMS.hay_ia) {
+    $("#zona").insertAdjacentHTML("afterend",
+      `<div class="avisos"><strong>Facturas escaneadas</strong><br>
+       Este servidor no tiene reconocimiento de texto propio, pero puede leerlas
+       con IA. Esas facturas quedan marcadas para que revises los importes.</div>`);
   }
   if (PARAMS.solo_lectura) {
     $("#estado-mayoristas").textContent =

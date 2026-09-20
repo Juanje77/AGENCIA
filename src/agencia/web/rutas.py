@@ -169,6 +169,7 @@ def _parametros() -> dict:
         "aviso": params.aviso,
         "solo_lectura": solo_lectura(),
         "hay_ocr": _hay_ocr(),
+        "hay_ia": _hay_ia(),
         "tipos_servicio": [
             {"nombre": nombre, "fiscal": fiscal}
             for nombre, fiscal in TIPOS_SERVICIO.items()
@@ -196,6 +197,12 @@ def _hay_ocr() -> bool:
         return True
     except Exception:
         return False
+
+
+def _hay_ia() -> bool:
+    from ..liquidaciones.lectura_ia import hay_ia
+
+    return hay_ia()
 
 
 def _guardar_mayoristas(datos: dict) -> Respuesta:
@@ -226,12 +233,17 @@ def _leer_facturas(datos: dict) -> dict:
     padron = _padron_de(datos)
     cuit = str(datos.get("cuit_agencia") or padron.agencia.cuit or "")
     servicio_propio = datos.get("servicio_propio_pct") or 0
+    usar_ia = str(datos.get("usar_ia") or "auto").lower()
+    if usar_ia not in ("auto", "nunca", "siempre"):
+        raise DatosInvalidos(
+            f"Valor invalido para usar_ia: {usar_ia!r}. Opciones: auto, nunca, siempre."
+        )
 
     operaciones, errores = [], []
     for archivo in archivos:
         nombre = str(archivo.get("nombre") or "sin-nombre.pdf")
         try:
-            comprobante = _leer_una(archivo, nombre, cuit)
+            comprobante = _leer_una(archivo, nombre, cuit, usar_ia)
         except (DatosInvalidos, ErrorDeLectura, ValueError) as exc:
             errores.append({"archivo": nombre, "error": str(exc)})
             continue
@@ -241,7 +253,7 @@ def _leer_facturas(datos: dict) -> dict:
     return {"operaciones": operaciones, "errores": errores}
 
 
-def _leer_una(archivo: dict, nombre: str, cuit: str):
+def _leer_una(archivo: dict, nombre: str, cuit: str, usar_ia: str = "auto"):
     contenido = archivo.get("contenido")
     if not contenido:
         raise DatosInvalidos("El archivo llego vacio.")
@@ -258,7 +270,7 @@ def _leer_una(archivo: dict, nombre: str, cuit: str):
         temporal.write(binario)
         ruta = Path(temporal.name)
     try:
-        comprobante = leer_factura(ruta, cuit_agencia=cuit)
+        comprobante = leer_factura(ruta, cuit_agencia=cuit, usar_ia=usar_ia)
         comprobante.archivo = nombre
         return comprobante
     finally:

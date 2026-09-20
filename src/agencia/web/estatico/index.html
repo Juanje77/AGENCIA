@@ -85,6 +85,13 @@
     <div class="acciones">
       <button class="btn-primary" id="procesar" disabled>Leer facturas</button>
       <button class="btn-ghost" id="agregar-fila">+ Cargar una a mano</button>
+      <label id="opcion-ia" class="oculto"
+             style="flex-direction:row;align-items:center;gap:7px;
+                    text-transform:none;font-weight:400;font-size:13px;margin-left:4px">
+        <input type="checkbox" id="usar-ia" checked style="width:auto">
+        <span>Leer con IA las que no se puedan interpretar
+          <span class="detalle">Solo se usa cuando el lector normal no llega.</span></span>
+      </label>
     </div>
   </section>
 

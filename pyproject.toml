@@ -15,9 +15,13 @@ dependencies = []
 [project.optional-dependencies]
 pdf = ["pymupdf>=1.24"]
 excel = ["openpyxl>=3.1"]
+ia = ["anthropic>=0.40"]
 ocr = ["pytesseract>=0.3", "pillow>=10.0", "pymupdf>=1.24"]
-todo = ["pymupdf>=1.24", "openpyxl>=3.1", "pytesseract>=0.3", "pillow>=10.0"]
-dev = ["pytest>=7.0", "pymupdf>=1.24", "openpyxl>=3.1"]
+todo = [
+    "pymupdf>=1.24", "openpyxl>=3.1", "anthropic>=0.40",
+    "pytesseract>=0.3", "pillow>=10.0",
+]
+dev = ["pytest>=7.0", "pymupdf>=1.24", "openpyxl>=3.1", "anthropic>=0.40"]
 
 [project.scripts]
 agencia = "agencia.cli:main"

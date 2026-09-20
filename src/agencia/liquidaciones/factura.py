@@ -209,12 +209,66 @@ class Comprobante:
         }
 
 
-def leer_factura(ruta: str | Path, cuit_agencia: str = "") -> Comprobante:
-    documento = extraer(ruta)
-    comprobante = parsear(documento, Path(ruta).name, cuit_agencia)
-    comprobante.motor_pdf = documento.motor
-    comprobante.avisos.extend(documento.avisos)
-    return comprobante
+AUTO, NUNCA, SIEMPRE = "auto", "nunca", "siempre"
+
+
+def leer_factura(
+    ruta: str | Path, cuit_agencia: str = "", usar_ia: str = AUTO
+) -> Comprobante:
+    """Lee una factura, con el lector de reglas y la IA como respaldo.
+
+    El lector de reglas no cuesta nada y responde al instante, asi que va
+    primero. La IA entra cuando ese lector no llego a un resultado confiable:
+    un formato que no reconoce, un escaneo sin OCR, o importes que no cierran
+    contra el total.
+
+    `usar_ia` acepta:
+      * "auto"    -> reglas primero, IA solo si hace falta (por defecto);
+      * "nunca"   -> solo reglas, sin costo ni envio de datos a terceros;
+      * "siempre" -> directo a la IA.
+    """
+    from .lectura_ia import ErrorDeIA, hay_ia, leer_con_ia
+
+    if usar_ia == SIEMPRE:
+        return leer_con_ia(ruta, cuit_agencia)
+
+    fallo = None
+    comprobante = None
+    try:
+        documento = extraer(ruta)
+        comprobante = parsear(documento, Path(ruta).name, cuit_agencia)
+        comprobante.motor_pdf = documento.motor
+        comprobante.avisos.extend(documento.avisos)
+    except ErrorDeLectura as exc:
+        fallo = exc
+
+    if usar_ia == NUNCA or (comprobante is not None and comprobante.confiable):
+        if fallo is not None:
+            raise fallo
+        return comprobante
+
+    if not hay_ia():
+        if fallo is not None:
+            raise fallo
+        return comprobante
+
+    try:
+        leido = leer_con_ia(ruta, cuit_agencia)
+    except ErrorDeIA as exc:
+        if fallo is not None:
+            raise ErrorDeLectura(f"{fallo}\n\nTampoco se pudo leer con IA: {exc}") from exc
+        comprobante.avisos.append(f"No se pudo reintentar con IA: {exc}")
+        return comprobante
+
+    if comprobante is not None and not leido.confiable and comprobante.total != CERO:
+        # Si ninguna lectura cierra, se conserva la del parser y se informan
+        # las dos: el operador decide con los dos numeros a la vista.
+        comprobante.avisos.append(
+            f"La lectura con IA tampoco cerro (total {leido.total}). "
+            "Verifica la factura a mano."
+        )
+        return comprobante
+    return leido
 
 
 def parsear(
