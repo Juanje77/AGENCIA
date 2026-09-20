@@ -19,8 +19,15 @@ Hay dos maneras de usarlo y el sistema funciona igual en las dos.
 
 1. Entrá a [vercel.com](https://vercel.com), creá una cuenta e importá este
    repositorio ("Add New… → Project").
-2. Vercel detecta la configuración solo. Dale **Deploy** y esperá un minuto.
-3. Te queda una dirección para entrar desde cualquier lado, también del celular.
+2. **Elegí la rama correcta.** Vercel despliega `main` por defecto. Si el código
+   está en otra rama, andá a *Settings → Git → Production Branch*, escribí el
+   nombre de esa rama y guardá; después *Deployments → Redeploy*. Si el proyecto
+   aparece creado pero no carga, esto suele ser la causa.
+3. Dale **Deploy** y esperá un minuto.
+4. Te queda una dirección para entrar desde cualquier lado, también del celular.
+
+Si el deploy falla, abrí el deployment en Vercel y mirá los **Build Logs**: el
+error concreto está ahí.
 
 **Ponele una clave antes de cargar facturas reales.** En Vercel, en
 *Settings → Environment Variables*, agregá:
