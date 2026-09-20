@@ -1,0 +1,319 @@
+{
+  "version": "1.0",
+  "vigencia_desde": "2026-01-01",
+  "moneda_base": "ARS",
+  "aviso": "Los valores de este archivo son PARAMETROS EDITABLES. Deben validarse con el contador de la agencia y con la normativa vigente de cada jurisdiccion antes de usarse para liquidar impuestos.",
+  "iva": {
+    "alicuota_general": "21.00",
+    "alicuota_reducida": "10.50",
+    "redondeo_decimales": 2,
+    "tratamientos": {
+      "GRAVADO_21": {
+        "alicuota": "21.00",
+        "computa_debito": true,
+        "etiqueta": "Gravado 21%"
+      },
+      "GRAVADO_105": {
+        "alicuota": "10.50",
+        "computa_debito": true,
+        "etiqueta": "Gravado 10,5%"
+      },
+      "EXENTO": {
+        "alicuota": "0.00",
+        "computa_debito": false,
+        "etiqueta": "Exento"
+      },
+      "NO_GRAVADO": {
+        "alicuota": "0.00",
+        "computa_debito": false,
+        "etiqueta": "No gravado / fuera del objeto"
+      },
+      "EXPORTACION": {
+        "alicuota": "0.00",
+        "computa_debito": false,
+        "etiqueta": "Exportacion de servicios"
+      }
+    }
+  },
+  "servicios": {
+    "AEREO_INTERNACIONAL": {
+      "etiqueta": "Pasaje aereo internacional",
+      "iva_servicio": "EXENTO",
+      "iva_comision": "EXENTO",
+      "iibb_base": "COMISION",
+      "nota": "Transporte internacional de pasajeros exento (Ley 23.349). La comision de la agencia suele tratarse como servicio conexo al transporte internacional. VERIFICAR con el contador."
+    },
+    "AEREO_CABOTAJE": {
+      "etiqueta": "Pasaje aereo de cabotaje",
+      "iva_servicio": "GRAVADO_105",
+      "iva_comision": "GRAVADO_21",
+      "iibb_base": "COMISION",
+      "nota": "Transporte de pasajeros de larga distancia a alicuota reducida."
+    },
+    "TERRESTRE_LARGA_DISTANCIA": {
+      "etiqueta": "Transporte terrestre larga distancia (+100 km)",
+      "iva_servicio": "GRAVADO_105",
+      "iva_comision": "GRAVADO_21",
+      "iibb_base": "COMISION",
+      "nota": "Recorridos mayores a 100 km."
+    },
+    "TERRESTRE_CORTA_DISTANCIA": {
+      "etiqueta": "Transporte terrestre corta distancia (-100 km)",
+      "iva_servicio": "GRAVADO_21",
+      "iva_comision": "GRAVADO_21",
+      "iibb_base": "COMISION",
+      "nota": "Verificar exenciones locales para transporte urbano y suburbano."
+    },
+    "HOTELERIA_NACIONAL": {
+      "etiqueta": "Alojamiento en el pais",
+      "iva_servicio": "GRAVADO_21",
+      "iva_comision": "GRAVADO_21",
+      "iibb_base": "COMISION",
+      "nota": ""
+    },
+    "HOTELERIA_TURISTA_EXTRANJERO": {
+      "etiqueta": "Alojamiento a turista del exterior (receptivo)",
+      "iva_servicio": "EXPORTACION",
+      "iva_comision": "EXPORTACION",
+      "iibb_base": "COMISION",
+      "nota": "Regimen de reintegro de IVA por alojamiento a turistas del exterior. Requiere respaldo documental del pasajero extranjero."
+    },
+    "HOTELERIA_EXTERIOR": {
+      "etiqueta": "Alojamiento en el exterior",
+      "iva_servicio": "NO_GRAVADO",
+      "iva_comision": "GRAVADO_21",
+      "iibb_base": "COMISION",
+      "nota": "El servicio se presta fuera del pais (fuera del objeto del IVA). La intermediacion prestada y utilizada en el pais queda gravada."
+    },
+    "PAQUETE_NACIONAL": {
+      "etiqueta": "Paquete turistico en el pais",
+      "iva_servicio": "GRAVADO_21",
+      "iva_comision": "GRAVADO_21",
+      "iibb_base": "DIFERENCIA",
+      "nota": "Si la agencia arma el paquete por cuenta propia factura el total y computa el credito fiscal de las compras."
+    },
+    "PAQUETE_EXTERIOR": {
+      "etiqueta": "Paquete turistico al exterior",
+      "iva_servicio": "NO_GRAVADO",
+      "iva_comision": "GRAVADO_21",
+      "iibb_base": "DIFERENCIA",
+      "nota": "Servicios prestados en el exterior. Los tramos prestados en el pais siguen su propio tratamiento."
+    },
+    "EXCURSION_NACIONAL": {
+      "etiqueta": "Excursion o actividad en el pais",
+      "iva_servicio": "GRAVADO_21",
+      "iva_comision": "GRAVADO_21",
+      "iibb_base": "COMISION",
+      "nota": ""
+    },
+    "EXCURSION_EXTERIOR": {
+      "etiqueta": "Excursion o actividad en el exterior",
+      "iva_servicio": "NO_GRAVADO",
+      "iva_comision": "GRAVADO_21",
+      "iibb_base": "COMISION",
+      "nota": ""
+    },
+    "ALQUILER_AUTO_NACIONAL": {
+      "etiqueta": "Alquiler de auto en el pais",
+      "iva_servicio": "GRAVADO_21",
+      "iva_comision": "GRAVADO_21",
+      "iibb_base": "COMISION",
+      "nota": ""
+    },
+    "ALQUILER_AUTO_EXTERIOR": {
+      "etiqueta": "Alquiler de auto en el exterior",
+      "iva_servicio": "NO_GRAVADO",
+      "iva_comision": "GRAVADO_21",
+      "iibb_base": "COMISION",
+      "nota": ""
+    },
+    "CRUCERO": {
+      "etiqueta": "Crucero",
+      "iva_servicio": "NO_GRAVADO",
+      "iva_comision": "GRAVADO_21",
+      "iibb_base": "COMISION",
+      "nota": "Verificar el tratamiento segun puerto de embarque e itinerario."
+    },
+    "ASISTENCIA_VIAJERO": {
+      "etiqueta": "Asistencia al viajero",
+      "iva_servicio": "GRAVADO_21",
+      "iva_comision": "GRAVADO_21",
+      "iibb_base": "COMISION",
+      "nota": "Verificar si la cobertura se presta y utiliza en el exterior."
+    },
+    "SEGURO": {
+      "etiqueta": "Seguro de viaje",
+      "iva_servicio": "GRAVADO_21",
+      "iva_comision": "GRAVADO_21",
+      "iibb_base": "COMISION",
+      "nota": ""
+    },
+    "TREN_O_BUS_EXTERIOR": {
+      "etiqueta": "Tren o bus en el exterior",
+      "iva_servicio": "NO_GRAVADO",
+      "iva_comision": "GRAVADO_21",
+      "iibb_base": "COMISION",
+      "nota": ""
+    },
+    "FEE_AGENCIA": {
+      "etiqueta": "Fee o cargo de gestion de la agencia",
+      "iva_servicio": "GRAVADO_21",
+      "iva_comision": "GRAVADO_21",
+      "iibb_base": "TOTAL",
+      "nota": "Servicio propio de la agencia: siempre gravado."
+    },
+    "OTRO": {
+      "etiqueta": "Otro servicio",
+      "iva_servicio": "GRAVADO_21",
+      "iva_comision": "GRAVADO_21",
+      "iibb_base": "COMISION",
+      "nota": ""
+    }
+  },
+  "iibb": {
+    "regimen": "CONVENIO_MULTILATERAL",
+    "bases_imponibles": {
+      "COMISION": "Solo la comision y el fee de la agencia (intermediacion por cuenta y orden de terceros).",
+      "DIFERENCIA": "Diferencia entre el precio de venta al pasajero y el costo del proveedor.",
+      "TOTAL": "Ingreso bruto total facturado."
+    },
+    "jurisdicciones": {
+      "LA_PAMPA": {
+        "etiqueta": "La Pampa",
+        "alicuota": "3.50",
+        "base_default": "COMISION",
+        "coeficiente_unificado": "1.0000",
+        "verificar": true
+      },
+      "CABA": {
+        "etiqueta": "Ciudad de Buenos Aires",
+        "alicuota": "3.00",
+        "base_default": "DIFERENCIA",
+        "coeficiente_unificado": "0.0000",
+        "verificar": true
+      },
+      "BUENOS_AIRES": {
+        "etiqueta": "Provincia de Buenos Aires",
+        "alicuota": "4.50",
+        "base_default": "COMISION",
+        "coeficiente_unificado": "0.0000",
+        "verificar": true
+      },
+      "CORDOBA": {
+        "etiqueta": "Cordoba",
+        "alicuota": "4.75",
+        "base_default": "COMISION",
+        "coeficiente_unificado": "0.0000",
+        "verificar": true
+      },
+      "SANTA_FE": {
+        "etiqueta": "Santa Fe",
+        "alicuota": "4.50",
+        "base_default": "COMISION",
+        "coeficiente_unificado": "0.0000",
+        "verificar": true
+      },
+      "MENDOZA": {
+        "etiqueta": "Mendoza",
+        "alicuota": "4.00",
+        "base_default": "COMISION",
+        "coeficiente_unificado": "0.0000",
+        "verificar": true
+      },
+      "NEUQUEN": {
+        "etiqueta": "Neuquen",
+        "alicuota": "4.00",
+        "base_default": "COMISION",
+        "coeficiente_unificado": "0.0000",
+        "verificar": true
+      },
+      "RIO_NEGRO": {
+        "etiqueta": "Rio Negro",
+        "alicuota": "4.00",
+        "base_default": "COMISION",
+        "coeficiente_unificado": "0.0000",
+        "verificar": true
+      }
+    },
+    "jurisdiccion_sede": "LA_PAMPA"
+  },
+  "retenciones_y_percepciones": {
+    "GANANCIAS_RG830": {
+      "etiqueta": "Retencion Ganancias RG 830",
+      "aplica_sobre": "COMISION_NETA",
+      "alicuota_inscripto": "2.00",
+      "alicuota_no_inscripto": "28.00",
+      "minimo_no_sujeto": "67170.00",
+      "tipo_minimo": "DEDUCIBLE",
+      "activo": true,
+      "verificar": true
+    },
+    "IVA_RG2854": {
+      "etiqueta": "Retencion IVA RG 2854",
+      "aplica_sobre": "IVA_COMISION",
+      "alicuota_inscripto": "50.00",
+      "alicuota_no_inscripto": "100.00",
+      "minimo_no_sujeto": "0.00",
+      "tipo_minimo": "UMBRAL",
+      "activo": true,
+      "verificar": true
+    },
+    "IIBB_SIRCAR": {
+      "etiqueta": "Retencion Ingresos Brutos (SIRCAR / regimen provincial)",
+      "aplica_sobre": "COMISION_NETA",
+      "alicuota_inscripto": "2.00",
+      "alicuota_no_inscripto": "3.00",
+      "minimo_no_sujeto": "0.00",
+      "tipo_minimo": "UMBRAL",
+      "activo": true,
+      "verificar": true
+    },
+    "SIRCREB": {
+      "etiqueta": "Recaudacion IIBB sobre acreditaciones bancarias (SIRCREB)",
+      "aplica_sobre": "ACREDITACION_BANCARIA",
+      "alicuota_inscripto": "0.00",
+      "alicuota_no_inscripto": "0.00",
+      "minimo_no_sujeto": "0.00",
+      "tipo_minimo": "UMBRAL",
+      "activo": false,
+      "verificar": true
+    },
+    "PERCEPCION_IIBB_COMPROBANTE": {
+      "etiqueta": "Percepcion de Ingresos Brutos en factura",
+      "aplica_sobre": "NETO_GRAVADO",
+      "alicuota_inscripto": "2.00",
+      "alicuota_no_inscripto": "3.00",
+      "minimo_no_sujeto": "0.00",
+      "tipo_minimo": "UMBRAL",
+      "activo": true,
+      "verificar": true,
+      "nota": "La percibe el mayorista al facturar, sobre el neto gravado. Es pago a cuenta de IIBB."
+    }
+  },
+  "percepciones_al_viajero": {
+    "IMPUESTO_PAIS": {
+      "etiqueta": "Impuesto PAIS sobre servicios turisticos",
+      "alicuota": "0.00",
+      "activo": false,
+      "nota": "Parametro historico. Confirmar vigencia antes de activarlo."
+    },
+    "PERCEPCION_GANANCIAS_TURISMO": {
+      "etiqueta": "Percepcion a cuenta de Ganancias / Bienes Personales por consumos en el exterior",
+      "alicuota": "0.00",
+      "activo": false,
+      "nota": "Parametro editable. Confirmar vigencia y alicuota con la RG aplicable antes de activarlo."
+    }
+  },
+  "presupuestos": {
+    "validez_dias": 7,
+    "markup_default_pct": "12.00",
+    "fee_default": "0.00",
+    "redondeo_precio_final": "1.00",
+    "moneda_cotizacion_default": "USD",
+    "leyenda_legal": "Presupuesto sujeto a disponibilidad y confirmacion del proveedor. Las tarifas pueden variar hasta la emision. Valores expresados segun el tipo de cambio indicado."
+  },
+  "tolerancias_conciliacion": {
+    "importe_absoluto": "1.00",
+    "porcentaje": "0.50"
+  }
+}

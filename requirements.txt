@@ -1,0 +1,10 @@
+# El nucleo del sistema usa solo la biblioteca estandar de Python.
+# Estas dependencias habilitan la lectura de facturas.
+
+pymupdf>=1.24      # lectura de facturas en PDF (recomendado)
+openpyxl>=3.1      # planillas de liquidacion en Excel (.xlsx)
+
+# Opcionales
+# pytesseract>=0.3 # facturas escaneadas; requiere el motor Tesseract del sistema:
+#                  #   apt install tesseract-ocr tesseract-ocr-spa
+# pillow>=10.0     # va junto con pytesseract

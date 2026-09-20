@@ -1,0 +1,41 @@
+{
+  "nombre": "Plantilla para un mayorista nuevo",
+  "descripcion": "Copia este archivo con el nombre del mayorista y ajusta los campos. Sin perfil el sistema igual detecta las columnas solo: un perfil sirve cuando los encabezados son raros o ambiguos.",
+
+  "formato": null,
+  "_formato": "csv | excel | pdf. En null se deduce de la extension del archivo.",
+
+  "delimitador": null,
+  "_delimitador": "Solo para CSV. En null se detecta solo (;, coma o tabulacion).",
+
+  "hoja": null,
+  "_hoja": "Solo para Excel. Nombre de la hoja; en null se usa la primera.",
+
+  "fila_encabezado": null,
+  "_fila_encabezado": "Numero de fila (empezando en 1) donde estan los titulos. En null se busca sola.",
+
+  "moneda_default": "ARS",
+  "tipo_servicio_default": "OTRO",
+  "jurisdiccion": null,
+  "_jurisdiccion": "Codigo de jurisdiccion de IIBB para estas operaciones. En null usa la sede.",
+
+  "columnas": {
+    "_ayuda": "Solo hace falta para las columnas que el sistema no reconoce solo. La clave es el titulo tal cual figura en el archivo; el valor, el campo del sistema.",
+    "Nro Expediente": "referencia",
+    "Importe Bruto": "importe_total",
+    "Comis. Agencia": "comision"
+  },
+
+  "mapeo_servicios": {
+    "_ayuda": "Si el archivo trae codigos propios, traducilos al tipo de servicio fiscal. Se busca el texto dentro de la descripcion.",
+    "AER INT": "AEREO_INTERNACIONAL",
+    "HTL": "HOTELERIA_EXTERIOR"
+  },
+
+  "_campos_disponibles": [
+    "referencia", "fecha", "pasajero", "destino", "proveedor",
+    "servicio_descripcion", "moneda", "tipo_cambio", "importe_total",
+    "costo_neto", "comision", "iva_comision", "over", "ret_ganancias",
+    "ret_iva", "ret_iibb", "otros_descuentos", "neto_a_cobrar"
+  ]
+}

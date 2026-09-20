@@ -1,0 +1,41 @@
+{
+  "general": {
+    "cliente": "Familia Gomez",
+    "contacto": "2954 123456",
+    "destino": "Bariloche",
+    "fecha_viaje": "12 al 19 de octubre",
+    "pax": 2,
+    "vendedor": "Mostrador 1",
+    "validez_dias": 5,
+    "tipo_cambio": "1450.00"
+  },
+  "opciones": [
+    {
+      "nombre": "Opcion 1 - SIGA (desglosado)",
+      "nombre_cliente": "Aereo + hotel centrico",
+      "modalidad": "desglosado",
+      "impuestos_pct": "21",
+      "servicios": [
+        { "tipo": "Aereo", "mayorista": "SIGA", "descripcion": "AEP-BRC-AEP", "tarifa": "1710.00", "comision_pct": "15.00", "gastos_admin_pct": "1.50" },
+        { "tipo": "Hotel en el pais", "mayorista": "SIGA", "descripcion": "4 estrellas, 7 noches con desayuno", "tarifa": "980.00", "comision_pct": "15.00", "gastos_admin_pct": "1.50" },
+        { "tipo": "Traslado/Transfer", "mayorista": "SIGA", "descripcion": "Aeropuerto - hotel ida y vuelta", "tarifa": "90.00", "comision_pct": "15.00", "gastos_admin_pct": "1.50" },
+        { "tipo": "Asistencia al viajero", "mayorista": "SIGA", "descripcion": "Cobertura nacional 8 dias", "tarifa": "64.00", "comision_pct": "15.00", "gastos_admin_pct": "1.50" }
+      ],
+      "notas_cliente": "Incluye equipaje de bodega."
+    },
+    {
+      "nombre": "Opcion 2 - OLA (paquete)",
+      "nombre_cliente": "Paquete todo incluido",
+      "modalidad": "paquete",
+      "paquete": {
+        "mayorista": "OLA",
+        "descripcion": "Aereo + hotel + traslados + excursiones",
+        "tarifa": "2400.00",
+        "comisionable_pct": "14.00",
+        "impuestos": "0.00",
+        "gastos_admin_pct": "1.50"
+      },
+      "notas_cliente": "Excursiones a Cerro Catedral y Circuito Chico incluidas."
+    }
+  ]
+}

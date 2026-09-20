@@ -1,0 +1,28 @@
+{
+  "nombre": "Ejemplo CSV",
+  "descripcion": "Perfil que acompana a ejemplos/liquidacion_ola_202609.csv. Sirve de referencia para armar los propios.",
+  "formato": "csv",
+  "delimitador": ";",
+  "fila_encabezado": 4,
+  "moneda_default": "ARS",
+  "tipo_servicio_default": "OTRO",
+  "columnas": {
+    "File": "referencia",
+    "Fecha Emision": "fecha",
+    "Concepto": "servicio_descripcion",
+    "Neto Proveedor": "costo_neto",
+    "IVA s/Comision": "iva_comision",
+    "Ret. Ganancias": "ret_ganancias",
+    "Ret. IVA": "ret_iva",
+    "Ret. IIBB": "ret_iibb",
+    "Neto a Cobrar": "neto_a_cobrar"
+  },
+  "mapeo_servicios": {
+    "aereo internacional": "AEREO_INTERNACIONAL",
+    "aereo cabotaje": "AEREO_CABOTAJE",
+    "hoteleria nacional": "HOTELERIA_NACIONAL",
+    "paquete": "PAQUETE_EXTERIOR",
+    "crucero": "CRUCERO",
+    "asistencia": "ASISTENCIA_VIAJERO"
+  }
+}

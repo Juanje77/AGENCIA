@@ -1,0 +1,21 @@
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
+venv/
+*.egg-info/
+build/
+dist/
+.coverage
+htmlcov/
+
+# Documentacion real de la agencia: no se versiona.
+# Las facturas traen nombres de pasajeros, CUIT y documentos.
+# Las barras iniciales anclan los patrones a la raiz del proyecto, para no
+# tapar el codigo de src/agencia/liquidaciones/.
+/facturas/
+/liquidaciones/
+/salidas/
+/ejemplos/reales/
+*.local.json
+config/mayoristas.local.json

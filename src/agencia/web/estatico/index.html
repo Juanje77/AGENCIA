@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Sistema de agencia de viajes</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="/estatico/estilos.css">
+</head>
+<body>
+<div class="app">
+
+<header class="top">
+  <div class="titulo">
+    <div class="marca">AV</div>
+    <div>
+      <h1>Sistema de agencia de viajes</h1>
+      <p>Cotizá con varios mayoristas y liquidá el IVA e Ingresos Brutos del período
+         a partir de las facturas que te mandan.</p>
+    </div>
+  </div>
+  <nav>
+    <button data-vista="cotizador" class="activo">Cotizador</button>
+    <button data-vista="liquidacion">Liquidación</button>
+    <button data-vista="mayoristas">Mayoristas</button>
+  </nav>
+</header>
+
+<!-- ===================== COTIZADOR ===================== -->
+<section id="vista-cotizador" class="vista activa">
+
+  <section class="panel">
+    <h2>Datos del viaje</h2>
+    <div class="grid grid-general">
+      <label>Cliente<input id="g-cliente" placeholder="Nombre del cliente"></label>
+      <label>Contacto<input id="g-contacto" placeholder="Ej. 2954 123456"></label>
+      <label>Destino<input id="g-destino" placeholder="Ej. Bariloche"></label>
+      <label>Fechas del viaje<input id="g-fechas" placeholder="Ej. 12 al 19 de octubre"></label>
+      <label>Pasajeros<input id="g-pax" type="number" min="1" step="1" value="2"></label>
+      <label>Vendedor<input id="g-vendedor" placeholder="Quién cotiza"></label>
+      <label>Fecha de cotización<input id="g-fecha" type="date"></label>
+      <label>Validez (días)<input id="g-validez" type="number" min="0" step="1" value="5"></label>
+      <label>Dólar (para impuestos)<input id="g-tc" type="number" step="0.01" placeholder="1450.00"></label>
+    </div>
+    <p class="hint">Los importes de la cotización se cargan y se muestran en dólares.
+      El tipo de cambio sirve para estimar el IVA e Ingresos Brutos en pesos.</p>
+  </section>
+
+  <section class="panel">
+    <div class="panel-head">
+      <h2>Opciones de la cotización</h2>
+      <button class="btn-primary" id="nueva-opcion">+ Nueva opción</button>
+    </div>
+    <p class="hint" style="margin-top:0;margin-bottom:14px">Cada opción se puede desglosar
+      servicio por servicio, con su comisión y gastos administrativos, o cargarse como
+      paquete cerrado con una parte comisionable. Los importes son totales para todos
+      los pasajeros.</p>
+    <div id="opciones"></div>
+  </section>
+
+  <div class="acciones no-print">
+    <button class="btn-primary" id="calcular-cotizacion">Calcular</button>
+    <button class="btn-secundario" id="ver-cliente">Ver propuesta para el cliente</button>
+    <button class="btn-secundario" id="ver-agencia">Ver análisis de la agencia</button>
+  </div>
+
+  <div id="resultado-cotizacion"></div>
+</section>
+
+<!-- ===================== LIQUIDACIÓN ===================== -->
+<section id="vista-liquidacion" class="vista">
+
+  <section class="panel">
+    <div class="panel-head">
+      <h2>Facturas de los mayoristas</h2>
+      <span class="hint">PDF, incluso escaneados. Se leen los importes y se arma la fila sola.</span>
+    </div>
+    <div class="zona" id="zona">
+      <strong>Arrastrá acá las facturas</strong>
+      o hacé clic para elegirlas · podés subir varias juntas
+    </div>
+    <input type="file" id="archivos" class="oculto" accept=".pdf" multiple>
+    <div id="lista-archivos"></div>
+    <div class="acciones">
+      <button class="btn-primary" id="procesar" disabled>Leer facturas</button>
+      <button class="btn-ghost" id="agregar-fila">+ Cargar una a mano</button>
+    </div>
+  </section>
+
+  <section class="panel">
+    <div class="panel-head">
+      <h2>Operaciones del período</h2>
+      <div style="display:flex;gap:9px;align-items:center;flex-wrap:wrap">
+        <label style="flex-direction:row;align-items:center;gap:6px">Período
+          <input id="l-periodo" style="width:90px" placeholder="09/2026"></label>
+        <button class="btn-ghost" id="limpiar">Vaciar</button>
+      </div>
+    </div>
+    <div class="table-scroll">
+      <table class="compacta">
+        <thead><tr>
+          <th>Fecha</th><th>Cliente</th><th>Mayorista</th><th>Mon.</th>
+          <th class="num">T.C.</th><th class="num">Comisionable</th><th class="num">No comis.</th>
+          <th class="num">Total</th><th class="num">% com.</th><th class="num">Comisión</th>
+          <th class="num">Gravado</th><th class="num">IVA com.</th>
+          <th class="num">% serv.</th><th class="num">Serv. propio</th><th class="num">IVA serv.</th>
+          <th></th>
+        </tr></thead>
+        <tbody id="operaciones"></tbody>
+        <tfoot><tr id="totales-operaciones"></tr></tfoot>
+      </table>
+    </div>
+    <div id="avisos-operaciones"></div>
+  </section>
+
+  <div class="tarjetas" id="tarjetas-liquidacion"></div>
+
+  <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(310px,1fr))">
+    <section class="panel">
+      <span class="tag tag-iva">Liquidación de IVA</span>
+      <div class="grid" style="margin-top:13px">
+        <label>Débito fiscal
+          <input id="iva-debito" readonly class="mono"></label>
+        <label>Crédito fiscal de compras y gastos propios
+          <input id="credito-extra" type="number" step="0.01" value="0"></label>
+        <label style="flex-direction:row;align-items:flex-start;gap:8px;font-size:13px;text-transform:none">
+          <input type="checkbox" id="computa-credito" style="width:auto;margin-top:3px">
+          <span style="font-weight:400;color:var(--ink)">Computar también el IVA de las
+            facturas de los mayoristas<br>
+            <span class="detalle">Solo si le facturás al pasajero el viaje completo por
+            cuenta propia, no si actuás como intermediaria.</span></span>
+        </label>
+      </div>
+      <div class="resultado pagar" id="resultado-iva">
+        <span class="rotulo">IVA a pagar</span><span class="monto">$ 0,00</span>
+      </div>
+    </section>
+
+    <section class="panel">
+      <span class="tag tag-iibb">Ingresos Brutos</span>
+      <div class="grid" style="margin-top:13px">
+        <label>Base imponible <span class="detalle" style="font-weight:400">Comisión neta + servicio propio</span>
+          <input id="iibb-base" readonly class="mono"></label>
+        <label>Jurisdicción<input id="iibb-jurisdiccion" value="La Pampa"></label>
+        <label>Alícuota %<input id="iibb-alicuota" type="number" step="0.01" value="3.5"></label>
+        <label>Retenciones y percepciones sufridas
+          <input id="iibb-retenciones" type="number" step="0.01" value="0"></label>
+      </div>
+      <div class="resultado pagar" id="resultado-iibb">
+        <span class="rotulo">IIBB a pagar</span><span class="monto">$ 0,00</span>
+      </div>
+    </section>
+  </div>
+
+  <div class="acciones no-print">
+    <button class="btn-secundario" id="ver-liquidacion">Ver informe imprimible</button>
+  </div>
+</section>
+
+<!-- ===================== MAYORISTAS ===================== -->
+<section id="vista-mayoristas" class="vista">
+  <section class="panel">
+    <h2>Datos de la agencia</h2>
+    <div class="grid grid-general">
+      <label>Razón social<input id="a-razon" placeholder="Nombre de la agencia"></label>
+      <label>CUIT<input id="a-cuit" placeholder="27-12345678-9"></label>
+      <label>Jurisdicción<input id="a-jurisdiccion" value="LA_PAMPA"></label>
+      <label>Alícuota IIBB %<input id="a-alicuota" type="number" step="0.01" value="3.5"></label>
+    </div>
+    <p class="hint">El CUIT se usa para reconocer, en cada factura, si la agencia es
+      quien emite o quien recibe.</p>
+  </section>
+
+  <section class="panel">
+    <div class="panel-head">
+      <h2>Mayoristas</h2>
+      <span class="hint">Comisión que cada uno reconoce y el IVA que aplica sobre ella.</span>
+    </div>
+    <div class="table-scroll">
+      <table class="compacta">
+        <thead><tr>
+          <th>Mayorista</th><th class="num">% comisión</th><th class="num">% IVA</th>
+          <th>CUIT</th><th>Otros nombres en la factura</th><th></th>
+        </tr></thead>
+        <tbody id="tabla-mayoristas"></tbody>
+      </table>
+    </div>
+    <div class="acciones">
+      <button class="btn-ghost" id="nuevo-mayorista">+ Agregar mayorista</button>
+      <button class="btn-primary" id="guardar-mayoristas">Guardar</button>
+      <span id="estado-mayoristas" class="hint"></span>
+    </div>
+  </section>
+
+  <section class="panel">
+    <h2>Tratamiento fiscal por tipo de servicio</h2>
+    <div id="tabla-fiscal"></div>
+  </section>
+</section>
+
+<p class="pie">Los importes calculados son una herramienta de gestión.<br>
+  Validalos con tu contador antes de presentar declaraciones juradas.</p>
+
+</div>
+<script src="/estatico/app.js"></script>
+</body>
+</html>

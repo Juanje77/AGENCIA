@@ -1,0 +1,67 @@
+{
+  "agencia": {
+    "razon_social": "",
+    "cuit": "",
+    "condicion_iva": "RESPONSABLE_INSCRIPTO",
+    "jurisdiccion": "LA_PAMPA",
+    "alicuota_iibb": "3.50"
+  },
+  "mayoristas": [
+    {
+      "nombre": "Toselli",
+      "comision_pct": "2.70",
+      "iva_pct": "21.00",
+      "cuit": "",
+      "alias": [
+        "TOSELLI VIAJES"
+      ]
+    },
+    {
+      "nombre": "Delfos",
+      "comision_pct": "3.00",
+      "iva_pct": "21.00",
+      "cuit": "30-70813316-3",
+      "alias": [
+        "DELFOS OPERADOR MAYORISTA",
+        "DELFOS"
+      ]
+    },
+    {
+      "nombre": "Ola",
+      "comision_pct": "4.50",
+      "iva_pct": "21.00",
+      "cuit": "33-68050456-9",
+      "alias": [
+        "OLA S.A.",
+        "OLA MAYORISTA"
+      ]
+    },
+    {
+      "nombre": "Buda Travel",
+      "comision_pct": "3.00",
+      "iva_pct": "21.00",
+      "cuit": "30-71443284-9",
+      "alias": [
+        "BUDA TRAVEL"
+      ]
+    },
+    {
+      "nombre": "Pedemonte",
+      "comision_pct": "3.00",
+      "iva_pct": "21.00",
+      "cuit": "30-70736013-1",
+      "alias": [
+        "PEDEMONTE REPRESENTACIONES"
+      ]
+    },
+    {
+      "nombre": "Siga",
+      "comision_pct": "15.00",
+      "iva_pct": "21.00",
+      "cuit": "",
+      "alias": [
+        "SIGA"
+      ]
+    }
+  ]
+}
