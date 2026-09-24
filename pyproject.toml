@@ -10,18 +10,21 @@ readme = "README.md"
 requires-python = ">=3.10"
 license = { text = "MIT" }
 keywords = ["turismo", "agencia de viajes", "iva", "ingresos brutos", "facturas", "arca", "afip"]
-dependencies = []
+
+# El nucleo del sistema funciona sin nada de esto. Estas tres se declaran como
+# dependencias principales -no opcionales- porque el instalador de Vercel usa
+# uv, que resuelve desde aca (project.dependencies), no desde requirements.txt.
+# requirements.txt se mantiene igual, como referencia para quien instale con
+# pip a mano; hay que mantener las dos listas iguales.
+dependencies = [
+    "pymupdf>=1.24",    # facturas en PDF
+    "openpyxl>=3.1",    # planillas de liquidacion en Excel
+    "anthropic>=0.40",  # leer con IA las facturas que el lector normal no interpreta
+]
 
 [project.optional-dependencies]
-pdf = ["pymupdf>=1.24"]
-excel = ["openpyxl>=3.1"]
-ia = ["anthropic>=0.40"]
-ocr = ["pytesseract>=0.3", "pillow>=10.0", "pymupdf>=1.24"]
-todo = [
-    "pymupdf>=1.24", "openpyxl>=3.1", "anthropic>=0.40",
-    "pytesseract>=0.3", "pillow>=10.0",
-]
-dev = ["pytest>=7.0", "pymupdf>=1.24", "openpyxl>=3.1", "anthropic>=0.40"]
+ocr = ["pytesseract>=0.3", "pillow>=10.0"]
+dev = ["pytest>=7.0"]
 
 [project.scripts]
 agencia = "agencia.cli:main"

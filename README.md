@@ -44,6 +44,17 @@ combinar `builds` con `functions` en el mismo archivo — Vercel rechaza esa
 mezcla —, así que las demás opciones (`maxLambdaSize`, `includeFiles`) van
 adentro de `builds[0].config`, no en un bloque `functions` aparte.
 
+### Si el diagnóstico dice que faltan todas las librerías por igual
+
+El instalador de Python de Vercel usa `uv`, no `pip` directo, y `uv` resuelve
+las dependencias desde `pyproject.toml` (`[project] dependencies`), **no**
+desde `requirements.txt`. Si `pyproject.toml` las tiene como opcionales o con
+`dependencies = []`, `uv` instala exactamente eso: nada — y las cuatro
+librerías fallan por igual, sin que ninguna tenga un error de compilación de
+por medio. `requirements.txt` se mantiene solo como referencia para quien
+instale con `pip` directamente; hay que mantener las dos listas iguales a
+mano.
+
 ### Si todo da 404, incluida la página principal
 
 Con `builds`, la función queda publicada en la ruta exacta de su archivo
