@@ -27,7 +27,22 @@ Hay dos maneras de usarlo y el sistema funciona igual en las dos.
 4. Te queda una dirección para entrar desde cualquier lado, también del celular.
 
 Si el deploy falla, abrí el deployment en Vercel y mirá los **Build Logs**: el
-error concreto está ahí.
+error concreto está ahí. Y aunque el sistema no llegue a arrancar, esta
+dirección responde igual y dice qué falta:
+
+```
+https://tu-proyecto.vercel.app/api/estado
+```
+
+### Si las facturas dicen "no instalado" pese a tener `requirements.txt`
+
+`vercel.json` tiene que declarar `builds` con `"use": "@vercel/python"` — es
+lo que le dice a Vercel que instale `requirements.txt`. Sin esa línea, la
+función arranca igual (por eso la página carga) pero corre con un intérprete
+pelado, sin ninguna librería instalada. No se puede combinar `builds` con
+`functions` en el mismo archivo — Vercel rechaza esa mezcla —, así que las
+demás opciones (`maxLambdaSize`, `includeFiles`) van adentro de
+`builds[0].config`, no en un bloque `functions` aparte.
 
 **Ponele una clave antes de cargar facturas reales.** En Vercel, en
 *Settings → Environment Variables*, agregá:
