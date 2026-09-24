@@ -158,6 +158,52 @@ def test_no_toca_el_archivo_del_repositorio(wsgi):
     assert (RAIZ / "config" / "mayoristas.json").read_text(encoding="utf-8") == antes
 
 
+# --- diagnostico -------------------------------------------------------------
+
+def test_el_estado_dice_que_hay_en_el_servidor(wsgi):
+    """Sirve para diagnosticar un despliegue sin ver los logs del hosting."""
+    datos = json.loads(_get(wsgi, "/api/estado")[1])
+    assert datos["carga"] == "ok"
+    assert datos["paquete_presente"] is True
+    assert datos["estaticos_presentes"] is True
+    assert datos["config_presente"] is True
+    assert "python" in datos
+    assert "librerias" in datos
+
+
+def test_el_estado_no_filtra_los_secretos(wsgi, monkeypatch):
+    """Informa si estan configurados, nunca su valor."""
+    monkeypatch.setenv("AGENCIA_CLAVE", "secreto123")
+    monkeypatch.setenv("ANTHROPIC_API_KEY", "sk-ant-nodeberiaaparecer")
+    cuerpo = _get(wsgi, "/api/estado")[1].decode("utf-8")
+    assert "secreto123" not in cuerpo
+    assert "sk-ant-nodeberiaaparecer" not in cuerpo
+    datos = json.loads(cuerpo)
+    assert datos["clave_configurada"] is True
+    assert datos["ia_configurada"] is True
+
+
+def test_el_estado_responde_aunque_el_sistema_no_cargue(monkeypatch):
+    """Es el unico endpoint que tiene que andar siempre."""
+    import index
+
+    monkeypatch.setattr(index, "_ERROR_DE_CARGA", "ModuleNotFoundError: agencia")
+    servidor, base = _levantar()
+    try:
+        datos = json.loads(_get(base, "/api/estado")[1])
+        assert datos["carga"] == "error"
+
+        with pytest.raises(urllib.error.HTTPError) as exc:
+            _get(base, "/")
+        assert exc.value.code == 500
+        pagina = exc.value.read().decode("utf-8")
+        assert "El sistema no pudo arrancar" in pagina
+        assert "ModuleNotFoundError" in pagina
+    finally:
+        servidor.shutdown()
+        servidor.server_close()
+
+
 # --- errores -----------------------------------------------------------------
 
 def test_datos_invalidos_devuelven_400(wsgi):
