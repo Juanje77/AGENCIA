@@ -44,6 +44,18 @@ combinar `builds` con `functions` en el mismo archivo — Vercel rechaza esa
 mezcla —, así que las demás opciones (`maxLambdaSize`, `includeFiles`) van
 adentro de `builds[0].config`, no en un bloque `functions` aparte.
 
+### Si el build falla por tamaño del paquete ("exceeds the maximum function size")
+
+`includeFiles` en `builds[0].config` tiene que apuntar solo a lo que la
+función necesita en tiempo de ejecución (`src/` y `config/`), nunca a `"**"`.
+Con `"**"` se arrastran también los archivos que Vercel genera durante su
+propio proceso de instalación (`.venv`, `build/`, `uv.lock` y similares),
+duplicando el tamaño del paquete final muy por encima del límite. `pymupdf`
+por sí solo pesa unos 65 MB (la librería C de MuPDF compilada); todas las
+dependencias juntas rondan los 100 MB, bien por debajo del límite — el
+problema nunca fue el peso de las librerías, sino qué más se estaba
+empaquetando de más.
+
 ### Si el diagnóstico dice que faltan todas las librerías por igual
 
 El instalador de Python de Vercel usa `uv`, no `pip` directo, y `uv` resuelve
