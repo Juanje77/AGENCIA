@@ -38,11 +38,22 @@ https://tu-proyecto.vercel.app/api/estado
 
 `vercel.json` tiene que declarar `builds` con `"use": "@vercel/python"` — es
 lo que le dice a Vercel que instale `requirements.txt`. Sin esa línea, la
-función arranca igual (por eso la página carga) pero corre con un intérprete
-pelado, sin ninguna librería instalada. No se puede combinar `builds` con
-`functions` en el mismo archivo — Vercel rechaza esa mezcla —, así que las
-demás opciones (`maxLambdaSize`, `includeFiles`) van adentro de
-`builds[0].config`, no en un bloque `functions` aparte.
+función arranca igual (por eso la página puede llegar a cargar) pero corre
+con un intérprete pelado, sin ninguna librería instalada. No se puede
+combinar `builds` con `functions` en el mismo archivo — Vercel rechaza esa
+mezcla —, así que las demás opciones (`maxLambdaSize`, `includeFiles`) van
+adentro de `builds[0].config`, no en un bloque `functions` aparte.
+
+### Si todo da 404, incluida la página principal
+
+Con `builds`, la función queda publicada en la ruta exacta de su archivo
+fuente, **con la extensión incluida**: `/api/index.py`, no `/api/index`. Es
+distinto de como se comporta `functions` (zero-config), que sí le saca el
+`.py`. Por eso el archivo enruta con `routes` (el formato viejo, `src`/`dest`,
+que es el que acompaña a `builds`) apuntando a `/api/index.py` con la
+extensión puesta — no con `rewrites`, que en este proyecto apuntaba al lugar
+equivocado y hacía que todo el sitio devolviera 404 de la propia plataforma
+(no un 404 de la aplicación).
 
 **Ponele una clave antes de cargar facturas reales.** En Vercel, en
 *Settings → Environment Variables*, agregá:

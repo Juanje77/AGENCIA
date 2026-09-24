@@ -7,7 +7,7 @@
       "config": { "maxLambdaSize": "50mb", "includeFiles": "**" }
     }
   ],
-  "rewrites": [
-    { "source": "/(.*)", "destination": "/api/index" }
+  "routes": [
+    { "src": "/(.*)", "dest": "/api/index.py" }
   ]
 }
