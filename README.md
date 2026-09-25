@@ -1,13 +1,40 @@
 # Sistema para agencia de viajes
 
-Dos herramientas sobre un mismo motor fiscal:
+Dos partes con público distinto:
 
-1. **Cotizador** — arma la propuesta al pasajero con varias opciones de mayoristas
-   y muestra cuánto queda de ganancia después de impuestos.
-2. **Liquidador** — lee las facturas que mandan los mayoristas (PDF, incluso
-   escaneadas) y arma la posición de **IVA e Ingresos Brutos** del período.
+- **`/` — sitio público** (marca Esplora): lo que ve un cliente potencial. No
+  pide clave, no toca el motor fiscal.
+- **`/panel` — herramientas internas**, sobre un mismo motor fiscal:
+  1. **Cotizador** — arma la propuesta al pasajero con varias opciones de
+     mayoristas y muestra cuánto queda de ganancia después de impuestos.
+  2. **Liquidador** — lee las facturas que mandan los mayoristas (PDF, incluso
+     escaneadas) y arma la posición de **IVA e Ingresos Brutos** del período.
 
-Corre en la computadora de la agencia. No manda datos a ningún lado.
+El panel queda protegido por `AGENCIA_CLAVE` (ver [Variables de
+entorno](#variables-de-entorno)); el sitio público nunca la pide.
+
+---
+
+## Sitio público (`/`)
+
+Landing con la identidad de marca **Esplora — Viajes y Turismo**: paleta
+terracota/buttercream, Playfair Display + Montserrat + Allura, isotipo propio.
+Archivos en `src/agencia/web/estatico/publico.{html,css,js}` — no dependen del
+resto del sistema, es una página estática.
+
+**Antes de publicarlo a clientes reales, completá lo que quedó de referencia:**
+
+| Dónde | Qué reemplazar |
+|---|---|
+| Sección de contacto y pie de página | Teléfono, email, dirección y horario — están marcados con `<!-- COMPLETAR -->` en `publico.html` |
+| Sección de contacto | Enlaces de Instagram, Facebook y WhatsApp (hoy apuntan a `#`) |
+| `publico.js` | El email de destino del formulario (`hola@esplora.com.ar` es de ejemplo) |
+| Hero y tarjetas de "Destinos" | Ilustraciones en SVG con los tonos de la marca, pensadas para reemplazarse por fotos reales (buscá los comentarios `<!-- FOTO: -->`) |
+
+El formulario de contacto no tiene backend de envío de mail: arma un
+`mailto:` con lo que la persona cargó y lo abre en su propio correo. Si más
+adelante conectás un servicio de email, se reemplaza solo esa parte de
+`publico.js`, sin tocar el resto de la página.
 
 ---
 
@@ -124,7 +151,7 @@ Así sí funcionan las facturas escaneadas, instalando además el OCR
 
 ## Primeros pasos
 
-La primera vez, entrá a **Mayoristas** y cargá:
+La primera vez, entrá a `/panel` → **Mayoristas** y cargá:
 
 - el **CUIT de la agencia** — sirve para que el sistema reconozca, en cada
   factura, si la agencia es quien emite o quien recibe;

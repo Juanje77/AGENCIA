@@ -1,0 +1,236 @@
+/* Identidad ESPLORA — Viajes y Turismo.
+   Tokens tomados del manual de marca: paleta terracota/buttercream,
+   Playfair Display para titulares, Montserrat para el cuerpo, Allura como
+   acento manuscrito. Sin fotografía real todavía: el hero y las secciones
+   usan ilustración plana en los mismos cinco tonos de la paleta -nunca un
+   color fuera de ella- para que quede prolijo hasta que haya fotos propias
+   de la agencia para reemplazarlo (buscá los comentarios "FOTO:" en el HTML). */
+
+:root{
+  --buttercream:#F8F1E7;
+  --terracota:#C97B5B;
+  --terracota-oscuro:#A85F42;
+  --arena:#D6C3A7;
+  --tierra:#8B6F56;
+  --carbon:#3E3E3E;
+  --carbon-suave:#6b6259;
+  --blanco:#FFFFFF;
+  --linea:rgba(62,62,62,.14);
+  --sombra:0 14px 34px rgba(139,111,86,.16);
+
+  --f-display:'Playfair Display',Georgia,serif;
+  --f-cuerpo:'Montserrat',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+  --f-acento:'Allura',cursive;
+}
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--buttercream);color:var(--carbon);
+  font-family:var(--f-cuerpo);line-height:1.6;-webkit-font-smoothing:antialiased;
+  overflow-x:hidden}
+img,svg{max-width:100%;display:block}
+a{color:inherit}
+.envoltorio{max-width:1180px;margin:0 auto;padding:0 24px}
+section{position:relative}
+
+/* --- tipografia general --- */
+h1,h2,h3{font-family:var(--f-display);font-weight:600;margin:0;
+  color:var(--carbon);letter-spacing:-.01em}
+.ojo{font-family:var(--f-cuerpo);font-weight:600;font-size:12px;
+  letter-spacing:.16em;text-transform:uppercase;color:var(--terracota)}
+.acento-manuscrito{font-family:var(--f-acento);font-weight:400}
+p{margin:0 0 14px}
+.lead{font-size:17px;color:var(--carbon-suave);max-width:56ch}
+
+/* --- botones --- */
+.boton{display:inline-flex;align-items:center;gap:9px;padding:14px 30px;
+  border-radius:999px;font-family:var(--f-cuerpo);font-weight:600;font-size:13.5px;
+  letter-spacing:.03em;text-decoration:none;cursor:pointer;border:1.5px solid transparent;
+  transition:transform .15s ease,box-shadow .15s ease,background .15s ease}
+.boton:hover{transform:translateY(-1px)}
+.boton-lleno{background:var(--terracota);color:var(--buttercream);box-shadow:var(--sombra)}
+.boton-lleno:hover{background:var(--terracota-oscuro)}
+.boton-linea{background:transparent;border-color:var(--terracota);color:var(--terracota)}
+.boton-linea:hover{background:var(--terracota);color:var(--buttercream)}
+.boton-linea-clara{background:transparent;border-color:rgba(248,241,231,.55);color:var(--buttercream)}
+.boton-linea-clara:hover{background:rgba(248,241,231,.14)}
+
+/* ======================= LOGO ======================= */
+.logo-esplora{display:flex;align-items:center;gap:12px;text-decoration:none;color:inherit}
+.logo-marca{width:42px;height:42px;flex:none}
+.logo-texto{line-height:1}
+.logo-texto strong{display:block;font-family:var(--f-display);font-weight:600;
+  font-size:21px;letter-spacing:.02em;color:var(--carbon)}
+.logo-texto span{display:block;font-size:9px;letter-spacing:.22em;
+  text-transform:uppercase;color:var(--tierra);margin-top:2px}
+.logo-esplora.claro .logo-texto strong{color:var(--buttercream)}
+.logo-esplora.claro .logo-texto span{color:var(--arena)}
+
+/* ======================= HEADER ======================= */
+.encabezado{position:fixed;top:0;left:0;right:0;z-index:50;padding:20px 0;
+  transition:background .25s ease,box-shadow .25s ease,padding .25s ease}
+.encabezado .envoltorio{display:flex;align-items:center;justify-content:space-between;gap:24px}
+.encabezado.con-fondo{background:rgba(248,241,231,.94);backdrop-filter:blur(8px);
+  box-shadow:0 2px 18px rgba(62,62,62,.08);padding:13px 0}
+.encabezado.con-fondo .logo-esplora.claro .logo-texto strong{color:var(--carbon)}
+.encabezado.con-fondo .logo-esplora.claro .logo-texto span{color:var(--tierra)}
+.encabezado.con-fondo .nav-principal a{color:var(--carbon)}
+.encabezado.con-fondo .boton-linea-clara{border-color:var(--terracota);color:var(--terracota)}
+.encabezado.con-fondo .boton-linea-clara:hover{background:var(--terracota);color:var(--buttercream)}
+.encabezado.con-fondo .disparador-menu span{background:var(--carbon)}
+
+.nav-principal{display:flex;align-items:center;gap:34px}
+.nav-principal a{text-decoration:none;color:var(--buttercream);font-size:13.5px;
+  font-weight:600;letter-spacing:.03em;transition:opacity .15s}
+.nav-principal a:hover{opacity:.7}
+.nav-derecha{display:flex;align-items:center;gap:16px}
+.disparador-menu{display:none;flex-direction:column;gap:5px;background:none;border:none;
+  cursor:pointer;padding:6px}
+.disparador-menu span{width:24px;height:2px;background:var(--buttercream);border-radius:2px;
+  transition:background .2s}
+
+/* ======================= HERO ======================= */
+.hero{min-height:100vh;display:flex;align-items:flex-end;position:relative;
+  overflow:hidden;isolation:isolate}
+.hero-ilustracion{position:absolute;inset:0;z-index:-1}
+.hero-ilustracion svg{width:100%;height:100%;display:block}
+.hero-velo{position:absolute;inset:0;z-index:-1;
+  background:linear-gradient(180deg,rgba(62,44,33,.05) 0%,rgba(58,38,26,.55) 78%,rgba(48,30,20,.72) 100%)}
+.hero-contenido{position:relative;padding:0 24px 110px;max-width:1180px;margin:0 auto;
+  width:100%;color:var(--buttercream)}
+.hero-contenido .ojo{color:var(--arena)}
+.hero-tagline{font-family:var(--f-acento);font-size:clamp(46px,7vw,88px);
+  line-height:1;margin:10px 0 18px;color:var(--buttercream);font-weight:400}
+.hero-sub{font-size:17px;color:rgba(248,241,231,.88);max-width:52ch;margin-bottom:30px}
+.hero-acciones{display:flex;gap:14px;flex-wrap:wrap}
+.hero-scroll{position:absolute;bottom:34px;left:50%;transform:translateX(-50%);
+  display:flex;flex-direction:column;align-items:center;gap:8px;color:var(--buttercream);
+  opacity:.8;font-size:10px;letter-spacing:.18em;text-transform:uppercase}
+.hero-scroll svg{width:16px;height:16px;animation:flotar 2.1s ease-in-out infinite}
+@keyframes flotar{0%,100%{transform:translateY(0)}50%{transform:translateY(7px)}}
+
+/* ======================= SECCIONES GENERICAS ======================= */
+.seccion{padding:100px 0}
+.seccion-clara{background:var(--buttercream)}
+.seccion-arena{background:var(--arena)}
+.seccion-oscura{background:var(--carbon);color:var(--buttercream)}
+.seccion-oscura h2,.seccion-oscura h3{color:var(--buttercream)}
+.seccion-oscura .lead{color:rgba(248,241,231,.78)}
+.encabezado-seccion{max-width:640px;margin:0 0 56px}
+.encabezado-seccion.centrado{margin:0 auto 56px;text-align:center}
+
+/* --- esencia --- */
+.esencia{display:grid;grid-template-columns:1.1fr .9fr;gap:70px;align-items:center}
+.esencia-marca{position:relative}
+.esencia-marca svg{width:100%;max-width:360px;margin:0 auto;display:block}
+.chips{display:flex;flex-wrap:wrap;gap:10px;margin-top:26px}
+.chip{border:1px solid var(--tierra);color:var(--tierra);border-radius:999px;
+  padding:7px 16px;font-size:11.5px;font-weight:600;letter-spacing:.05em;
+  text-transform:uppercase}
+
+/* --- servicios / iconografia --- */
+.grilla-servicios{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));
+  gap:6px 8px}
+.servicio{background:var(--buttercream);border-radius:18px;padding:30px 20px;
+  text-align:center;transition:transform .18s ease,box-shadow .18s ease}
+.servicio:hover{transform:translateY(-4px);box-shadow:var(--sombra)}
+.servicio-icono{width:58px;height:58px;margin:0 auto 18px;border-radius:50%;
+  border:1.5px solid var(--terracota);display:flex;align-items:center;justify-content:center}
+.servicio-icono svg{width:26px;height:26px;stroke:var(--terracota);fill:none;
+  stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.servicio h3{font-size:16.5px;margin-bottom:6px}
+.servicio p{font-size:13px;color:var(--carbon-suave);margin:0}
+
+/* --- destinos / categorias --- */
+.grilla-destinos{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:22px}
+.tarjeta-destino{border-radius:20px;overflow:hidden;position:relative;height:340px;
+  display:flex;align-items:flex-end;box-shadow:0 10px 26px rgba(62,62,62,.12)}
+.tarjeta-destino svg{position:absolute;inset:0;width:100%;height:100%;z-index:0}
+.tarjeta-destino .capa{position:relative;z-index:1;padding:26px;color:var(--buttercream);
+  width:100%;background:linear-gradient(180deg,transparent 0%,rgba(40,26,18,.72) 100%)}
+.tarjeta-destino .ojo{color:var(--arena)}
+.tarjeta-destino h3{color:var(--buttercream);font-size:22px;margin:4px 0 6px}
+.tarjeta-destino p{color:rgba(248,241,231,.85);font-size:13px;margin:0}
+
+/* --- proceso --- */
+.pasos{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:30px;
+  counter-reset:paso}
+.paso{position:relative;padding-top:8px}
+.paso::before{counter-increment:paso;content:counter(paso,decimal-leading-zero);
+  font-family:var(--f-display);font-size:15px;color:var(--terracota);
+  border:1px solid var(--terracota);border-radius:50%;width:38px;height:38px;
+  display:flex;align-items:center;justify-content:center;margin-bottom:16px}
+.paso h3{font-size:17px;margin-bottom:8px}
+.paso p{font-size:13.5px;color:var(--carbon-suave)}
+
+/* --- testimonios --- */
+.testimonio{max-width:760px;margin:0 auto;text-align:center}
+.testimonio blockquote{font-family:var(--f-display);font-style:italic;font-size:26px;
+  line-height:1.5;margin:0 0 22px;color:var(--carbon)}
+.seccion-oscura .testimonio blockquote{color:var(--buttercream)}
+.testimonio cite{font-style:normal;font-size:12.5px;letter-spacing:.08em;
+  text-transform:uppercase;color:var(--tierra)}
+
+/* --- contacto --- */
+.contacto{display:grid;grid-template-columns:.95fr 1.05fr;gap:64px}
+.contacto-datos ul{list-style:none;margin:26px 0 0;padding:0;display:flex;
+  flex-direction:column;gap:16px}
+.contacto-datos li{display:flex;align-items:center;gap:14px;font-size:14.5px}
+.contacto-datos li svg{width:19px;height:19px;stroke:var(--terracota);fill:none;
+  stroke-width:1.7;flex:none}
+.contacto-datos a{text-decoration:none;color:var(--carbon);font-weight:600}
+.contacto-datos a:hover{color:var(--terracota)}
+.redes{display:flex;gap:12px;margin-top:30px}
+.redes a{width:38px;height:38px;border-radius:50%;border:1px solid var(--tierra);
+  display:flex;align-items:center;justify-content:center;text-decoration:none}
+.redes a svg{width:16px;height:16px;stroke:var(--tierra);fill:none;stroke-width:1.7}
+.redes a:hover{background:var(--terracota);border-color:var(--terracota)}
+.redes a:hover svg{stroke:var(--buttercream)}
+
+.formulario{background:var(--blanco);border-radius:22px;padding:38px;box-shadow:var(--sombra)}
+.campo{margin-bottom:18px}
+.campo label{display:block;font-size:11.5px;font-weight:600;letter-spacing:.06em;
+  text-transform:uppercase;color:var(--tierra);margin-bottom:7px}
+.campo input,.campo select,.campo textarea{width:100%;border:1px solid var(--linea);
+  border-radius:11px;padding:12px 14px;font-family:var(--f-cuerpo);font-size:14px;
+  color:var(--carbon);background:var(--buttercream)}
+.campo textarea{min-height:100px;resize:vertical}
+.campo input:focus,.campo select:focus,.campo textarea:focus{outline:none;
+  border-color:var(--terracota);background:var(--blanco)}
+.form-fila{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.formulario .boton{width:100%;justify-content:center;margin-top:6px}
+.form-nota{font-size:12px;color:var(--carbon-suave);margin-top:14px;text-align:center}
+
+/* ======================= FOOTER ======================= */
+.pie{background:var(--carbon);color:var(--arena);padding:64px 0 26px}
+.pie-arriba{display:grid;grid-template-columns:1.3fr repeat(3,1fr);gap:40px;
+  padding-bottom:44px;border-bottom:1px solid rgba(248,241,231,.14)}
+.pie h4{font-family:var(--f-cuerpo);font-size:12px;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--buttercream);margin:0 0 18px}
+.pie ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:11px}
+.pie a{text-decoration:none;color:var(--arena);font-size:13.5px}
+.pie a:hover{color:var(--buttercream)}
+.pie-marca p{color:var(--arena);font-size:13.5px;max-width:34ch;margin:16px 0 0}
+.pie-abajo{display:flex;justify-content:space-between;align-items:center;
+  padding-top:24px;font-size:11.5px;color:rgba(214,195,167,.65);flex-wrap:wrap;gap:10px}
+.pie-abajo a{color:rgba(214,195,167,.85);text-decoration:none;border-bottom:1px dashed rgba(214,195,167,.4)}
+.pie-abajo a:hover{color:var(--buttercream)}
+
+/* ======================= RESPONSIVE ======================= */
+@media (max-width:900px){
+  .esencia,.contacto{grid-template-columns:1fr;gap:40px}
+  .pie-arriba{grid-template-columns:1fr 1fr;row-gap:34px}
+}
+@media (max-width:760px){
+  .nav-principal{position:fixed;inset:0 0 0 auto;width:78%;max-width:320px;
+    background:var(--carbon);flex-direction:column;align-items:flex-start;
+    padding:100px 30px 30px;gap:26px;transform:translateX(100%);
+    transition:transform .3s ease;z-index:40}
+  .nav-principal.abierto{transform:translateX(0)}
+  .nav-principal a{color:var(--buttercream);font-size:16px}
+  .disparador-menu{display:flex}
+  .nav-derecha .boton-linea-clara{display:none}
+  .seccion{padding:70px 0}
+  .form-fila{grid-template-columns:1fr}
+  .pie-arriba{grid-template-columns:1fr}
+}

@@ -39,8 +39,16 @@ def _post(base, ruta, datos):
 
 # --- estaticos ---------------------------------------------------------------
 
-def test_sirve_la_pagina(servidor):
+def test_sirve_el_sitio_publico_en_la_raiz(servidor):
+    """La raiz es lo que ve un cliente potencial: la pagina publica, no el panel."""
     codigo, cuerpo = _get(servidor, "/")
+    assert codigo == 200
+    assert "Esplora" in cuerpo
+    assert "Cotizador" not in cuerpo
+
+
+def test_sirve_el_panel_interno_aparte(servidor):
+    codigo, cuerpo = _get(servidor, "/panel")
     assert codigo == 200
     assert "Cotizador" in cuerpo
     assert "Liquidación" in cuerpo
@@ -49,6 +57,8 @@ def test_sirve_la_pagina(servidor):
 def test_sirve_los_estaticos(servidor):
     assert _get(servidor, "/estatico/app.js")[0] == 200
     assert _get(servidor, "/estatico/estilos.css")[0] == 200
+    assert _get(servidor, "/estatico/publico.js")[0] == 200
+    assert _get(servidor, "/estatico/publico.css")[0] == 200
 
 
 def test_no_deja_salir_del_directorio_estatico(servidor):

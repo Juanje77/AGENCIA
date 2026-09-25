@@ -106,12 +106,21 @@ def despachar(peticion: Peticion) -> Respuesta:
         return Respuesta.error(400, str(exc))
 
 
+RUTAS_PANEL = ("/panel", "/panel/", "/panel/index.html")
+RUTAS_PUBLICAS_DE_PAGINA = ("/", "/index.html", "/publico.html") + RUTAS_PANEL
+
+
 def _controlar_acceso(peticion: Peticion) -> Respuesta | None:
-    """Clave compartida, para cuando el sistema queda publicado en internet."""
+    """Clave compartida, para cuando el sistema queda publicado en internet.
+
+    La pagina del panel se puede cargar sin clave -es solo el cascaron-, pero
+    ninguna llamada a la API funciona sin ella. El sitio publico (/) nunca la
+    pide: es lo que ve un cliente potencial, no personal de la agencia.
+    """
     clave = clave_de_acceso()
     if not clave:
         return None
-    if peticion.ruta in ("/", "/index.html") or peticion.ruta.startswith("/estatico/"):
+    if peticion.ruta in RUTAS_PUBLICAS_DE_PAGINA or peticion.ruta.startswith("/estatico/"):
         return None
     if peticion.cabecera("X-Clave") == clave:
         return None
@@ -121,6 +130,8 @@ def _controlar_acceso(peticion: Peticion) -> Respuesta | None:
 def _get(peticion: Peticion) -> Respuesta:
     ruta = peticion.ruta
     if ruta in ("/", "/index.html"):
+        return _estatico("publico.html")
+    if ruta in RUTAS_PANEL:
         return _estatico("index.html")
     if ruta == "/api/parametros":
         return Respuesta.json(_parametros())

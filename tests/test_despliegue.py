@@ -62,8 +62,14 @@ def _post(base, ruta, datos, cabeceras=None):
 
 # --- el adaptador sirve lo mismo que el servidor local -----------------------
 
-def test_sirve_la_pagina(wsgi):
+def test_sirve_el_sitio_publico_en_la_raiz(wsgi):
     codigo, cuerpo = _get(wsgi, "/")
+    assert codigo == 200
+    assert "Esplora" in cuerpo.decode("utf-8")
+
+
+def test_sirve_el_panel_interno_en_su_ruta(wsgi):
+    codigo, cuerpo = _get(wsgi, "/panel")
     assert codigo == 200
     assert "Cotizador" in cuerpo.decode("utf-8")
 
@@ -242,9 +248,19 @@ def wsgi_con_clave(entorno_serverless, monkeypatch):
     servidor.server_close()
 
 
-def test_la_pagina_sigue_abierta_para_poder_pedir_la_clave(wsgi_con_clave):
+def test_el_sitio_publico_nunca_pide_la_clave(wsgi_con_clave):
+    """Lo que ve un cliente potencial no tiene por que saber que existe una clave."""
     assert _get(wsgi_con_clave, "/")[0] == 200
+    assert _get(wsgi_con_clave, "/estatico/publico.js")[0] == 200
+
+
+def test_el_panel_carga_su_cascaron_sin_clave_pero_pide_para_usarlo(wsgi_con_clave):
+    """La pagina del panel se ve para poder pedir la clave; la API si la exige."""
+    assert _get(wsgi_con_clave, "/panel")[0] == 200
     assert _get(wsgi_con_clave, "/estatico/app.js")[0] == 200
+    with pytest.raises(urllib.error.HTTPError) as exc:
+        _get(wsgi_con_clave, "/api/parametros")
+    assert exc.value.code == 401
 
 
 def test_la_api_queda_cerrada_sin_clave(wsgi_con_clave):
