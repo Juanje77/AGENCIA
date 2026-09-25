@@ -11,9 +11,23 @@
 <body>
 <div class="app">
 
+<!-- Isotipo de la marca, igual al del sitio público. -->
+<svg style="display:none" aria-hidden="true">
+  <symbol id="isotipo-esplora" viewBox="0 0 100 100">
+    <circle cx="50" cy="50" r="45" fill="none" stroke="currentColor" stroke-width="2.2"/>
+    <path d="M18 66 C 32 70, 40 40, 58 34 S 78 30, 84 24" fill="none"
+          stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
+    <path d="M78 18 L88 22 L84 32 L80 26 L70 30 L68 26 L78 18 Z" fill="currentColor"/>
+  </symbol>
+</svg>
+
 <header class="top">
   <div class="titulo">
-    <div class="marca">AV</div>
+    <a href="/" class="marca-esplora" title="Ir al sitio público">
+      <svg class="marca-icono"><use href="#isotipo-esplora"/></svg>
+      <span class="marca-texto"><strong>Esplora</strong><span>Viajes y Turismo</span></span>
+    </a>
+    <div class="separador-titulo"></div>
     <div>
       <h1>Panel interno</h1>
       <p>Cotizá con varios mayoristas y liquidá el IVA e Ingresos Brutos del período
@@ -25,7 +39,10 @@
     <button data-vista="liquidacion">Liquidación</button>
     <button data-vista="mayoristas">Mayoristas</button>
   </nav>
-  <a href="/" class="volver-publico" title="Ver el sitio que ven los clientes">← Sitio público</a>
+  <div class="switch-sitio" role="tablist" aria-label="Cambiar entre el panel interno y el sitio público">
+    <a href="/" class="switch-opcion" role="tab" title="Ver el sitio que ven los clientes">Público</a>
+    <span class="switch-opcion activo" role="tab" aria-current="page">Interno</span>
+  </div>
 </header>
 
 <!-- ===================== COTIZADOR ===================== -->
