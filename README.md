@@ -64,10 +64,10 @@ lado del ícono. La foto-flyer que mandó la agencia (`hero-esplora.jpg`) se
 usa como imagen de vista previa al compartir el link (`og:image`).
 
 El fondo del hero (la sección de arriba de todo en `/`) es una foto real
-de playa (`hero-playa.jpg`) que mandó la agencia. Es de resolución modesta
-(597×335) para usarse a pantalla completa en monitores grandes, así que se
-ve un poco blanda ahí — si llega una versión en mayor resolución del mismo
-tipo de imagen, se reemplaza solo ese archivo sin tocar el HTML.
+de playa (`hero-playa.jpg`, 1717×916) que mandó la agencia. Al ser una
+sección a pantalla completa, conviene que cualquier reemplazo futuro tenga
+un ancho similar o mayor — con una foto más chica se nota borrosa al
+estirarse en monitores grandes.
 
 **Antes de publicarlo a clientes reales, completá lo que quedó de referencia:**
 
