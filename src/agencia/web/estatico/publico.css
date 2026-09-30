@@ -129,7 +129,7 @@ a.switch-opcion:hover{opacity:1}
 .seccion{padding:100px 0}
 .seccion-clara{background:var(--buttercream)}
 .seccion-arena{background:var(--arena)}
-.seccion-oscura{background:var(--carbon);color:var(--buttercream)}
+.seccion-oscura{background:var(--tierra);color:var(--buttercream)}
 .seccion-oscura h2,.seccion-oscura h3{color:var(--buttercream)}
 .seccion-oscura .lead{color:rgba(248,241,231,.78)}
 .encabezado-seccion{max-width:640px;margin:0 0 56px}
@@ -250,9 +250,9 @@ a.switch-opcion:hover{opacity:1}
   display:flex;align-items:center;justify-content:center;margin-bottom:16px}
 .paso h3{font-size:17px;margin-bottom:8px}
 .paso p{font-size:13.5px;color:var(--carbon-suave)}
-/* En "Nosotros" (fondo oscuro) el acento ahora es un marron muy oscuro: sobre
-   el carbon del fondo casi no se distingue, asi que ahi el numero usa arena
-   -el mismo tono que ya lleva el "ojo" de esa seccion- en vez del acento. */
+/* El fondo de "Nosotros" es el mismo bordo (--tierra) que el acento de
+   texto, asi que ahi el numero usa arena -el mismo tono que ya lleva el
+   "ojo" de esa seccion- para no quedar del color del fondo. */
 .seccion-oscura .paso::before{color:var(--arena);border-color:var(--arena)}
 
 /* --- testimonios --- */
@@ -262,8 +262,7 @@ a.switch-opcion:hover{opacity:1}
 .seccion-oscura .testimonio blockquote{color:var(--buttercream)}
 .testimonio cite{font-style:normal;font-size:12.5px;letter-spacing:.08em;
   text-transform:uppercase;color:var(--tierra)}
-/* En "Nosotros" (fondo oscuro) el tierra tambien queda muy oscuro sobre el
-   carbon del fondo, igual que le pasaba al numero de los pasos. */
+/* Mismo caso que el numero de los pasos: el fondo ya es --tierra. */
 .seccion-oscura .testimonio cite{color:var(--arena)}
 
 /* --- contacto --- */
@@ -297,7 +296,7 @@ a.switch-opcion:hover{opacity:1}
 .form-nota{font-size:12px;color:var(--carbon-suave);margin-top:14px;text-align:center}
 
 /* ======================= FOOTER ======================= */
-.pie{background:var(--carbon);color:var(--arena);padding:64px 0 26px}
+.pie{background:var(--tierra);color:var(--arena);padding:64px 0 26px}
 .pie-arriba{display:grid;grid-template-columns:1.3fr repeat(3,1fr);gap:40px;
   padding-bottom:44px;border-bottom:1px solid rgba(248,241,231,.14)}
 .pie h4{font-family:var(--f-cuerpo);font-size:12px;letter-spacing:.1em;
@@ -318,7 +317,7 @@ a.switch-opcion:hover{opacity:1}
 }
 @media (max-width:760px){
   .nav-principal{position:fixed;inset:0 0 0 auto;width:78%;max-width:320px;
-    background:var(--carbon);flex-direction:column;align-items:flex-start;
+    background:var(--tierra);flex-direction:column;align-items:flex-start;
     padding:100px 30px 30px;gap:26px;transform:translateX(100%);
     transition:transform .3s ease;z-index:40}
   .nav-principal.abierto{transform:translateX(0)}
