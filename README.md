@@ -33,10 +33,13 @@ también quedó guardado ahí por si sirve para papelería o redes, pero no se
 usa en la página: a los tamaños de un header el subtítulo se ve borroso, así
 que el nombre se sigue mostrando como texto (nítido a cualquier tamaño) al
 lado del ícono. La foto-flyer que mandó la agencia (`hero-esplora.jpg`) se
-usa como imagen de vista previa al compartir el link (`og:image`); tiene
-buena calidad para eso, pero es chica para usarla de fondo a pantalla
-completa — si más adelante llega una versión en mayor resolución, ese es el
-lugar natural para reemplazar la ilustración del hero.
+usa como imagen de vista previa al compartir el link (`og:image`).
+
+El fondo del hero (la sección de arriba de todo, `#inicio`) es una foto real
+de playa (`hero-playa.jpg`) que mandó la agencia. Es de resolución modesta
+(597×335) para usarse a pantalla completa en monitores grandes, así que se
+ve un poco blanda ahí — si llega una versión en mayor resolución del mismo
+tipo de imagen, se reemplaza solo ese archivo sin tocar el HTML.
 
 **Antes de publicarlo a clientes reales, completá lo que quedó de referencia:**
 
@@ -45,7 +48,7 @@ lugar natural para reemplazar la ilustración del hero.
 | Sección de contacto y pie de página | Teléfono, email, dirección y horario — están marcados con `<!-- COMPLETAR -->` en `publico.html` |
 | Sección de contacto | Enlaces de Instagram, Facebook y WhatsApp (hoy apuntan a `#`) |
 | `publico.js` | El email de destino del formulario (`hola@esplora.com.ar` es de ejemplo) |
-| Hero y tarjetas de "Destinos" | Ilustraciones en SVG con los tonos de la marca, pensadas para reemplazarse por fotos reales (buscá los comentarios `<!-- FOTO: -->`) |
+| Tarjetas de "Destinos" | Ilustraciones en SVG con los tonos de la marca, pensadas para reemplazarse por fotos reales (buscá los comentarios `<!-- FOTO: -->`) |
 | Sección "Viajes nacionales" | 4 flyers de ejemplo (Bariloche, Iguazú, Mendoza, El Calafate) con ilustración, precio, fecha y descripción de referencia — buscá el comentario `<!-- COMPLETAR -->` arriba de `<div class="grilla-flyers">` en `publico.html` |
 
 **Sobre las fotos de "Viajes nacionales":** se probó usar fotos reales

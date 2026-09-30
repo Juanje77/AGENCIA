@@ -105,8 +105,8 @@ a.switch-opcion:hover{opacity:1}
 /* ======================= HERO ======================= */
 .hero{min-height:100vh;display:flex;align-items:flex-end;position:relative;
   overflow:hidden;isolation:isolate}
-.hero-ilustracion{position:absolute;inset:0;z-index:-1}
-.hero-ilustracion svg{width:100%;height:100%;display:block}
+.hero-ilustracion{position:absolute;inset:0;z-index:-1;background:var(--terracota)}
+.hero-ilustracion svg,.hero-ilustracion img{width:100%;height:100%;display:block;object-fit:cover}
 .hero-velo{position:absolute;inset:0;z-index:-1;
   background:linear-gradient(180deg,rgba(62,44,33,.05) 0%,rgba(58,38,26,.55) 78%,rgba(48,30,20,.72) 100%)}
 .hero-contenido{position:relative;padding:0 24px 110px;max-width:1180px;margin:0 auto;
