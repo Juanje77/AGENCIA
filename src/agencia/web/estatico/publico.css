@@ -43,7 +43,7 @@ p{margin:0 0 14px}
 .lead{font-size:17px;color:var(--carbon-suave);max-width:56ch}
 
 /* --- botones --- */
-.boton{display:inline-flex;align-items:center;gap:9px;padding:14px 30px;
+.boton{display:inline-flex;align-items:center;gap:9px;padding:14px 30px;white-space:nowrap;
   border-radius:999px;font-family:var(--f-cuerpo);font-weight:600;font-size:13.5px;
   letter-spacing:.03em;text-decoration:none;cursor:pointer;border:1.5px solid transparent;
   transition:transform .15s ease,box-shadow .15s ease,background .15s ease}
@@ -82,7 +82,7 @@ p{margin:0 0 14px}
 .encabezado.con-fondo .boton-linea-clara:hover{background:var(--terracota);color:var(--buttercream)}
 .encabezado.con-fondo .disparador-menu span{background:var(--carbon)}
 
-.nav-principal{display:flex;align-items:center;gap:34px}
+.nav-principal{display:flex;align-items:center;gap:24px}
 .nav-principal a{text-decoration:none;color:var(--buttercream);font-size:13.5px;
   font-weight:600;letter-spacing:.03em;transition:opacity .15s}
 .nav-principal a:hover{opacity:.7}
@@ -189,6 +189,11 @@ a.switch-opcion:hover{opacity:1}
 .boton-mercadopago:hover{background:#0086c3;transform:translateY(-1px)}
 .boton-mercadopago svg{width:18px;height:18px;flex:none;stroke:currentColor;fill:none;
   stroke-width:1.8}
+.boton-cotizar{display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  margin-top:14px;padding:12px 20px;border-radius:999px;background:var(--terracota);
+  color:var(--buttercream);font-family:var(--f-cuerpo);font-weight:700;font-size:13.5px;
+  text-decoration:none;transition:background .15s ease,transform .15s ease}
+.boton-cotizar:hover{background:var(--terracota-oscuro);transform:translateY(-1px)}
 
 /* --- proceso --- */
 .pasos{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:30px;

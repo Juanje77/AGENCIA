@@ -49,6 +49,7 @@ tipo de imagen, se reemplaza solo ese archivo sin tocar el HTML.
 | Sección de contacto | Enlaces de Instagram, Facebook y WhatsApp (hoy apuntan a `#`) |
 | `publico.js` | El email de destino del formulario (`hola@esplora.com.ar` es de ejemplo) |
 | Sección "Viajes nacionales" | 4 flyers de ejemplo (Bariloche, Iguazú, Mendoza, El Calafate) con precio, fecha y descripción de referencia — buscá el comentario `<!-- COMPLETAR -->` arriba de `<div class="grilla-flyers">` en `publico.html` |
+| Sección "Viajes internacionales" | 4 flyers de ejemplo (Cancún, Río de Janeiro, París/Roma, Orlando) con ilustración y precio de referencia — buscá el comentario `<!-- COMPLETAR -->` arriba de la segunda `<div class="grilla-flyers">` |
 
 **Sobre las fotos:** tanto las 4 tarjetas de "Destinos" (sol y mar,
 metrópolis, aire libre, a medida) como los 4 flyers de "Viajes nacionales"
@@ -57,7 +58,15 @@ ya tienen la foto real que mandó la agencia, guardadas en
 Para cambiar una foto o agregar un viaje nuevo, se suma el archivo en la
 carpeta que corresponda y se apunta el `src` del `<img>` — se suben directo
 al repo, no se enlazan a un sitio externo (un intento anterior con fotos de
-Wikimedia Commons no se veía en el sitio publicado).
+Wikimedia Commons no se veía en el sitio publicado). "Viajes internacionales"
+todavía muestra ilustraciones de referencia, a la espera de sus fotos.
+
+**"Viajes nacionales" vs "Viajes internacionales":** son dos secciones con
+la misma tarjeta (`.tarjeta-flyer`), pero un botón distinto a propósito. Los
+nacionales son paquetes de precio cerrado, así que el botón cobra directo
+con Mercado Pago. Los internacionales dependen del tipo de cambio y la
+disponibilidad del día, así que llevan un precio "Desde U$S X" de referencia
+y el botón lleva al formulario de contacto para pedir la cotización exacta.
 
 El formulario de contacto no tiene backend de envío de mail: arma un
 `mailto:` con lo que la persona cargó y lo abre en su propio correo. Si más
