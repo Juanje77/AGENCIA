@@ -26,7 +26,7 @@ Está repartido en varias páginas en vez de una sola muy larga:
 | Página | Contenido |
 |---|---|
 | `/` | Inicio: hero + un resumen breve de cada sección de abajo, con su link a la página completa |
-| `/servicios` | Los 10 servicios completos |
+| `/servicios` | Los 10 servicios completos + "Consejos para elegir tu viaje" |
 | `/destinos` | Las 4 categorías de "Para inspirarte" |
 | `/nacionales` | Los 4 flyers de viajes nacionales, con su botón de Mercado Pago |
 | `/nacionales/bariloche`, `/…/iguazu`, `/…/mendoza`, `/…/calafate` | Itinerario día por día de cada salida grupal, con horarios, incluye/no incluye y el botón de pago |
