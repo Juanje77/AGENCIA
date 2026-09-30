@@ -8,8 +8,8 @@
 
 :root{
   --buttercream:#F8F1E7;
-  --terracota:#C97B5B;
-  --terracota-oscuro:#A85F42;
+  --terracota:#440E0B;
+  --terracota-oscuro:#2C0907;
   --arena:#D6C3A7;
   --tierra:#8B6F56;
   --carbon:#3E3E3E;
@@ -247,6 +247,10 @@ a.switch-opcion:hover{opacity:1}
   display:flex;align-items:center;justify-content:center;margin-bottom:16px}
 .paso h3{font-size:17px;margin-bottom:8px}
 .paso p{font-size:13.5px;color:var(--carbon-suave)}
+/* En "Nosotros" (fondo oscuro) el acento ahora es un marron muy oscuro: sobre
+   el carbon del fondo casi no se distingue, asi que ahi el numero usa arena
+   -el mismo tono que ya lleva el "ojo" de esa seccion- en vez del acento. */
+.seccion-oscura .paso::before{color:var(--arena);border-color:var(--arena)}
 
 /* --- testimonios --- */
 .testimonio{max-width:760px;margin:0 auto;text-align:center}
