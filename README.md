@@ -29,6 +29,7 @@ Está repartido en varias páginas en vez de una sola muy larga:
 | `/servicios` | Los 10 servicios completos |
 | `/destinos` | Las 4 categorías de "Para inspirarte" |
 | `/nacionales` | Los 4 flyers de viajes nacionales, con su botón de Mercado Pago |
+| `/nacionales/bariloche`, `/…/iguazu`, `/…/mendoza`, `/…/calafate` | Itinerario día por día de cada salida grupal, con horarios, incluye/no incluye y el botón de pago |
 | `/internacionales` | Los 4 destinos internacionales de referencia |
 | `/nosotros` | Cómo trabajamos, paso a paso, y el testimonio |
 | `/contacto` | Datos de contacto y el formulario |
@@ -95,6 +96,16 @@ nacionales son paquetes de precio cerrado, así que el botón cobra directo
 con Mercado Pago. Los internacionales dependen del tipo de cambio y la
 disponibilidad del día, así que llevan un precio "Desde U$S X" de referencia
 y el botón lleva al formulario de contacto para pedir la cotización exacta.
+
+**Itinerario de cada salida grupal:** cada flyer de "Viajes nacionales"
+tiene, debajo del botón de pago, un link **"Ver itinerario completo"** que
+lleva a su propia página (`itinerario-bariloche.html`, `itinerario-iguazu.html`,
+`itinerario-mendoza.html`, `itinerario-calafate.html`, en las rutas
+`/nacionales/<destino>`) con el día por día, horarios, y qué incluye y qué
+no. Para una salida nueva: copiar uno de esos archivos, agregarlo a
+`PAGINAS_PUBLICAS` en `rutas.py` con su ruta, y linkearlo desde la tarjeta
+correspondiente en `nacionales.html` (y opcionalmente desde el resumen en
+`publico.html`) con la clase `flyer-mas-info`.
 
 El formulario de contacto no tiene backend de envío de mail: arma un
 `mailto:` con lo que la persona cargó y lo abre en su propio correo. Si más
