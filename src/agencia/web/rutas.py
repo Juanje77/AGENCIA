@@ -107,7 +107,17 @@ def despachar(peticion: Peticion) -> Respuesta:
 
 
 RUTAS_PANEL = ("/panel", "/panel/", "/panel/index.html")
-RUTAS_PUBLICAS_DE_PAGINA = ("/", "/index.html", "/publico.html") + RUTAS_PANEL
+PAGINAS_PUBLICAS = {
+    "/servicios": "servicios.html",
+    "/destinos": "destinos.html",
+    "/nacionales": "nacionales.html",
+    "/internacionales": "internacionales.html",
+    "/nosotros": "nosotros.html",
+    "/contacto": "contacto.html",
+}
+RUTAS_PUBLICAS_DE_PAGINA = (
+    ("/", "/index.html", "/publico.html") + tuple(PAGINAS_PUBLICAS) + RUTAS_PANEL
+)
 
 
 def _controlar_acceso(peticion: Peticion) -> Respuesta | None:
@@ -130,7 +140,9 @@ def _controlar_acceso(peticion: Peticion) -> Respuesta | None:
 def _get(peticion: Peticion) -> Respuesta:
     ruta = peticion.ruta
     if ruta in ("/", "/index.html"):
-        return _estatico("publico.html")
+        return _pagina_publica("publico.html")
+    if ruta in PAGINAS_PUBLICAS:
+        return _pagina_publica(PAGINAS_PUBLICAS[ruta])
     if ruta in RUTAS_PANEL:
         return _estatico("index.html")
     if ruta == "/api/parametros":
@@ -293,6 +305,28 @@ def _estatico(nombre: str) -> Respuesta:
     if not ruta.is_relative_to(ESTATICO.resolve()) or not ruta.exists():
         return Respuesta.error(404, "Archivo no encontrado")
     return Respuesta(200, tipo_de(nombre), ruta.read_bytes())
+
+
+PARTES = ESTATICO / "_partes"
+
+
+def _pagina_publica(nombre: str) -> Respuesta:
+    """Arma una pagina del sitio publico con el mismo header, footer e iconos.
+
+    Cada pagina del sitio publico es un archivo HTML con marcadores
+    (<!--ICONOS-->, <!--ENCABEZADO-->, <!--PIE-->) que se completan con los
+    mismos tres fragmentos en _partes/, para no repetir el header y el
+    footer -con sus enlaces, logo y switch- en cada archivo.
+    """
+    plantilla = (ESTATICO / nombre).read_text(encoding="utf-8")
+    pagina = plantilla
+    for marcador, archivo in (
+        ("<!--ICONOS-->", "iconos.html"),
+        ("<!--ENCABEZADO-->", "encabezado.html"),
+        ("<!--PIE-->", "pie.html"),
+    ):
+        pagina = pagina.replace(marcador, (PARTES / archivo).read_text(encoding="utf-8"))
+    return Respuesta(200, HTML, pagina.encode("utf-8"))
 
 
 def tipo_de(nombre: str) -> str:

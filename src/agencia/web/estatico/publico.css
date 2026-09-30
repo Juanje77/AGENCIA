@@ -59,8 +59,8 @@ p{margin:0 0 14px}
 .logo-esplora{display:flex;align-items:center;gap:12px;text-decoration:none;color:inherit}
 .logo-marca{width:42px;height:42px;flex:none;object-fit:contain}
 .logo-marca-oscura{display:none}
-.encabezado.con-fondo .logo-marca-clara{display:none}
-.encabezado.con-fondo .logo-marca-oscura{display:block}
+.encabezado.con-fondo .logo-marca-clara, body.pagina-interna .encabezado .logo-marca-clara{display:none}
+.encabezado.con-fondo .logo-marca-oscura, body.pagina-interna .encabezado .logo-marca-oscura{display:block}
 .logo-texto{line-height:1}
 .logo-texto strong{display:block;font-family:var(--f-display);font-weight:600;
   font-size:21px;letter-spacing:.02em;color:var(--carbon)}
@@ -73,14 +73,14 @@ p{margin:0 0 14px}
 .encabezado{position:fixed;top:0;left:0;right:0;z-index:50;padding:20px 0;
   transition:background .25s ease,box-shadow .25s ease,padding .25s ease}
 .encabezado .envoltorio{display:flex;align-items:center;justify-content:space-between;gap:24px}
-.encabezado.con-fondo{background:rgba(248,241,231,.94);backdrop-filter:blur(8px);
+.encabezado.con-fondo, body.pagina-interna .encabezado{background:var(--buttercream);
   box-shadow:0 2px 18px rgba(62,62,62,.08);padding:13px 0}
-.encabezado.con-fondo .logo-esplora.claro .logo-texto strong{color:var(--carbon)}
-.encabezado.con-fondo .logo-esplora.claro .logo-texto span{color:var(--tierra)}
-.encabezado.con-fondo .nav-principal a{color:var(--carbon)}
-.encabezado.con-fondo .boton-linea-clara{border-color:var(--terracota);color:var(--terracota)}
-.encabezado.con-fondo .boton-linea-clara:hover{background:var(--terracota);color:var(--buttercream)}
-.encabezado.con-fondo .disparador-menu span{background:var(--carbon)}
+.encabezado.con-fondo .logo-esplora.claro .logo-texto strong, body.pagina-interna .encabezado .logo-esplora.claro .logo-texto strong{color:var(--carbon)}
+.encabezado.con-fondo .logo-esplora.claro .logo-texto span, body.pagina-interna .encabezado .logo-esplora.claro .logo-texto span{color:var(--tierra)}
+.encabezado.con-fondo .nav-principal a, body.pagina-interna .encabezado .nav-principal a{color:var(--carbon)}
+.encabezado.con-fondo .boton-linea-clara, body.pagina-interna .encabezado .boton-linea-clara{border-color:var(--terracota);color:var(--terracota)}
+.encabezado.con-fondo .boton-linea-clara:hover, body.pagina-interna .encabezado .boton-linea-clara:hover{background:var(--terracota);color:var(--buttercream)}
+.encabezado.con-fondo .disparador-menu span, body.pagina-interna .encabezado .disparador-menu span{background:var(--carbon)}
 
 .nav-principal{display:flex;align-items:center;gap:24px}
 .nav-principal a{text-decoration:none;color:var(--buttercream);font-size:13.5px;
@@ -94,9 +94,9 @@ p{margin:0 0 14px}
   opacity:.85;line-height:1;white-space:nowrap;transition:opacity .15s,background .15s,color .15s}
 .switch-opcion.activo{background:var(--buttercream);color:var(--terracota-oscuro);opacity:1}
 a.switch-opcion:hover{opacity:1}
-.encabezado.con-fondo .switch-sitio{background:rgba(62,62,62,.06);border-color:rgba(62,62,62,.18)}
-.encabezado.con-fondo .switch-opcion{color:var(--carbon-suave)}
-.encabezado.con-fondo .switch-opcion.activo{background:var(--terracota);color:var(--buttercream)}
+.encabezado.con-fondo .switch-sitio, body.pagina-interna .encabezado .switch-sitio{background:rgba(62,62,62,.06);border-color:rgba(62,62,62,.18)}
+.encabezado.con-fondo .switch-opcion, body.pagina-interna .encabezado .switch-opcion{color:var(--carbon-suave)}
+.encabezado.con-fondo .switch-opcion.activo, body.pagina-interna .encabezado .switch-opcion.activo{background:var(--terracota);color:var(--buttercream)}
 .disparador-menu{display:none;flex-direction:column;gap:5px;background:none;border:none;
   cursor:pointer;padding:6px}
 .disparador-menu span{width:24px;height:2px;background:var(--buttercream);border-radius:2px;
@@ -271,6 +271,10 @@ a.switch-opcion:hover{opacity:1}
     transition:transform .3s ease;z-index:40}
   .nav-principal.abierto{transform:translateX(0)}
   .nav-principal a{color:var(--buttercream);font-size:16px}
+  /* El panel movil siempre es oscuro, sin importar si el header esta en su
+     modo solido (con-fondo o pagina-interna) -que pinta el texto oscuro-;
+     el selector por id le gana en especificidad a esas reglas. */
+  #nav-principal a{color:var(--buttercream)}
   .disparador-menu{display:flex}
   .nav-derecha .boton-linea-clara{display:none}
   .seccion{padding:70px 0}

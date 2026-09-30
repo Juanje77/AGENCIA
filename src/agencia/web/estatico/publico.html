@@ -18,117 +18,12 @@
 </head>
 <body>
 
-<!-- ============ SIMBOLOS SVG REUTILIZABLES (logo e iconos) ============ -->
-<svg style="display:none" aria-hidden="true">
+<!--ICONOS-->
 
-  <symbol id="icono-vuelo" viewBox="0 0 24 24">
-    <path d="M2 16l20-7-7 7 2 6-4-3-3 3-1-5-6-1z"/>
-  </symbol>
-  <symbol id="icono-experiencia" viewBox="0 0 24 24">
-    <circle cx="12" cy="12" r="9.2"/>
-    <path d="M15.2 8.8l-2 4.4-4.4 2 2-4.4z"/>
-  </symbol>
-  <symbol id="icono-destino" viewBox="0 0 24 24">
-    <path d="M12 21s-6.8-6.1-6.8-11.2A6.8 6.8 0 1 1 18.8 9.8C18.8 14.9 12 21 12 21z"/>
-    <circle cx="12" cy="9.6" r="2.4"/>
-  </symbol>
-  <symbol id="icono-alojamiento" viewBox="0 0 24 24">
-    <rect x="3" y="9.5" width="18" height="8.5" rx="1.4"/>
-    <path d="M3 13.5h18M7 9.5V7.3a1.6 1.6 0 0 1 1.6-1.6h6.8A1.6 1.6 0 0 1 17 7.3v2.2"/>
-  </symbol>
-  <symbol id="icono-momento" viewBox="0 0 24 24">
-    <rect x="2.5" y="6.5" width="19" height="13.5" rx="1.8"/>
-    <circle cx="12" cy="13.2" r="3.6"/>
-    <path d="M8.5 6.5l1.4-2.2h4.2l1.4 2.2"/>
-  </symbol>
-  <symbol id="icono-naturaleza" viewBox="0 0 24 24">
-    <path d="M3 19L9.5 8 13 14l2-3 6 8z"/>
-  </symbol>
-  <symbol id="icono-playa" viewBox="0 0 24 24">
-    <circle cx="17.5" cy="6.5" r="3"/>
-    <path d="M2 14c2-1.6 4-1.6 6 0s4 1.6 6 0 4-1.6 6 0M2 19c2-1.6 4-1.6 6 0s4 1.6 6 0 4-1.6 6 0"/>
-  </symbol>
-  <symbol id="icono-ciudad" viewBox="0 0 24 24">
-    <path d="M3 20V9l5-3v14M8 20V6l5-3v17M13 20V11l5-3v12M3 20h18"/>
-  </symbol>
-  <symbol id="icono-cultura" viewBox="0 0 24 24">
-    <path d="M3 8l9-4 9 4M4 8h16M5 8v9.5M9 8v9.5M15 8v9.5M19 8v9.5M3 20h18"/>
-  </symbol>
-  <symbol id="icono-medida" viewBox="0 0 24 24">
-    <path d="M12 20.2S3.5 14.9 3.5 9.1A4.6 4.6 0 0 1 12 6.4a4.6 4.6 0 0 1 8.5 2.7c0 5.8-8.5 11.1-8.5 11.1z"/>
-  </symbol>
-
-  <symbol id="icono-pin" viewBox="0 0 24 24">
-    <path d="M12 21s-6.5-5.9-6.5-10.7A6.5 6.5 0 0 1 18.5 10.3C18.5 15.1 12 21 12 21z"/>
-    <circle cx="12" cy="9.6" r="2.2"/>
-  </symbol>
-  <symbol id="icono-mail" viewBox="0 0 24 24">
-    <rect x="2.5" y="5" width="19" height="14" rx="1.6"/>
-    <path d="M3 6.5l9 6.5 9-6.5"/>
-  </symbol>
-  <symbol id="icono-tel" viewBox="0 0 24 24">
-    <path d="M6 3.5h3l1.5 4-2 1.6a11.2 11.2 0 0 0 5.4 5.4l1.6-2 4 1.5v3a1.6 1.6 0 0 1-1.7 1.6C10.6 18.7 5.3 13.4 4.4 6.2A1.6 1.6 0 0 1 6 3.5z"/>
-  </symbol>
-  <symbol id="icono-reloj" viewBox="0 0 24 24">
-    <circle cx="12" cy="12" r="9.2"/>
-    <path d="M12 7v5.3l3.6 2.1"/>
-  </symbol>
-  <symbol id="icono-ig" viewBox="0 0 24 24">
-    <rect x="3.5" y="3.5" width="17" height="17" rx="4.5"/>
-    <circle cx="12" cy="12" r="4"/>
-    <circle cx="16.6" cy="7.4" r="1"/>
-  </symbol>
-  <symbol id="icono-fb" viewBox="0 0 24 24">
-    <path d="M14.5 21v-7.5H17l.5-3.3h-3V8.1c0-1 .3-1.7 1.7-1.7H17.6V3.4C17 3.3 16 3.2 15 3.2c-2.6 0-4.4 1.6-4.4 4.5v2.5H8v3.3h2.6V21"/>
-  </symbol>
-  <symbol id="icono-wa" viewBox="0 0 24 24">
-    <path d="M4 20l1.3-4A8 8 0 1 1 8.4 19z"/>
-    <path d="M8.7 9.3c.2 2.6 2.4 4.8 5 5"/>
-  </symbol>
-  <symbol id="icono-flecha-abajo" viewBox="0 0 24 24">
-    <path d="M12 4v15M6 13l6 6 6-6"/>
-  </symbol>
-  <symbol id="icono-tarjeta" viewBox="0 0 24 24">
-    <rect x="2.3" y="5.2" width="19.4" height="13.6" rx="2.3"/>
-    <path d="M2.3 9.6h19.4"/>
-    <path d="M6 14.4h4.2"/>
-  </symbol>
-</svg>
-
-<!-- ============================ HEADER ============================ -->
-<header class="encabezado" id="encabezado">
-  <div class="envoltorio">
-    <a href="#inicio" class="logo-esplora claro">
-      <img class="logo-marca logo-marca-clara" src="/estatico/img/logo-icono-claro.png" alt="">
-      <img class="logo-marca logo-marca-oscura" src="/estatico/img/logo-icono-oscuro.png" alt="">
-      <span class="logo-texto"><strong>Esplora</strong><span>Viajes y Turismo</span></span>
-    </a>
-
-    <nav class="nav-principal" id="nav-principal">
-      <a href="#inicio">Inicio</a>
-      <a href="#servicios">Servicios</a>
-      <a href="#destinos">Destinos</a>
-      <a href="#nacionales">Nacionales</a>
-      <a href="#internacionales">Internacionales</a>
-      <a href="#nosotros">Nosotros</a>
-      <a href="#contacto">Contacto</a>
-    </nav>
-
-    <div class="nav-derecha">
-      <div class="switch-sitio" role="tablist" aria-label="Cambiar entre el sitio público y el panel interno">
-        <span class="switch-opcion activo" role="tab" aria-current="page">Público</span>
-        <a href="/panel" class="switch-opcion" role="tab" title="Acceso interno de la agencia">Interno</a>
-      </div>
-      <a href="#contacto" class="boton boton-linea-clara">Cotizá tu viaje</a>
-      <button class="disparador-menu" id="disparador-menu" aria-label="Abrir menú" aria-expanded="false">
-        <span></span><span></span><span></span>
-      </button>
-    </div>
-  </div>
-</header>
+<!--ENCABEZADO-->
 
 <!-- ============================= HERO ============================= -->
-<section class="hero" id="inicio">
+<section class="hero">
   <div class="hero-ilustracion" aria-hidden="true">
     <img src="/estatico/img/hero-playa.jpg" alt="">
   </div>
@@ -140,8 +35,8 @@
     <p class="hero-sub">Diseñamos cada viaje a medida: vuelos, alojamiento, experiencias y
       acompañamiento de principio a fin, para que solo tengas que disfrutar.</p>
     <div class="hero-acciones">
-      <a href="#contacto" class="boton boton-lleno">Cotizá tu viaje</a>
-      <a href="#servicios" class="boton boton-linea-clara">Conocé nuestros servicios</a>
+      <a href="/contacto" class="boton boton-lleno">Cotizá tu viaje</a>
+      <a href="/servicios" class="boton boton-linea-clara">Conocé nuestros servicios</a>
     </div>
   </div>
 
@@ -180,8 +75,8 @@
   </div>
 </section>
 
-<!-- =========================== SERVICIOS =========================== -->
-<section class="seccion seccion-arena" id="servicios">
+<!-- =========================== SERVICIOS (resumen) =========================== -->
+<section class="seccion seccion-arena">
   <div class="envoltorio">
     <div class="encabezado-seccion centrado">
       <span class="ojo">Qué hacemos</span>
@@ -194,47 +89,26 @@
         <h3>Vuelos</h3><p>Tarifas nacionales e internacionales con la mejor conexión.</p>
       </article>
       <article class="servicio">
-        <div class="servicio-icono"><svg><use href="#icono-experiencia"/></svg></div>
-        <h3>Experiencias</h3><p>Actividades y excursiones curadas en cada destino.</p>
-      </article>
-      <article class="servicio">
-        <div class="servicio-icono"><svg><use href="#icono-destino"/></svg></div>
-        <h3>Destinos</h3><p>Un mundo de opciones, cerca o lejos, para todos los gustos.</p>
-      </article>
-      <article class="servicio">
         <div class="servicio-icono"><svg><use href="#icono-alojamiento"/></svg></div>
         <h3>Alojamientos</h3><p>Desde hoteles boutique hasta resorts todo incluido.</p>
       </article>
       <article class="servicio">
-        <div class="servicio-icono"><svg><use href="#icono-momento"/></svg></div>
-        <h3>Momentos</h3><p>Itinerarios armados para que cada día valga la pena.</p>
-      </article>
-      <article class="servicio">
-        <div class="servicio-icono"><svg><use href="#icono-naturaleza"/></svg></div>
-        <h3>Naturaleza</h3><p>Montaña, selva y paisajes que se disfrutan en persona.</p>
-      </article>
-      <article class="servicio">
-        <div class="servicio-icono"><svg><use href="#icono-playa"/></svg></div>
-        <h3>Playas</h3><p>Costas del país y del mundo, para desconectar de verdad.</p>
-      </article>
-      <article class="servicio">
-        <div class="servicio-icono"><svg><use href="#icono-ciudad"/></svg></div>
-        <h3>Ciudades</h3><p>Capitales y metrópolis para explorar a tu ritmo.</p>
-      </article>
-      <article class="servicio">
-        <div class="servicio-icono"><svg><use href="#icono-cultura"/></svg></div>
-        <h3>Cultura</h3><p>Historia, arte y tradición en cada parada del viaje.</p>
+        <div class="servicio-icono"><svg><use href="#icono-experiencia"/></svg></div>
+        <h3>Experiencias</h3><p>Actividades y excursiones curadas en cada destino.</p>
       </article>
       <article class="servicio">
         <div class="servicio-icono"><svg><use href="#icono-medida"/></svg></div>
         <h3>Viajes a medida</h3><p>Cada itinerario diseñado según lo que buscás vos.</p>
       </article>
     </div>
+    <p style="text-align:center;margin-top:36px">
+      <a href="/servicios" class="boton boton-linea">Ver todos los servicios</a>
+    </p>
   </div>
 </section>
 
-<!-- ============================ DESTINOS ============================ -->
-<section class="seccion seccion-clara" id="destinos">
+<!-- ============================ DESTINOS (resumen) ============================ -->
+<section class="seccion seccion-clara">
   <div class="envoltorio">
     <div class="encabezado-seccion centrado">
       <span class="ojo">Para inspirarte</span>
@@ -250,42 +124,27 @@
           <h3>Sol y mar</h3><p>Playas del Caribe, el Mediterráneo y nuestra costa atlántica.</p></div>
       </article>
       <article class="tarjeta-destino">
-        <img src="/estatico/img/destinos/metropolis.jpg" alt="" loading="lazy">
-        <div class="capa"><span class="ojo">Ciudades con historia</span>
-          <h3>Metrópolis del mundo</h3><p>Arte, arquitectura y vida urbana en cada capital.</p></div>
-      </article>
-      <article class="tarjeta-destino">
         <img src="/estatico/img/destinos/aire-libre.jpg" alt="" loading="lazy">
         <div class="capa"><span class="ojo">Naturaleza y aventura</span>
           <h3>Al aire libre</h3><p>Montaña, trekking y paisajes que se viven a fondo.</p></div>
       </article>
-      <article class="tarjeta-destino">
-        <img src="/estatico/img/destinos/a-medida.jpg" alt="" loading="lazy">
-        <div class="capa"><span class="ojo">A tu manera</span>
-          <h3>Escapadas a medida</h3><p>El itinerario se arma alrededor de lo que vos querés.</p></div>
-      </article>
     </div>
+    <p style="text-align:center;margin-top:36px">
+      <a href="/destinos" class="boton boton-linea">Ver todos los destinos</a>
+    </p>
   </div>
 </section>
 
-<!-- ======================= VIAJES NACIONALES ======================= -->
-<section class="seccion seccion-arena" id="nacionales">
+<!-- ======================= VIAJES NACIONALES (resumen) ======================= -->
+<section class="seccion seccion-arena">
   <div class="envoltorio">
     <div class="encabezado-seccion centrado">
       <span class="ojo">Salidas con fecha fija</span>
       <h2 style="font-size:clamp(28px,3.6vw,38px);margin-top:12px">Viajes nacionales</h2>
       <p class="lead" style="margin:14px auto 0">Paquetes armados y con precio cerrado.
-        Reservá tu lugar y aboná online, con tarjeta de crédito o débito, a través de
-        Mercado Pago.</p>
+        Reservá tu lugar y aboná online con Mercado Pago.</p>
     </div>
 
-    <!-- COMPLETAR: cada tarjeta es un flyer de ejemplo. Para publicar uno real:
-         1) reemplazar el <svg> por una <img> con la foto/flyer del viaje;
-         2) completar destino, fecha, precio y descripción;
-         3) crear un "Link de pago" para ese viaje desde la cuenta de Mercado
-            Pago de la agencia (Tu negocio > Cobros > Links de pago) y pegar
-            esa URL en el href del botón "Pagar con Mercado Pago" de abajo.
-         Se puede agregar o sacar tarjetas copiando/borrando un <article>. -->
     <div class="grilla-flyers">
       <article class="tarjeta-flyer">
         <div class="flyer-imagen">
@@ -298,10 +157,7 @@
           <p class="flyer-fecha">14 al 19 de julio · 5 noches</p>
           <p>Hotel 3 estrellas con desayuno, traslados aeropuerto-hotel y excursión al
             Cerro Catedral incluida.</p>
-          <a href="#" class="boton-mercadopago">
-            <svg><use href="#icono-tarjeta"/></svg>
-            Pagar con Mercado Pago
-          </a>
+          <a href="/nacionales" class="boton-cotizar">Ver este viaje →</a>
         </div>
       </article>
 
@@ -316,75 +172,26 @@
           <p class="flyer-fecha">8 al 11 de octubre · 3 noches</p>
           <p>Hotel a 10 minutos del Parque Nacional, entrada al lado argentino y
             traslados incluidos.</p>
-          <a href="#" class="boton-mercadopago">
-            <svg><use href="#icono-tarjeta"/></svg>
-            Pagar con Mercado Pago
-          </a>
-        </div>
-      </article>
-
-      <article class="tarjeta-flyer">
-        <div class="flyer-imagen">
-          <img src="/estatico/img/flyers/mendoza.jpg" alt="Viñedos en Mendoza, con la Cordillera de los Andes de fondo" loading="lazy">
-          <span class="flyer-precio">$280.000 <span style="font-weight:500">p/persona</span></span>
-        </div>
-        <div class="flyer-cuerpo">
-          <span class="ojo">Ruta del vino</span>
-          <h3>Mendoza</h3>
-          <p class="flyer-fecha">5 al 8 de septiembre · 3 noches</p>
-          <p>Alojamiento céntrico, medio día de visita a bodegas con degustación y
-            traslados incluidos.</p>
-          <a href="#" class="boton-mercadopago">
-            <svg><use href="#icono-tarjeta"/></svg>
-            Pagar con Mercado Pago
-          </a>
-        </div>
-      </article>
-
-      <article class="tarjeta-flyer">
-        <div class="flyer-imagen">
-          <img src="/estatico/img/flyers/calafate.jpg" alt="Glaciar Perito Moreno, El Calafate" loading="lazy">
-          <span class="flyer-precio">$520.000 <span style="font-weight:500">p/persona</span></span>
-        </div>
-        <div class="flyer-cuerpo">
-          <span class="ojo">Trekking en el glaciar</span>
-          <h3>El Calafate</h3>
-          <p class="flyer-fecha">2 al 6 de noviembre · 4 noches</p>
-          <p>Hotel con desayuno, excursión de día completo al Glaciar Perito Moreno y
-            traslados incluidos.</p>
-          <a href="#" class="boton-mercadopago">
-            <svg><use href="#icono-tarjeta"/></svg>
-            Pagar con Mercado Pago
-          </a>
+          <a href="/nacionales" class="boton-cotizar">Ver este viaje →</a>
         </div>
       </article>
     </div>
-
-    <p class="form-nota" style="margin-top:34px">¿Buscás otra fecha o un cupo para un
-      grupo? <a href="#contacto" style="color:var(--terracota);font-weight:600">Escribinos</a>
-      y te armamos una propuesta a medida.</p>
+    <p style="text-align:center;margin-top:36px">
+      <a href="/nacionales" class="boton boton-linea">Ver todos los viajes nacionales</a>
+    </p>
   </div>
 </section>
 
-<!-- ======================= VIAJES INTERNACIONALES ======================= -->
-<section class="seccion seccion-clara" id="internacionales">
+<!-- ======================= VIAJES INTERNACIONALES (resumen) ======================= -->
+<section class="seccion seccion-clara">
   <div class="envoltorio">
     <div class="encabezado-seccion centrado">
       <span class="ojo">Presupuesto a medida</span>
       <h2 style="font-size:clamp(28px,3.6vw,38px);margin-top:12px">Viajes internacionales</h2>
       <p class="lead" style="margin:14px auto 0">El precio final depende de fechas, tipo de
-        cambio y disponibilidad de vuelos, así que estos son valores de referencia.
-        Pedí tu cotización y te armamos la propuesta exacta.</p>
+        cambio y disponibilidad de vuelos. Pedí tu cotización y te armamos la propuesta exacta.</p>
     </div>
 
-    <!-- COMPLETAR: cada tarjeta es un ejemplo. Para publicar uno real:
-         1) reemplazar el <svg> por una <img> con una foto real del destino;
-         2) completar destino, noches, precio de referencia y descripción.
-         A diferencia de "Viajes nacionales" (precio cerrado, se paga con
-         Mercado Pago), acá el botón lleva al formulario de contacto: el
-         precio final de un viaje internacional se calcula caso por caso
-         segun tipo de cambio y disponibilidad del día, no es un pago fijo.
-         Se puede agregar o sacar tarjetas copiando/borrando un <article>. -->
     <div class="grilla-flyers">
       <article class="tarjeta-flyer">
         <div class="flyer-imagen">
@@ -401,7 +208,7 @@
           <p class="flyer-fecha">7 noches · vuelo + hotel</p>
           <p>Hotel frente al mar con opción all inclusive y traslados
             aeropuerto-hotel incluidos.</p>
-          <a href="#contacto" class="boton-cotizar">Pedir esta cotización →</a>
+          <a href="/internacionales" class="boton-cotizar">Ver este viaje →</a>
         </div>
       </article>
 
@@ -420,170 +227,45 @@
           <p class="flyer-fecha">5 noches · vuelo + hotel</p>
           <p>Alojamiento en Copacabana o Ipanema, con traslados y city tour
             opcional a Pan de Azúcar.</p>
-          <a href="#contacto" class="boton-cotizar">Pedir esta cotización →</a>
-        </div>
-      </article>
-
-      <article class="tarjeta-flyer">
-        <div class="flyer-imagen">
-          <svg viewBox="0 0 400 240" preserveAspectRatio="xMidYMid slice">
-            <rect width="400" height="240" fill="#5b5548"/>
-            <g fill="#3E3E3E" opacity=".6">
-              <rect x="50" y="150" width="30" height="90"/><rect x="90" y="120" width="24" height="120"/>
-              <rect x="124" y="160" width="34" height="80"/><rect x="240" y="110" width="26" height="130"/>
-              <rect x="276" y="150" width="30" height="90"/><rect x="316" y="130" width="24" height="110"/>
-            </g>
-            <path d="M180 130 L188 100 L196 130 Z" fill="#F8F1E7" opacity=".8"/>
-          </svg>
-          <span class="flyer-precio">Desde U$S 2.400 <span style="font-weight:500">p/persona</span></span>
-        </div>
-        <div class="flyer-cuerpo">
-          <span class="ojo">Clásico europeo</span>
-          <h3>París y Roma</h3>
-          <p class="flyer-fecha">10 noches · vuelo + hotel + tren entre ciudades</p>
-          <p>Recorré las dos capitales con hotel céntrico en cada una y el
-            traslado en tren ya incluido.</p>
-          <a href="#contacto" class="boton-cotizar">Pedir esta cotización →</a>
-        </div>
-      </article>
-
-      <article class="tarjeta-flyer">
-        <div class="flyer-imagen">
-          <svg viewBox="0 0 400 240" preserveAspectRatio="xMidYMid slice">
-            <rect width="400" height="240" fill="#C97B5B"/>
-            <circle cx="200" cy="120" r="70" fill="#A85F42" opacity=".7"/>
-            <circle cx="200" cy="120" r="40" fill="#F8F1E7" opacity=".55"/>
-          </svg>
-          <span class="flyer-precio">Desde U$S 1.600 <span style="font-weight:500">p/persona</span></span>
-        </div>
-        <div class="flyer-cuerpo">
-          <span class="ojo">Parques temáticos</span>
-          <h3>Orlando, Estados Unidos</h3>
-          <p class="flyer-fecha">8 noches · vuelo + hotel</p>
-          <p>Ideal para ir en familia, con alojamiento cerca de los parques y
-            asesoramiento para armar el itinerario.</p>
-          <a href="#contacto" class="boton-cotizar">Pedir esta cotización →</a>
+          <a href="/internacionales" class="boton-cotizar">Ver este viaje →</a>
         </div>
       </article>
     </div>
-
-    <p class="form-nota" style="margin-top:34px">¿Tenías otro destino en mente?
-      <a href="#contacto" style="color:var(--terracota);font-weight:600">Escribinos</a>
-      y armamos el presupuesto para donde quieras ir.</p>
+    <p style="text-align:center;margin-top:36px">
+      <a href="/internacionales" class="boton boton-linea">Ver todos los viajes internacionales</a>
+    </p>
   </div>
 </section>
 
-<!-- ============================ NOSOTROS ============================ -->
-<section class="seccion seccion-oscura" id="nosotros">
+<!-- ============================ NOSOTROS (resumen) ============================ -->
+<section class="seccion seccion-oscura">
   <div class="envoltorio">
     <div class="encabezado-seccion centrado" style="max-width:680px">
       <span class="ojo" style="color:var(--arena)">Cómo trabajamos</span>
       <h2 style="font-size:clamp(28px,3.6vw,38px);margin-top:12px">De la idea al viaje, paso a paso</h2>
+      <p class="lead" style="margin:14px auto 0">Te acompañamos desde la primera idea hasta la
+        vuelta a casa, con asesoramiento en cada etapa del viaje.</p>
     </div>
-    <div class="pasos">
-      <div class="paso"><h3>Contanos tu idea</h3>
-        <p>Destino, fechas, presupuesto aproximado y qué tipo de viaje estás buscando.</p></div>
-      <div class="paso"><h3>Armamos las opciones</h3>
-        <p>Comparamos entre mayoristas y proveedores para ofrecerte las mejores alternativas.</p></div>
-      <div class="paso"><h3>Elegís y coordinamos</h3>
-        <p>Reservas, documentación y cada detalle, resuelto por nosotros.</p></div>
-      <div class="paso"><h3>Viajás tranquilo</h3>
-        <p>Con acompañamiento antes y durante el viaje, ante cualquier imprevisto.</p></div>
-    </div>
-
-    <div class="testimonio" style="margin-top:80px">
-      <blockquote>“El mundo te espera” no es solo una frase: es la manera en la
-        que encaramos cada viaje que armamos.</blockquote>
-      <cite>— Equipo Esplora</cite>
-    </div>
+    <p style="text-align:center;margin-top:36px">
+      <a href="/nosotros" class="boton boton-linea-clara">Conocé cómo trabajamos</a>
+    </p>
   </div>
 </section>
 
-<!-- ============================ CONTACTO ============================ -->
-<section class="seccion seccion-clara" id="contacto">
-  <div class="envoltorio contacto">
-    <div class="contacto-datos">
-      <span class="ojo">Empecemos</span>
-      <h2 style="font-size:clamp(28px,3.6vw,38px);margin:12px 0 16px">
-        Planeemos tu próximo viaje</h2>
-      <p class="lead">Escribinos y te contactamos para armar juntos la propuesta que
-        mejor se ajuste a lo que estás buscando.</p>
-      <ul>
-        <!-- COMPLETAR: reemplazar por el telefono real de la agencia -->
-        <li><svg><use href="#icono-tel"/></svg>
-          <a href="tel:+542954000000">+54 2954 000-000</a></li>
-        <!-- COMPLETAR: reemplazar por el email real de la agencia -->
-        <li><svg><use href="#icono-mail"/></svg>
-          <a href="mailto:hola@esplora.com.ar">hola@esplora.com.ar</a></li>
-        <!-- COMPLETAR: direccion real, si atienden en un local -->
-        <li><svg><use href="#icono-pin"/></svg>
-          <span>Santa Rosa, La Pampa, Argentina</span></li>
-        <li><svg><use href="#icono-reloj"/></svg>
-          <span>Lunes a viernes, 9 a 18 h</span></li>
-      </ul>
-      <div class="redes">
-        <!-- COMPLETAR: enlaces reales a redes sociales y WhatsApp -->
-        <a href="#" aria-label="Instagram"><svg><use href="#icono-ig"/></svg></a>
-        <a href="#" aria-label="Facebook"><svg><use href="#icono-fb"/></svg></a>
-        <a href="#" aria-label="WhatsApp"><svg><use href="#icono-wa"/></svg></a>
-      </div>
-    </div>
-
-    <form class="formulario" id="formulario-contacto">
-      <div class="form-fila">
-        <div class="campo"><label for="f-nombre">Nombre</label>
-          <input id="f-nombre" name="nombre" required placeholder="Tu nombre"></div>
-        <div class="campo"><label for="f-telefono">Teléfono</label>
-          <input id="f-telefono" name="telefono" placeholder="Opcional"></div>
-      </div>
-      <div class="campo"><label for="f-email">Email</label>
-        <input id="f-email" name="email" type="email" required placeholder="tu@email.com"></div>
-      <div class="campo"><label for="f-destino">Destino de interés</label>
-        <input id="f-destino" name="destino" placeholder="¿A dónde te gustaría ir?"></div>
-      <div class="campo"><label for="f-mensaje">Contanos más</label>
-        <textarea id="f-mensaje" name="mensaje" placeholder="Fechas tentativas, cantidad de personas, presupuesto..."></textarea></div>
-      <button type="submit" class="boton boton-lleno">Enviar consulta</button>
-      <p class="form-nota">Se abre tu programa de correo con la consulta ya redactada.</p>
-    </form>
+<!-- ============================ CONTACTO (resumen) ============================ -->
+<section class="seccion seccion-clara">
+  <div class="envoltorio" style="text-align:center;max-width:680px">
+    <span class="ojo">Empecemos</span>
+    <h2 style="font-size:clamp(28px,3.6vw,38px);margin:12px 0 16px">Planeemos tu próximo viaje</h2>
+    <p class="lead" style="margin:0 auto">Escribinos y te contactamos para armar juntos la
+      propuesta que mejor se ajuste a lo que estás buscando.</p>
+    <p style="margin-top:30px">
+      <a href="/contacto" class="boton boton-lleno">Contactanos</a>
+    </p>
   </div>
 </section>
 
-<!-- ============================= FOOTER ============================= -->
-<footer class="pie">
-  <div class="envoltorio">
-    <div class="pie-arriba">
-      <div class="pie-marca">
-        <div class="logo-esplora claro">
-          <img class="logo-marca" src="/estatico/img/logo-icono-claro.png" alt="">
-          <span class="logo-texto"><strong style="color:var(--buttercream)">Esplora</strong>
-            <span style="color:var(--arena)">Viajes y Turismo</span></span>
-        </div>
-        <p class="acento-manuscrito" style="font-size:24px;color:var(--buttercream);margin-top:16px">
-          El mundo te espera.</p>
-      </div>
-      <div><h4>Explorar</h4>
-        <ul><li><a href="#servicios">Servicios</a></li><li><a href="#destinos">Destinos</a></li>
-          <li><a href="#nosotros">Nosotros</a></li><li><a href="#contacto">Contacto</a></li></ul>
-      </div>
-      <div><h4>Servicios</h4>
-        <ul><li><a href="#servicios">Vuelos</a></li><li><a href="#servicios">Alojamientos</a></li>
-          <li><a href="#servicios">Experiencias</a></li><li><a href="#servicios">Viajes a medida</a></li></ul>
-      </div>
-      <div><h4>Contacto</h4>
-        <ul>
-          <!-- COMPLETAR: mismos datos que en la seccion de contacto -->
-          <li><a href="mailto:hola@esplora.com.ar">hola@esplora.com.ar</a></li>
-          <li><a href="tel:+542954000000">+54 2954 000-000</a></li>
-          <li><span>Santa Rosa, La Pampa</span></li>
-        </ul>
-      </div>
-    </div>
-    <div class="pie-abajo">
-      <span>© <span id="anio-actual">2026</span> Esplora · Viajes y Turismo. Todos los derechos reservados.</span>
-      <a href="/panel">Acceso agencia</a>
-    </div>
-  </div>
-</footer>
+<!--PIE-->
 
 <script src="/estatico/publico.js"></script>
 </body>

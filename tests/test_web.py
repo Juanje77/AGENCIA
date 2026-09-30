@@ -54,6 +54,37 @@ def test_sirve_el_panel_interno_aparte(servidor):
     assert "Liquidación" in cuerpo
 
 
+def test_cada_seccion_tiene_su_propia_pagina(servidor):
+    """El sitio publico esta repartido en paginas, no todo apilado en /."""
+    paginas = {
+        "/servicios": "Servicios pensados para cada viaje",
+        "/destinos": "Un mundo de posibilidades",
+        "/nacionales": "Viajes nacionales",
+        "/internacionales": "Viajes internacionales",
+        "/nosotros": "De la idea al viaje",
+        "/contacto": "Planeemos tu próximo viaje",
+    }
+    for ruta, texto_esperado in paginas.items():
+        codigo, cuerpo = _get(servidor, ruta)
+        assert codigo == 200, ruta
+        assert texto_esperado in cuerpo, ruta
+        # Header y footer compartidos, iguales en todas las paginas.
+        assert "Esplora" in cuerpo and "Acceso agencia" in cuerpo, ruta
+
+
+def test_el_inicio_es_un_resumen_no_todo_apilado(servidor):
+    """La home muestra una parte de cada seccion, con un link a la pagina completa."""
+    _, cuerpo = _get(servidor, "/")
+    assert 'href="/nacionales"' in cuerpo
+    assert 'href="/internacionales"' in cuerpo
+    assert 'href="/servicios"' in cuerpo
+    assert 'href="/destinos"' in cuerpo
+    assert 'href="/nosotros"' in cuerpo
+    assert 'href="/contacto"' in cuerpo
+    # El formulario completo de contacto solo vive en /contacto.
+    assert 'id="formulario-contacto"' not in cuerpo
+
+
 def test_sirve_los_estaticos(servidor):
     assert _get(servidor, "/estatico/app.js")[0] == 200
     assert _get(servidor, "/estatico/estilos.css")[0] == 200

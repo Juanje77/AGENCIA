@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Contacto · Esplora Viajes y Turismo</title>
+<meta name="description" content="Escribinos y te contactamos para armar juntos tu próximo viaje.">
+<link rel="icon" type="image/png" href="/estatico/img/favicon-32.png" sizes="32x32">
+<link rel="icon" type="image/png" href="/estatico/img/favicon-64.png" sizes="64x64">
+<link rel="apple-touch-icon" href="/estatico/img/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Montserrat:wght@400;500;600;700&family=Allura&display=swap">
+<link rel="stylesheet" href="/estatico/publico.css">
+</head>
+<body class="pagina-interna">
+
+<!--ICONOS-->
+
+<!--ENCABEZADO-->
+
+<!-- ============================ CONTACTO ============================ -->
+<section class="seccion seccion-clara">
+  <div class="envoltorio contacto">
+    <div class="contacto-datos">
+      <span class="ojo">Empecemos</span>
+      <h2 style="font-size:clamp(28px,3.6vw,38px);margin:12px 0 16px">
+        Planeemos tu próximo viaje</h2>
+      <p class="lead">Escribinos y te contactamos para armar juntos la propuesta que
+        mejor se ajuste a lo que estás buscando.</p>
+      <ul>
+        <!-- COMPLETAR: reemplazar por el telefono real de la agencia -->
+        <li><svg><use href="#icono-tel"/></svg>
+          <a href="tel:+542954000000">+54 2954 000-000</a></li>
+        <!-- COMPLETAR: reemplazar por el email real de la agencia -->
+        <li><svg><use href="#icono-mail"/></svg>
+          <a href="mailto:hola@esplora.com.ar">hola@esplora.com.ar</a></li>
+        <!-- COMPLETAR: direccion real, si atienden en un local -->
+        <li><svg><use href="#icono-pin"/></svg>
+          <span>Santa Rosa, La Pampa, Argentina</span></li>
+        <li><svg><use href="#icono-reloj"/></svg>
+          <span>Lunes a viernes, 9 a 18 h</span></li>
+      </ul>
+      <div class="redes">
+        <!-- COMPLETAR: enlaces reales a redes sociales y WhatsApp -->
+        <a href="#" aria-label="Instagram"><svg><use href="#icono-ig"/></svg></a>
+        <a href="#" aria-label="Facebook"><svg><use href="#icono-fb"/></svg></a>
+        <a href="#" aria-label="WhatsApp"><svg><use href="#icono-wa"/></svg></a>
+      </div>
+    </div>
+
+    <form class="formulario" id="formulario-contacto">
+      <div class="form-fila">
+        <div class="campo"><label for="f-nombre">Nombre</label>
+          <input id="f-nombre" name="nombre" required placeholder="Tu nombre"></div>
+        <div class="campo"><label for="f-telefono">Teléfono</label>
+          <input id="f-telefono" name="telefono" placeholder="Opcional"></div>
+      </div>
+      <div class="campo"><label for="f-email">Email</label>
+        <input id="f-email" name="email" type="email" required placeholder="tu@email.com"></div>
+      <div class="campo"><label for="f-destino">Destino de interés</label>
+        <input id="f-destino" name="destino" placeholder="¿A dónde te gustaría ir?"></div>
+      <div class="campo"><label for="f-mensaje">Contanos más</label>
+        <textarea id="f-mensaje" name="mensaje" placeholder="Fechas tentativas, cantidad de personas, presupuesto..."></textarea></div>
+      <button type="submit" class="boton boton-lleno">Enviar consulta</button>
+      <p class="form-nota">Se abre tu programa de correo con la consulta ya redactada.</p>
+    </form>
+  </div>
+</section>
+
+<!--PIE-->
+
+<script src="/estatico/publico.js"></script>
+</body>
+</html>

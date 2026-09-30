@@ -19,8 +19,36 @@ entorno](#variables-de-entorno)); el sitio público nunca la pide.
 
 Landing con la identidad de marca **Esplora — Viajes y Turismo**: paleta
 terracota/buttercream, Playfair Display + Montserrat + Allura, con el logo
-real de la marca. Archivos en `src/agencia/web/estatico/publico.{html,css,js}`
-— no dependen del resto del sistema, es una página estática.
+real de la marca. No depende del resto del sistema, son páginas estáticas.
+
+Está repartido en varias páginas en vez de una sola muy larga:
+
+| Página | Contenido |
+|---|---|
+| `/` | Inicio: hero + un resumen breve de cada sección de abajo, con su link a la página completa |
+| `/servicios` | Los 10 servicios completos |
+| `/destinos` | Las 4 categorías de "Para inspirarte" |
+| `/nacionales` | Los 4 flyers de viajes nacionales, con su botón de Mercado Pago |
+| `/internacionales` | Los 4 destinos internacionales de referencia |
+| `/nosotros` | Cómo trabajamos, paso a paso, y el testimonio |
+| `/contacto` | Datos de contacto y el formulario |
+| `/panel` | Herramientas internas (protegidas por `AGENCIA_CLAVE`) |
+
+Cada página es un archivo en `src/agencia/web/estatico/` (`publico.html`,
+`servicios.html`, `destinos.html`, `nacionales.html`, `internacionales.html`,
+`nosotros.html`, `contacto.html`). El header, el pie de página y los íconos
+SVG **no están duplicados** en cada uno: viven una sola vez en
+`src/agencia/web/estatico/_partes/` (`encabezado.html`, `pie.html`,
+`iconos.html`) y el servidor los inserta al vuelo donde cada página tiene el
+comentario `<!--ENCABEZADO-->`, `<!--PIE-->` o `<!--ICONOS-->` (función
+`_pagina_publica()` en `rutas.py`). Para cambiar un link del menú o algo del
+pie de página alcanza con editar ese archivo una sola vez.
+
+Todas las páginas comparten `publico.css`/`publico.js`. Las páginas que no
+son el inicio llevan `<body class="pagina-interna">`: como no tienen la foto
+del hero detrás, el header no puede empezar transparente como en `/` — esa
+clase le pone el mismo fondo sólido que el header adopta al hacer scroll en
+el inicio.
 
 El logo (isotipo círculo + avión) se procesó a partir de los archivos que
 pasó la agencia para sacarle el fondo, y quedó en dos versiones en
@@ -35,7 +63,7 @@ que el nombre se sigue mostrando como texto (nítido a cualquier tamaño) al
 lado del ícono. La foto-flyer que mandó la agencia (`hero-esplora.jpg`) se
 usa como imagen de vista previa al compartir el link (`og:image`).
 
-El fondo del hero (la sección de arriba de todo, `#inicio`) es una foto real
+El fondo del hero (la sección de arriba de todo en `/`) es una foto real
 de playa (`hero-playa.jpg`) que mandó la agencia. Es de resolución modesta
 (597×335) para usarse a pantalla completa en monitores grandes, así que se
 ve un poco blanda ahí — si llega una versión en mayor resolución del mismo
@@ -45,11 +73,11 @@ tipo de imagen, se reemplaza solo ese archivo sin tocar el HTML.
 
 | Dónde | Qué reemplazar |
 |---|---|
-| Sección de contacto y pie de página | Teléfono, email, dirección y horario — están marcados con `<!-- COMPLETAR -->` en `publico.html` |
-| Sección de contacto | Enlaces de Instagram, Facebook y WhatsApp (hoy apuntan a `#`) |
+| `contacto.html` y `_partes/pie.html` | Teléfono, email, dirección y horario — están marcados con `<!-- COMPLETAR -->` |
+| `contacto.html` | Enlaces de Instagram, Facebook y WhatsApp (hoy apuntan a `#`) |
 | `publico.js` | El email de destino del formulario (`hola@esplora.com.ar` es de ejemplo) |
-| Sección "Viajes nacionales" | 4 flyers de ejemplo (Bariloche, Iguazú, Mendoza, El Calafate) con precio, fecha y descripción de referencia — buscá el comentario `<!-- COMPLETAR -->` arriba de `<div class="grilla-flyers">` en `publico.html` |
-| Sección "Viajes internacionales" | 4 flyers de ejemplo (Cancún, Río de Janeiro, París/Roma, Orlando) con ilustración y precio de referencia — buscá el comentario `<!-- COMPLETAR -->` arriba de la segunda `<div class="grilla-flyers">` |
+| `nacionales.html` | 4 flyers de ejemplo (Bariloche, Iguazú, Mendoza, El Calafate) con precio y fecha de referencia — buscá el comentario `<!-- COMPLETAR -->` arriba de `<div class="grilla-flyers">` |
+| `internacionales.html` | 4 destinos de ejemplo (Cancún, Río de Janeiro, París/Roma, Orlando) con ilustración y precio de referencia — buscá el comentario `<!-- COMPLETAR -->` arriba de `<div class="grilla-flyers">` |
 
 **Sobre las fotos:** tanto las 4 tarjetas de "Destinos" (sol y mar,
 metrópolis, aire libre, a medida) como los 4 flyers de "Viajes nacionales"
@@ -84,7 +112,7 @@ funciona igual en local y en Vercel. Para activar el cobro de un viaje real:
 2. Cargá el nombre del viaje y el precio (ahí también se define si se
    permite pagar en cuotas).
 3. Copiá la URL que te da Mercado Pago y pegala en el `href` del botón
-   correspondiente en `publico.html` (donde hoy dice `href="#"`).
+   correspondiente en `nacionales.html` (donde hoy dice `href="#"`).
 
 Con eso, el pasajero paga con tarjeta de crédito o débito directamente en
 Mercado Pago; la agencia ve el cobro en su propia cuenta como cualquier otro

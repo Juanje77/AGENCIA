@@ -74,6 +74,14 @@ def test_sirve_el_panel_interno_en_su_ruta(wsgi):
     assert "Cotizador" in cuerpo.decode("utf-8")
 
 
+def test_sirve_las_paginas_del_sitio_publico(wsgi):
+    for ruta in ("/servicios", "/destinos", "/nacionales", "/internacionales",
+                 "/nosotros", "/contacto"):
+        codigo, cuerpo = _get(wsgi, ruta)
+        assert codigo == 200, ruta
+        assert "Esplora" in cuerpo.decode("utf-8"), ruta
+
+
 def test_sirve_los_estaticos_con_su_tipo(wsgi):
     peticion = urllib.request.Request(wsgi + "/estatico/app.js")
     with urllib.request.urlopen(peticion) as r:
@@ -259,6 +267,9 @@ def test_el_sitio_publico_nunca_pide_la_clave(wsgi_con_clave):
     """Lo que ve un cliente potencial no tiene por que saber que existe una clave."""
     assert _get(wsgi_con_clave, "/")[0] == 200
     assert _get(wsgi_con_clave, "/estatico/publico.js")[0] == 200
+    for ruta in ("/servicios", "/destinos", "/nacionales", "/internacionales",
+                 "/nosotros", "/contacto"):
+        assert _get(wsgi_con_clave, ruta)[0] == 200, ruta
 
 
 def test_el_panel_carga_su_cascaron_sin_clave_pero_pide_para_usarlo(wsgi_con_clave):
