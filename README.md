@@ -46,7 +46,20 @@ lugar natural para reemplazar la ilustración del hero.
 | Sección de contacto | Enlaces de Instagram, Facebook y WhatsApp (hoy apuntan a `#`) |
 | `publico.js` | El email de destino del formulario (`hola@esplora.com.ar` es de ejemplo) |
 | Hero y tarjetas de "Destinos" | Ilustraciones en SVG con los tonos de la marca, pensadas para reemplazarse por fotos reales (buscá los comentarios `<!-- FOTO: -->`) |
-| Sección "Viajes nacionales" | 4 flyers de ejemplo (Bariloche, Iguazú, Mendoza, El Calafate) con foto, precio, fecha y descripción de referencia — buscá el comentario `<!-- COMPLETAR -->` arriba de `<div class="grilla-flyers">` en `publico.html` |
+| Sección "Viajes nacionales" | 4 flyers de ejemplo (Bariloche, Iguazú, Mendoza, El Calafate) con foto real, precio, fecha y descripción de referencia — buscá el comentario `<!-- COMPLETAR -->` arriba de `<div class="grilla-flyers">` en `publico.html` |
+
+**Sobre las fotos de "Viajes nacionales":** son fotos reales de cada lugar
+(no ilustraciones), tomadas de Wikimedia Commons por búsqueda, con un link
+de crédito visible en la esquina de cada flyer. No se pudieron ver
+renderizadas desde este entorno de trabajo porque tiene bloqueado el acceso
+a internet general (solo puede llegar a unos pocos sitios como GitHub o
+PyPI) — conviene revisarlas una vez publicado el sitio y avisar si alguna no
+carga bien. Antes de un uso comercial más permanente, también conviene
+entrar al link de cada crédito y confirmar la licencia exacta y el autor de
+la foto (la mayoría de Wikimedia Commons pide solo atribución, pero conviene
+verificarlo). Cuando la agencia tenga sus propias fotos de cada viaje, se
+reemplaza el `src` de la etiqueta `<img>` de cada flyer y se puede sacar el
+link de crédito.
 
 El formulario de contacto no tiene backend de envío de mail: arma un
 `mailto:` con lo que la persona cargó y lo abre en su propio correo. Si más
