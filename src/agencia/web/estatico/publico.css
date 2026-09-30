@@ -4,22 +4,22 @@
    manuscrito. */
 
 :root{
-  /* Paleta reducida a dos colores de marca -buttercream y mostaza- mas los
-     neutros imprescindibles para que el texto se lea (negro/blanco/grises).
-     --arena y --tierra son tinte claro y sombra oscura de ese mismo mostaza
-     -no un tercer color-, para conservar los distintos usos (fondos
-     alternados, texto secundario, texto claro sobre fondo oscuro) sin salir
-     de la paleta. */
+  /* Paleta de marca: buttercream, mostaza y el bordo (#440e0b) para todo lo
+     que el mostaza no puede resolver por si solo -texto fino, iconos, links-
+     porque es muy claro para leerse sobre el buttercream. --arena es un
+     tinte claro del mostaza, para fondos alternados y texto claro sobre
+     fondo oscuro (ahi el bordo tampoco funciona: es casi tan oscuro como el
+     carbon de esos fondos). */
   --buttercream:#FFFCE9;
   --terracota:#E1AD01;
   --terracota-oscuro:#A98201;
   --arena:#F5E2A6;
-  --tierra:#876801;
+  --tierra:#440E0B;
   --carbon:#3E3E3E;
   --carbon-suave:#6b6259;
   --blanco:#FFFFFF;
   --linea:rgba(62,62,62,.14);
-  --sombra:0 14px 34px rgba(135,104,1,.16);
+  --sombra:0 14px 34px rgba(68,14,11,.16);
 
   --f-display:'Playfair Display',Georgia,serif;
   --f-cuerpo:'Montserrat',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
