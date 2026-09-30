@@ -15,7 +15,7 @@
   --terracota-oscuro:#A98201;
   --arena:#F5E2A6;
   --tierra:#440E0B;
-  --carbon:#3E3E3E;
+  --carbon:#000000;
   --carbon-suave:#6b6259;
   --blanco:#FFFFFF;
   --linea:rgba(62,62,62,.14);
@@ -254,6 +254,9 @@ a.switch-opcion:hover{opacity:1}
    texto, asi que ahi el numero usa arena -el mismo tono que ya lleva el
    "ojo" de esa seccion- para no quedar del color del fondo. */
 .seccion-oscura .paso::before{color:var(--arena);border-color:var(--arena)}
+/* La descripcion de cada paso usa carbon-suave, un gris pensado para fondo
+   claro: sobre el bordo de esta seccion casi no se lee. */
+.seccion-oscura .paso p{color:rgba(245,226,166,.82)}
 
 /* --- testimonios --- */
 .testimonio{max-width:760px;margin:0 auto;text-align:center}
