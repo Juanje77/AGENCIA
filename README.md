@@ -77,17 +77,17 @@ tipo de imagen, se reemplaza solo ese archivo sin tocar el HTML.
 | `contacto.html` | Enlaces de Instagram, Facebook y WhatsApp (hoy apuntan a `#`) |
 | `publico.js` | El email de destino del formulario (`hola@esplora.com.ar` es de ejemplo) |
 | `nacionales.html` | 4 flyers de ejemplo (Bariloche, Iguazú, Mendoza, El Calafate) con precio y fecha de referencia — buscá el comentario `<!-- COMPLETAR -->` arriba de `<div class="grilla-flyers">` |
-| `internacionales.html` | 4 destinos de ejemplo (Cancún, Río de Janeiro, París/Roma, Orlando) con ilustración y precio de referencia — buscá el comentario `<!-- COMPLETAR -->` arriba de `<div class="grilla-flyers">` |
+| `internacionales.html` | 4 destinos de ejemplo (Cancún, Río de Janeiro, París/Roma, Orlando) con precio de referencia — buscá el comentario arriba de `<div class="grilla-flyers">` |
 
-**Sobre las fotos:** tanto las 4 tarjetas de "Destinos" (sol y mar,
-metrópolis, aire libre, a medida) como los 4 flyers de "Viajes nacionales"
-ya tienen la foto real que mandó la agencia, guardadas en
-`src/agencia/web/estatico/img/destinos/` y `.../img/flyers/` respectivamente.
-Para cambiar una foto o agregar un viaje nuevo, se suma el archivo en la
-carpeta que corresponda y se apunta el `src` del `<img>` — se suben directo
-al repo, no se enlazan a un sitio externo (un intento anterior con fotos de
-Wikimedia Commons no se veía en el sitio publicado). "Viajes internacionales"
-todavía muestra ilustraciones de referencia, a la espera de sus fotos.
+**Sobre las fotos:** las 4 tarjetas de "Destinos" (sol y mar, metrópolis,
+aire libre, a medida), los 4 flyers de "Viajes nacionales" y los 4 destinos
+de "Viajes internacionales" ya tienen la foto real que mandó la agencia,
+guardadas en `src/agencia/web/estatico/img/destinos/`, `.../img/flyers/` y
+`.../img/internacionales/` respectivamente. Para cambiar una foto o agregar
+un viaje nuevo, se suma el archivo en la carpeta que corresponda y se apunta
+el `src` del `<img>` — se suben directo al repo, no se enlazan a un sitio
+externo (un intento anterior con fotos de Wikimedia Commons no se veía en
+el sitio publicado).
 
 **"Viajes nacionales" vs "Viajes internacionales":** son dos secciones con
 la misma tarjeta (`.tarjeta-flyer`), pero un botón distinto a propósito. Los
