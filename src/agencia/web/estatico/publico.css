@@ -160,7 +160,8 @@ a.switch-opcion:hover{opacity:1}
 .grilla-destinos{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:22px}
 .tarjeta-destino{border-radius:20px;overflow:hidden;position:relative;height:340px;
   display:flex;align-items:flex-end;box-shadow:0 10px 26px rgba(62,62,62,.12)}
-.tarjeta-destino svg{position:absolute;inset:0;width:100%;height:100%;z-index:0}
+.tarjeta-destino svg,.tarjeta-destino img{position:absolute;inset:0;width:100%;height:100%;
+  z-index:0;object-fit:cover}
 .tarjeta-destino .capa{position:relative;z-index:1;padding:26px;color:var(--buttercream);
   width:100%;background:linear-gradient(180deg,transparent 0%,rgba(40,26,18,.72) 100%)}
 .tarjeta-destino .ojo{color:var(--arena)}

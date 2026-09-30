@@ -48,16 +48,16 @@ tipo de imagen, se reemplaza solo ese archivo sin tocar el HTML.
 | Sección de contacto y pie de página | Teléfono, email, dirección y horario — están marcados con `<!-- COMPLETAR -->` en `publico.html` |
 | Sección de contacto | Enlaces de Instagram, Facebook y WhatsApp (hoy apuntan a `#`) |
 | `publico.js` | El email de destino del formulario (`hola@esplora.com.ar` es de ejemplo) |
-| Tarjetas de "Destinos" | Ilustraciones en SVG con los tonos de la marca, pensadas para reemplazarse por fotos reales (buscá los comentarios `<!-- FOTO: -->`) |
 | Sección "Viajes nacionales" | 4 flyers de ejemplo (Bariloche, Iguazú, Mendoza, El Calafate) con precio, fecha y descripción de referencia — buscá el comentario `<!-- COMPLETAR -->` arriba de `<div class="grilla-flyers">` en `publico.html` |
 
-**Sobre las fotos de "Viajes nacionales":** los 4 flyers ya tienen la foto
-real que mandó la agencia (Bariloche, Cataratas del Iguazú, Mendoza y El
-Calafate), guardadas en `src/agencia/web/estatico/img/flyers/`. Para un
-viaje nuevo, se agrega la foto ahí y se apunta el `src` del `<img>` de ese
-flyer — se suben directo al repo, no se enlazan a un sitio externo (un
-intento anterior con fotos de Wikimedia Commons no se veía en el sitio
-publicado).
+**Sobre las fotos:** tanto las 4 tarjetas de "Destinos" (sol y mar,
+metrópolis, aire libre, a medida) como los 4 flyers de "Viajes nacionales"
+ya tienen la foto real que mandó la agencia, guardadas en
+`src/agencia/web/estatico/img/destinos/` y `.../img/flyers/` respectivamente.
+Para cambiar una foto o agregar un viaje nuevo, se suma el archivo en la
+carpeta que corresponda y se apunta el `src` del `<img>` — se suben directo
+al repo, no se enlazan a un sitio externo (un intento anterior con fotos de
+Wikimedia Commons no se veía en el sitio publicado).
 
 El formulario de contacto no tiene backend de envío de mail: arma un
 `mailto:` con lo que la persona cargó y lo abre en su propio correo. Si más
