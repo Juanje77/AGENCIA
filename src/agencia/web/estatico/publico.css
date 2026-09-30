@@ -176,11 +176,6 @@ a.switch-opcion:hover{opacity:1}
 .flyer-precio{position:absolute;top:14px;right:14px;background:var(--terracota);
   color:var(--buttercream);font-family:var(--f-cuerpo);font-weight:700;font-size:13px;
   padding:6px 13px;border-radius:999px;box-shadow:0 4px 10px rgba(62,62,62,.2)}
-.flyer-credito{position:absolute;left:0;right:0;bottom:0;padding:16px 12px 6px;
-  background:linear-gradient(0deg,rgba(20,14,10,.62) 0%,transparent 100%);
-  color:rgba(248,241,231,.85);font-family:var(--f-cuerpo);font-size:10px;
-  text-decoration:none;letter-spacing:.03em}
-.flyer-credito:hover{color:var(--buttercream);text-decoration:underline}
 .flyer-cuerpo{padding:22px 22px 24px;display:flex;flex-direction:column;gap:2px;flex:1}
 .flyer-cuerpo .ojo{font-size:11px}
 .flyer-cuerpo h3{font-size:20px;margin:2px 0 4px}
