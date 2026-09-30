@@ -1,22 +1,25 @@
 /* Identidad ESPLORA — Viajes y Turismo.
-   Tokens tomados del manual de marca: paleta terracota/buttercream,
-   Playfair Display para titulares, Montserrat para el cuerpo, Allura como
-   acento manuscrito. Sin fotografía real todavía: el hero y las secciones
-   usan ilustración plana en los mismos cinco tonos de la paleta -nunca un
-   color fuera de ella- para que quede prolijo hasta que haya fotos propias
-   de la agencia para reemplazarlo (buscá los comentarios "FOTO:" en el HTML). */
+   Paleta de marca: buttercream y mostaza (ver comentario en :root). Playfair
+   Display para titulares, Montserrat para el cuerpo, Allura como acento
+   manuscrito. */
 
 :root{
-  --buttercream:#F8F1E7;
-  --terracota:#440E0B;
-  --terracota-oscuro:#2C0907;
-  --arena:#D6C3A7;
-  --tierra:#8B6F56;
+  /* Paleta reducida a dos colores de marca -buttercream y mostaza- mas los
+     neutros imprescindibles para que el texto se lea (negro/blanco/grises).
+     --arena y --tierra son tinte claro y sombra oscura de ese mismo mostaza
+     -no un tercer color-, para conservar los distintos usos (fondos
+     alternados, texto secundario, texto claro sobre fondo oscuro) sin salir
+     de la paleta. */
+  --buttercream:#FFFCE9;
+  --terracota:#E1AD01;
+  --terracota-oscuro:#A98201;
+  --arena:#F5E2A6;
+  --tierra:#876801;
   --carbon:#3E3E3E;
   --carbon-suave:#6b6259;
   --blanco:#FFFFFF;
   --linea:rgba(62,62,62,.14);
-  --sombra:0 14px 34px rgba(139,111,86,.16);
+  --sombra:0 14px 34px rgba(135,104,1,.16);
 
   --f-display:'Playfair Display',Georgia,serif;
   --f-cuerpo:'Montserrat',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
@@ -37,7 +40,7 @@ section{position:relative}
 h1,h2,h3{font-family:var(--f-display);font-weight:600;margin:0;
   color:var(--carbon);letter-spacing:-.01em}
 .ojo{font-family:var(--f-cuerpo);font-weight:600;font-size:12px;
-  letter-spacing:.16em;text-transform:uppercase;color:var(--terracota)}
+  letter-spacing:.16em;text-transform:uppercase;color:var(--tierra)}
 .acento-manuscrito{font-family:var(--f-acento);font-weight:400}
 p{margin:0 0 14px}
 .lead{font-size:17px;color:var(--carbon-suave);max-width:56ch}
@@ -48,10 +51,10 @@ p{margin:0 0 14px}
   letter-spacing:.03em;text-decoration:none;cursor:pointer;border:1.5px solid transparent;
   transition:transform .15s ease,box-shadow .15s ease,background .15s ease}
 .boton:hover{transform:translateY(-1px)}
-.boton-lleno{background:var(--terracota);color:var(--buttercream);box-shadow:var(--sombra)}
+.boton-lleno{background:var(--terracota);color:var(--carbon);box-shadow:var(--sombra)}
 .boton-lleno:hover{background:var(--terracota-oscuro)}
-.boton-linea{background:transparent;border-color:var(--terracota);color:var(--terracota)}
-.boton-linea:hover{background:var(--terracota);color:var(--buttercream)}
+.boton-linea{background:transparent;border-color:var(--tierra);color:var(--tierra)}
+.boton-linea:hover{background:var(--terracota);color:var(--carbon);border-color:var(--terracota)}
 .boton-linea-clara{background:transparent;border-color:rgba(248,241,231,.55);color:var(--buttercream)}
 .boton-linea-clara:hover{background:rgba(248,241,231,.14)}
 
@@ -78,8 +81,8 @@ p{margin:0 0 14px}
 .encabezado.con-fondo .logo-esplora.claro .logo-texto strong, body.pagina-interna .encabezado .logo-esplora.claro .logo-texto strong{color:var(--carbon)}
 .encabezado.con-fondo .logo-esplora.claro .logo-texto span, body.pagina-interna .encabezado .logo-esplora.claro .logo-texto span{color:var(--tierra)}
 .encabezado.con-fondo .nav-principal a, body.pagina-interna .encabezado .nav-principal a{color:var(--carbon)}
-.encabezado.con-fondo .boton-linea-clara, body.pagina-interna .encabezado .boton-linea-clara{border-color:var(--terracota);color:var(--terracota)}
-.encabezado.con-fondo .boton-linea-clara:hover, body.pagina-interna .encabezado .boton-linea-clara:hover{background:var(--terracota);color:var(--buttercream)}
+.encabezado.con-fondo .boton-linea-clara, body.pagina-interna .encabezado .boton-linea-clara{border-color:var(--tierra);color:var(--tierra)}
+.encabezado.con-fondo .boton-linea-clara:hover, body.pagina-interna .encabezado .boton-linea-clara:hover{background:var(--terracota);color:var(--carbon);border-color:var(--terracota)}
 .encabezado.con-fondo .disparador-menu span, body.pagina-interna .encabezado .disparador-menu span{background:var(--carbon)}
 
 .nav-principal{display:flex;align-items:center;gap:24px}
@@ -92,11 +95,11 @@ p{margin:0 0 14px}
 .switch-opcion{font-family:var(--f-cuerpo);font-weight:600;font-size:11.5px;
   padding:6px 12px;border-radius:999px;text-decoration:none;color:var(--buttercream);
   opacity:.85;line-height:1;white-space:nowrap;transition:opacity .15s,background .15s,color .15s}
-.switch-opcion.activo{background:var(--buttercream);color:var(--terracota-oscuro);opacity:1}
+.switch-opcion.activo{background:var(--buttercream);color:var(--tierra);opacity:1}
 a.switch-opcion:hover{opacity:1}
 .encabezado.con-fondo .switch-sitio, body.pagina-interna .encabezado .switch-sitio{background:rgba(62,62,62,.06);border-color:rgba(62,62,62,.18)}
 .encabezado.con-fondo .switch-opcion, body.pagina-interna .encabezado .switch-opcion{color:var(--carbon-suave)}
-.encabezado.con-fondo .switch-opcion.activo, body.pagina-interna .encabezado .switch-opcion.activo{background:var(--terracota);color:var(--buttercream)}
+.encabezado.con-fondo .switch-opcion.activo, body.pagina-interna .encabezado .switch-opcion.activo{background:var(--terracota);color:var(--carbon)}
 .disparador-menu{display:none;flex-direction:column;gap:5px;background:none;border:none;
   cursor:pointer;padding:6px}
 .disparador-menu span{width:24px;height:2px;background:var(--buttercream);border-radius:2px;
@@ -150,8 +153,8 @@ a.switch-opcion:hover{opacity:1}
   text-align:center;transition:transform .18s ease,box-shadow .18s ease}
 .servicio:hover{transform:translateY(-4px);box-shadow:var(--sombra)}
 .servicio-icono{width:58px;height:58px;margin:0 auto 18px;border-radius:50%;
-  border:1.5px solid var(--terracota);display:flex;align-items:center;justify-content:center}
-.servicio-icono svg{width:26px;height:26px;stroke:var(--terracota);fill:none;
+  border:1.5px solid var(--tierra);display:flex;align-items:center;justify-content:center}
+.servicio-icono svg{width:26px;height:26px;stroke:var(--tierra);fill:none;
   stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
 .servicio h3{font-size:16.5px;margin-bottom:6px}
 .servicio p{font-size:13px;color:var(--carbon-suave);margin:0}
@@ -175,7 +178,7 @@ a.switch-opcion:hover{opacity:1}
 .flyer-imagen{position:relative;height:190px;background:var(--arena)}
 .flyer-imagen svg,.flyer-imagen img{width:100%;height:100%;display:block;object-fit:cover}
 .flyer-precio{position:absolute;top:14px;right:14px;background:var(--terracota);
-  color:var(--buttercream);font-family:var(--f-cuerpo);font-weight:700;font-size:13px;
+  color:var(--carbon);font-family:var(--f-cuerpo);font-weight:700;font-size:13px;
   padding:6px 13px;border-radius:999px;box-shadow:0 4px 10px rgba(62,62,62,.2)}
 .flyer-cuerpo{padding:22px 22px 24px;display:flex;flex-direction:column;gap:2px;flex:1}
 .flyer-cuerpo .ojo{font-size:11px}
@@ -191,10 +194,10 @@ a.switch-opcion:hover{opacity:1}
   stroke-width:1.8}
 .flyer-mas-info{display:block;text-align:center;margin-top:12px;font-size:12.5px;
   font-weight:600;color:var(--tierra);text-decoration:none}
-.flyer-mas-info:hover{color:var(--terracota)}
+.flyer-mas-info:hover{color:var(--carbon)}
 .boton-cotizar{display:inline-flex;align-items:center;justify-content:center;gap:8px;
   margin-top:14px;padding:12px 20px;border-radius:999px;background:var(--terracota);
-  color:var(--buttercream);font-family:var(--f-cuerpo);font-weight:700;font-size:13.5px;
+  color:var(--carbon);font-family:var(--f-cuerpo);font-weight:700;font-size:13.5px;
   text-decoration:none;transition:background .15s ease,transform .15s ease}
 .boton-cotizar:hover{background:var(--terracota-oscuro);transform:translateY(-1px)}
 
@@ -202,7 +205,7 @@ a.switch-opcion:hover{opacity:1}
 .itinerario{max-width:820px}
 .itinerario-volver{display:inline-block;margin-bottom:26px;color:var(--tierra);
   text-decoration:none;font-size:13px;font-weight:600}
-.itinerario-volver:hover{color:var(--terracota)}
+.itinerario-volver:hover{color:var(--carbon)}
 .itinerario-encabezado{margin-bottom:26px}
 .itinerario-encabezado h1{font-family:var(--f-display);font-weight:600;
   font-size:clamp(28px,4vw,42px);margin:10px 0 6px;color:var(--carbon)}
@@ -219,15 +222,15 @@ a.switch-opcion:hover{opacity:1}
 .itinerario-incluye h3{font-family:var(--f-display);font-size:17px;margin:0 0 14px}
 .lista-check{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px}
 .lista-check li{position:relative;padding-left:26px;font-size:13.5px;color:var(--carbon-suave)}
-.lista-check li::before{content:"✓";position:absolute;left:0;color:var(--terracota);font-weight:700}
+.lista-check li::before{content:"✓";position:absolute;left:0;color:var(--tierra);font-weight:700}
 .lista-check.lista-no li::before{content:"–";color:var(--tierra)}
 .itinerario-dias{display:flex;flex-direction:column;margin-top:24px}
 .itinerario-dia{border-left:3px solid var(--arena);padding:0 0 32px 26px;position:relative}
 .itinerario-dia:last-child{padding-bottom:0}
 .itinerario-dia::before{content:"";position:absolute;left:-7px;top:4px;width:11px;height:11px;
-  border-radius:50%;background:var(--terracota)}
+  border-radius:50%;background:var(--tierra)}
 .itinerario-dia h3{font-family:var(--f-display);font-size:17px;margin:0 0 12px;
-  color:var(--terracota-oscuro)}
+  color:var(--tierra)}
 .itinerario-dia ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px}
 .itinerario-dia li{display:flex;gap:14px;font-size:13.5px;color:var(--carbon-suave)}
 .itinerario-hora{font-family:var(--f-cuerpo);font-weight:700;color:var(--carbon);
@@ -242,8 +245,8 @@ a.switch-opcion:hover{opacity:1}
   counter-reset:paso}
 .paso{position:relative;padding-top:8px}
 .paso::before{counter-increment:paso;content:counter(paso,decimal-leading-zero);
-  font-family:var(--f-display);font-size:15px;color:var(--terracota);
-  border:1px solid var(--terracota);border-radius:50%;width:38px;height:38px;
+  font-family:var(--f-display);font-size:15px;color:var(--tierra);
+  border:1px solid var(--tierra);border-radius:50%;width:38px;height:38px;
   display:flex;align-items:center;justify-content:center;margin-bottom:16px}
 .paso h3{font-size:17px;margin-bottom:8px}
 .paso p{font-size:13.5px;color:var(--carbon-suave)}
@@ -259,22 +262,25 @@ a.switch-opcion:hover{opacity:1}
 .seccion-oscura .testimonio blockquote{color:var(--buttercream)}
 .testimonio cite{font-style:normal;font-size:12.5px;letter-spacing:.08em;
   text-transform:uppercase;color:var(--tierra)}
+/* En "Nosotros" (fondo oscuro) el tierra tambien queda muy oscuro sobre el
+   carbon del fondo, igual que le pasaba al numero de los pasos. */
+.seccion-oscura .testimonio cite{color:var(--arena)}
 
 /* --- contacto --- */
 .contacto{display:grid;grid-template-columns:.95fr 1.05fr;gap:64px}
 .contacto-datos ul{list-style:none;margin:26px 0 0;padding:0;display:flex;
   flex-direction:column;gap:16px}
 .contacto-datos li{display:flex;align-items:center;gap:14px;font-size:14.5px}
-.contacto-datos li svg{width:19px;height:19px;stroke:var(--terracota);fill:none;
+.contacto-datos li svg{width:19px;height:19px;stroke:var(--tierra);fill:none;
   stroke-width:1.7;flex:none}
 .contacto-datos a{text-decoration:none;color:var(--carbon);font-weight:600}
-.contacto-datos a:hover{color:var(--terracota)}
+.contacto-datos a:hover{color:var(--tierra)}
 .redes{display:flex;gap:12px;margin-top:30px}
 .redes a{width:38px;height:38px;border-radius:50%;border:1px solid var(--tierra);
   display:flex;align-items:center;justify-content:center;text-decoration:none}
 .redes a svg{width:16px;height:16px;stroke:var(--tierra);fill:none;stroke-width:1.7}
 .redes a:hover{background:var(--terracota);border-color:var(--terracota)}
-.redes a:hover svg{stroke:var(--buttercream)}
+.redes a:hover svg{stroke:var(--carbon)}
 
 .formulario{background:var(--blanco);border-radius:22px;padding:38px;box-shadow:var(--sombra)}
 .campo{margin-bottom:18px}
@@ -285,7 +291,7 @@ a.switch-opcion:hover{opacity:1}
   color:var(--carbon);background:var(--buttercream)}
 .campo textarea{min-height:100px;resize:vertical}
 .campo input:focus,.campo select:focus,.campo textarea:focus{outline:none;
-  border-color:var(--terracota);background:var(--blanco)}
+  border-color:var(--tierra);background:var(--blanco)}
 .form-fila{display:grid;grid-template-columns:1fr 1fr;gap:16px}
 .formulario .boton{width:100%;justify-content:center;margin-top:6px}
 .form-nota{font-size:12px;color:var(--carbon-suave);margin-top:14px;text-align:center}
