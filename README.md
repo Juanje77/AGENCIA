@@ -49,17 +49,16 @@ tipo de imagen, se reemplaza solo ese archivo sin tocar el HTML.
 | Sección de contacto | Enlaces de Instagram, Facebook y WhatsApp (hoy apuntan a `#`) |
 | `publico.js` | El email de destino del formulario (`hola@esplora.com.ar` es de ejemplo) |
 | Tarjetas de "Destinos" | Ilustraciones en SVG con los tonos de la marca, pensadas para reemplazarse por fotos reales (buscá los comentarios `<!-- FOTO: -->`) |
-| Sección "Viajes nacionales" | 4 flyers de ejemplo (Bariloche, Iguazú, Mendoza, El Calafate) con ilustración, precio, fecha y descripción de referencia — buscá el comentario `<!-- COMPLETAR -->` arriba de `<div class="grilla-flyers">` en `publico.html` |
+| Sección "Viajes nacionales" | 4 flyers de ejemplo (Bariloche, Iguazú, Mendoza, El Calafate) con precio, fecha y descripción de referencia — buscá el comentario `<!-- COMPLETAR -->` arriba de `<div class="grilla-flyers">` en `publico.html` |
 
-**Sobre las fotos de "Viajes nacionales":** se probó usar fotos reales
-enlazadas desde Wikimedia Commons, pero no se veían en el sitio publicado
-(este entorno de trabajo tiene bloqueado el acceso a internet general, así
-que tampoco se pudieron verificar antes de publicarlas) — se volvió a las
-ilustraciones de referencia hasta tener fotos propias. Cada flyer tiene un
-comentario `<!-- FOTO: ... -->` justo arriba de `.flyer-imagen` con el
-`<img>` exacto para pegar (`src="/estatico/img/flyers/bariloche.jpg"`, etc.)
-apenas lleguen las fotos reales de cada viaje — ahí se reemplaza el bloque
-`<svg>` completo por esa etiqueta `<img>`.
+**Sobre las fotos de "Viajes nacionales":** Iguazú y El Calafate ya tienen
+la foto real que mandó la agencia, guardada en
+`src/agencia/web/estatico/img/flyers/`. Bariloche y Mendoza todavía muestran
+la ilustración de referencia — cada uno tiene un comentario
+`<!-- FOTO: ... -->` justo arriba de `.flyer-imagen` con el `<img>` exacto
+para pegar apenas llegue la foto de cada viaje (se suben directo al repo,
+no se enlazan a un sitio externo — un intento anterior con fotos de
+Wikimedia Commons no se veía en el sitio publicado).
 
 El formulario de contacto no tiene backend de envío de mail: arma un
 `mailto:` con lo que la persona cargó y lo abre en su propio correo. Si más
