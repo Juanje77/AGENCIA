@@ -51,14 +51,13 @@ tipo de imagen, se reemplaza solo ese archivo sin tocar el HTML.
 | Tarjetas de "Destinos" | Ilustraciones en SVG con los tonos de la marca, pensadas para reemplazarse por fotos reales (buscá los comentarios `<!-- FOTO: -->`) |
 | Sección "Viajes nacionales" | 4 flyers de ejemplo (Bariloche, Iguazú, Mendoza, El Calafate) con precio, fecha y descripción de referencia — buscá el comentario `<!-- COMPLETAR -->` arriba de `<div class="grilla-flyers">` en `publico.html` |
 
-**Sobre las fotos de "Viajes nacionales":** Iguazú y El Calafate ya tienen
-la foto real que mandó la agencia, guardada en
-`src/agencia/web/estatico/img/flyers/`. Bariloche y Mendoza todavía muestran
-la ilustración de referencia — cada uno tiene un comentario
-`<!-- FOTO: ... -->` justo arriba de `.flyer-imagen` con el `<img>` exacto
-para pegar apenas llegue la foto de cada viaje (se suben directo al repo,
-no se enlazan a un sitio externo — un intento anterior con fotos de
-Wikimedia Commons no se veía en el sitio publicado).
+**Sobre las fotos de "Viajes nacionales":** los 4 flyers ya tienen la foto
+real que mandó la agencia (Bariloche, Cataratas del Iguazú, Mendoza y El
+Calafate), guardadas en `src/agencia/web/estatico/img/flyers/`. Para un
+viaje nuevo, se agrega la foto ahí y se apunta el `src` del `<img>` de ese
+flyer — se suben directo al repo, no se enlazan a un sitio externo (un
+intento anterior con fotos de Wikimedia Commons no se veía en el sitio
+publicado).
 
 El formulario de contacto no tiene backend de envío de mail: arma un
 `mailto:` con lo que la persona cargó y lo abre en su propio correo. Si más
