@@ -81,6 +81,13 @@ def test_sirve_los_estaticos_con_su_tipo(wsgi):
         assert "javascript" in r.headers["Content-Type"]
 
 
+def test_sirve_el_logo_real_desde_una_subcarpeta(wsgi):
+    peticion = urllib.request.Request(wsgi + "/estatico/img/logo-icono-oscuro.png")
+    with urllib.request.urlopen(peticion) as r:
+        assert r.status == 200
+        assert r.headers["Content-Type"] == "image/png"
+
+
 def test_calcula_una_cotizacion(wsgi):
     _, cuerpo = _post(wsgi, "/api/cotizacion", {
         "general": {"pax": 2},

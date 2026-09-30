@@ -34,7 +34,7 @@ header.top{display:flex;align-items:center;justify-content:space-between;gap:20p
 header.top .titulo{display:flex;align-items:center;gap:15px}
 .marca-esplora{display:flex;align-items:center;gap:10px;text-decoration:none;
   color:inherit;flex:none}
-.marca-icono{width:44px;height:44px;flex:none;color:var(--primary)}
+.marca-icono{width:44px;height:44px;flex:none;object-fit:contain}
 .marca-texto{line-height:1}
 .marca-texto strong{display:block;font-family:var(--font-display);font-weight:600;
   font-size:17px;letter-spacing:.01em;color:var(--primary-dark)}

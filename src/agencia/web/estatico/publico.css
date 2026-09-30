@@ -57,7 +57,10 @@ p{margin:0 0 14px}
 
 /* ======================= LOGO ======================= */
 .logo-esplora{display:flex;align-items:center;gap:12px;text-decoration:none;color:inherit}
-.logo-marca{width:42px;height:42px;flex:none}
+.logo-marca{width:42px;height:42px;flex:none;object-fit:contain}
+.logo-marca-oscura{display:none}
+.encabezado.con-fondo .logo-marca-clara{display:none}
+.encabezado.con-fondo .logo-marca-oscura{display:block}
 .logo-texto{line-height:1}
 .logo-texto strong{display:block;font-family:var(--f-display);font-weight:600;
   font-size:21px;letter-spacing:.02em;color:var(--carbon)}
@@ -133,6 +136,8 @@ a.switch-opcion:hover{opacity:1}
 .esencia{display:grid;grid-template-columns:1.1fr .9fr;gap:70px;align-items:center}
 .esencia-marca{position:relative}
 .esencia-marca svg{width:100%;max-width:360px;margin:0 auto;display:block}
+.esencia-marca-img{position:absolute;inset:0;margin:auto;width:38%;max-width:140px;
+  height:auto;object-fit:contain}
 .chips{display:flex;flex-wrap:wrap;gap:10px;margin-top:26px}
 .chip{border:1px solid var(--tierra);color:var(--tierra);border-radius:999px;
   padding:7px 16px;font-size:11.5px;font-weight:600;letter-spacing:.05em;

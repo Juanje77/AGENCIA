@@ -306,4 +306,10 @@ def tipo_de(nombre: str) -> str:
         return JSON
     if nombre.endswith(".svg"):
         return "image/svg+xml"
+    if nombre.endswith(".png"):
+        return "image/png"
+    if nombre.endswith(".jpg") or nombre.endswith(".jpeg"):
+        return "image/jpeg"
+    if nombre.endswith(".ico"):
+        return "image/x-icon"
     return "application/octet-stream"

@@ -61,6 +61,16 @@ def test_sirve_los_estaticos(servidor):
     assert _get(servidor, "/estatico/publico.css")[0] == 200
 
 
+def test_sirve_los_logos_reales_con_su_tipo(servidor):
+    """Los PNG/JPG del logo no son texto: se piden sin decodificar."""
+    with urllib.request.urlopen(f"{servidor}/estatico/img/logo-icono-oscuro.png") as r:
+        assert r.status == 200
+        assert r.headers["Content-Type"] == "image/png"
+    with urllib.request.urlopen(f"{servidor}/estatico/img/hero-esplora.jpg") as r:
+        assert r.status == 200
+        assert r.headers["Content-Type"] == "image/jpeg"
+
+
 def test_no_deja_salir_del_directorio_estatico(servidor):
     with pytest.raises(urllib.error.HTTPError) as exc:
         _get(servidor, "/estatico/../../../etc/passwd")

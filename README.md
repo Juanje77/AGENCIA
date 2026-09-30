@@ -18,9 +18,25 @@ entorno](#variables-de-entorno)); el sitio público nunca la pide.
 ## Sitio público (`/`)
 
 Landing con la identidad de marca **Esplora — Viajes y Turismo**: paleta
-terracota/buttercream, Playfair Display + Montserrat + Allura, isotipo propio.
-Archivos en `src/agencia/web/estatico/publico.{html,css,js}` — no dependen del
-resto del sistema, es una página estática.
+terracota/buttercream, Playfair Display + Montserrat + Allura, con el logo
+real de la marca. Archivos en `src/agencia/web/estatico/publico.{html,css,js}`
+— no dependen del resto del sistema, es una página estática.
+
+El logo (isotipo círculo + avión) se procesó a partir de los archivos que
+pasó la agencia para sacarle el fondo, y quedó en dos versiones en
+`src/agencia/web/estatico/img/`: `logo-icono-oscuro.png` (tinta oscura, para
+fondos claros) y `logo-icono-claro.png` (tinta clara, para fondos oscuros o
+sobre la foto del hero). Se usa así en el header (cambia solo al hacer
+scroll), en el pie de página, en el panel interno y como favicon. El
+lockup completo con el nombre y "VIAJES Y TURISMO" (`logo-horizontal-*.png`)
+también quedó guardado ahí por si sirve para papelería o redes, pero no se
+usa en la página: a los tamaños de un header el subtítulo se ve borroso, así
+que el nombre se sigue mostrando como texto (nítido a cualquier tamaño) al
+lado del ícono. La foto-flyer que mandó la agencia (`hero-esplora.jpg`) se
+usa como imagen de vista previa al compartir el link (`og:image`); tiene
+buena calidad para eso, pero es chica para usarla de fondo a pantalla
+completa — si más adelante llega una versión en mayor resolución, ese es el
+lugar natural para reemplazar la ilustración del hero.
 
 **Antes de publicarlo a clientes reales, completá lo que quedó de referencia:**
 
