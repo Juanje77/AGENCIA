@@ -162,6 +162,28 @@ a.switch-opcion:hover{opacity:1}
 .tarjeta-destino h3{color:var(--buttercream);font-size:22px;margin:4px 0 6px}
 .tarjeta-destino p{color:rgba(248,241,231,.85);font-size:13px;margin:0}
 
+/* --- viajes nacionales --- */
+.grilla-flyers{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:26px}
+.tarjeta-flyer{background:var(--blanco);border-radius:16px;overflow:hidden;
+  box-shadow:0 10px 26px rgba(62,62,62,.1);display:flex;flex-direction:column}
+.flyer-imagen{position:relative;height:190px}
+.flyer-imagen svg{width:100%;height:100%;display:block}
+.flyer-precio{position:absolute;top:14px;right:14px;background:var(--terracota);
+  color:var(--buttercream);font-family:var(--f-cuerpo);font-weight:700;font-size:13px;
+  padding:6px 13px;border-radius:999px;box-shadow:0 4px 10px rgba(62,62,62,.2)}
+.flyer-cuerpo{padding:22px 22px 24px;display:flex;flex-direction:column;gap:2px;flex:1}
+.flyer-cuerpo .ojo{font-size:11px}
+.flyer-cuerpo h3{font-size:20px;margin:2px 0 4px}
+.flyer-fecha{font-size:12.5px;color:var(--tierra);margin-bottom:8px}
+.flyer-cuerpo p:not(.flyer-fecha){font-size:13.5px;color:var(--carbon-suave);flex:1}
+.boton-mercadopago{display:inline-flex;align-items:center;justify-content:center;gap:9px;
+  margin-top:14px;padding:12px 20px;border-radius:999px;background:#009ee3;color:#fff;
+  font-family:var(--f-cuerpo);font-weight:700;font-size:13.5px;text-decoration:none;
+  transition:background .15s ease,transform .15s ease}
+.boton-mercadopago:hover{background:#0086c3;transform:translateY(-1px)}
+.boton-mercadopago svg{width:18px;height:18px;flex:none;stroke:currentColor;fill:none;
+  stroke-width:1.8}
+
 /* --- proceso --- */
 .pasos{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:30px;
   counter-reset:paso}

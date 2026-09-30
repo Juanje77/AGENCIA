@@ -89,6 +89,11 @@
   <symbol id="icono-flecha-abajo" viewBox="0 0 24 24">
     <path d="M12 4v15M6 13l6 6 6-6"/>
   </symbol>
+  <symbol id="icono-tarjeta" viewBox="0 0 24 24">
+    <rect x="2.3" y="5.2" width="19.4" height="13.6" rx="2.3"/>
+    <path d="M2.3 9.6h19.4"/>
+    <path d="M6 14.4h4.2"/>
+  </symbol>
 </svg>
 
 <!-- ============================ HEADER ============================ -->
@@ -103,6 +108,7 @@
       <a href="#inicio">Inicio</a>
       <a href="#servicios">Servicios</a>
       <a href="#destinos">Destinos</a>
+      <a href="#nacionales">Viajes nacionales</a>
       <a href="#nosotros">Nosotros</a>
       <a href="#contacto">Contacto</a>
     </nav>
@@ -311,6 +317,121 @@
           <h3>Escapadas a medida</h3><p>El itinerario se arma alrededor de lo que vos querés.</p></div>
       </article>
     </div>
+  </div>
+</section>
+
+<!-- ======================= VIAJES NACIONALES ======================= -->
+<section class="seccion seccion-arena" id="nacionales">
+  <div class="envoltorio">
+    <div class="encabezado-seccion centrado">
+      <span class="ojo">Salidas con fecha fija</span>
+      <h2 style="font-size:clamp(28px,3.6vw,38px);margin-top:12px">Viajes nacionales</h2>
+      <p class="lead" style="margin:14px auto 0">Paquetes armados y con precio cerrado.
+        Reservá tu lugar y aboná online, con tarjeta de crédito o débito, a través de
+        Mercado Pago.</p>
+    </div>
+
+    <!-- COMPLETAR: cada tarjeta es un flyer de ejemplo. Para publicar uno real:
+         1) reemplazar el <svg> por una <img> con la foto/flyer del viaje;
+         2) completar destino, fecha, precio y descripción;
+         3) crear un "Link de pago" para ese viaje desde la cuenta de Mercado
+            Pago de la agencia (Tu negocio > Cobros > Links de pago) y pegar
+            esa URL en el href del botón "Pagar con Mercado Pago" de abajo.
+         Se puede agregar o sacar tarjetas copiando/borrando un <article>. -->
+    <div class="grilla-flyers">
+      <article class="tarjeta-flyer">
+        <div class="flyer-imagen">
+          <svg viewBox="0 0 400 240" preserveAspectRatio="xMidYMid slice">
+            <rect width="400" height="240" fill="#8B6F56"/>
+            <path d="M0 170l60-90 55 55 45-75 240 140v40H0z" fill="#3E3E3E" opacity=".55"/>
+            <circle cx="330" cy="55" r="26" fill="#F8F1E7" opacity=".7"/>
+          </svg>
+          <span class="flyer-precio">$450.000 <span style="font-weight:500">p/persona</span></span>
+        </div>
+        <div class="flyer-cuerpo">
+          <span class="ojo">Semana de vacaciones de invierno</span>
+          <h3>Bariloche</h3>
+          <p class="flyer-fecha">14 al 19 de julio · 5 noches</p>
+          <p>Hotel 3 estrellas con desayuno, traslados aeropuerto-hotel y excursión al
+            Cerro Catedral incluida.</p>
+          <a href="#" class="boton-mercadopago">
+            <svg><use href="#icono-tarjeta"/></svg>
+            Pagar con Mercado Pago
+          </a>
+        </div>
+      </article>
+
+      <article class="tarjeta-flyer">
+        <div class="flyer-imagen">
+          <svg viewBox="0 0 400 240" preserveAspectRatio="xMidYMid slice">
+            <rect width="400" height="240" fill="#2f6b52"/>
+            <path d="M0 60c60 40 90-20 150 10s80 60 130 20 90-30 120 10v140H0z" fill="#1f4a39" opacity=".7"/>
+            <rect x="150" y="30" width="10" height="140" fill="#F8F1E7" opacity=".55"/>
+            <rect x="170" y="10" width="8" height="160" fill="#F8F1E7" opacity=".4"/>
+          </svg>
+          <span class="flyer-precio">$320.000 <span style="font-weight:500">p/persona</span></span>
+        </div>
+        <div class="flyer-cuerpo">
+          <span class="ojo">Escapada de fin de semana largo</span>
+          <h3>Cataratas del Iguazú</h3>
+          <p class="flyer-fecha">8 al 11 de octubre · 3 noches</p>
+          <p>Hotel a 10 minutos del Parque Nacional, entrada al lado argentino y
+            traslados incluidos.</p>
+          <a href="#" class="boton-mercadopago">
+            <svg><use href="#icono-tarjeta"/></svg>
+            Pagar con Mercado Pago
+          </a>
+        </div>
+      </article>
+
+      <article class="tarjeta-flyer">
+        <div class="flyer-imagen">
+          <svg viewBox="0 0 400 240" preserveAspectRatio="xMidYMid slice">
+            <rect width="400" height="240" fill="#C97B5B"/>
+            <path d="M0 190c70-60 110-10 170-50s90-70 230-30v120H0z" fill="#A85F42"/>
+            <circle cx="90" cy="70" r="34" fill="#F8F1E7" opacity=".55"/>
+          </svg>
+          <span class="flyer-precio">$280.000 <span style="font-weight:500">p/persona</span></span>
+        </div>
+        <div class="flyer-cuerpo">
+          <span class="ojo">Ruta del vino</span>
+          <h3>Mendoza</h3>
+          <p class="flyer-fecha">5 al 8 de septiembre · 3 noches</p>
+          <p>Alojamiento céntrico, medio día de visita a bodegas con degustación y
+            traslados incluidos.</p>
+          <a href="#" class="boton-mercadopago">
+            <svg><use href="#icono-tarjeta"/></svg>
+            Pagar con Mercado Pago
+          </a>
+        </div>
+      </article>
+
+      <article class="tarjeta-flyer">
+        <div class="flyer-imagen">
+          <svg viewBox="0 0 400 240" preserveAspectRatio="xMidYMid slice">
+            <rect width="400" height="240" fill="#3E3E3E"/>
+            <path d="M0 150l90-70 70 40 100-80 140 90v70H0z" fill="#6b6259" opacity=".6"/>
+            <rect x="0" y="150" width="400" height="90" fill="#274b63" opacity=".55"/>
+          </svg>
+          <span class="flyer-precio">$520.000 <span style="font-weight:500">p/persona</span></span>
+        </div>
+        <div class="flyer-cuerpo">
+          <span class="ojo">Trekking en el glaciar</span>
+          <h3>El Calafate</h3>
+          <p class="flyer-fecha">2 al 6 de noviembre · 4 noches</p>
+          <p>Hotel con desayuno, excursión de día completo al Glaciar Perito Moreno y
+            traslados incluidos.</p>
+          <a href="#" class="boton-mercadopago">
+            <svg><use href="#icono-tarjeta"/></svg>
+            Pagar con Mercado Pago
+          </a>
+        </div>
+      </article>
+    </div>
+
+    <p class="form-nota" style="margin-top:34px">¿Buscás otra fecha o un cupo para un
+      grupo? <a href="#contacto" style="color:var(--terracota);font-weight:600">Escribinos</a>
+      y te armamos una propuesta a medida.</p>
   </div>
 </section>
 

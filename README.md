@@ -30,11 +30,33 @@ resto del sistema, es una página estática.
 | Sección de contacto | Enlaces de Instagram, Facebook y WhatsApp (hoy apuntan a `#`) |
 | `publico.js` | El email de destino del formulario (`hola@esplora.com.ar` es de ejemplo) |
 | Hero y tarjetas de "Destinos" | Ilustraciones en SVG con los tonos de la marca, pensadas para reemplazarse por fotos reales (buscá los comentarios `<!-- FOTO: -->`) |
+| Sección "Viajes nacionales" | 4 flyers de ejemplo (Bariloche, Iguazú, Mendoza, El Calafate) con foto, precio, fecha y descripción de referencia — buscá el comentario `<!-- COMPLETAR -->` arriba de `<div class="grilla-flyers">` en `publico.html` |
 
 El formulario de contacto no tiene backend de envío de mail: arma un
 `mailto:` con lo que la persona cargó y lo abre en su propio correo. Si más
 adelante conectás un servicio de email, se reemplaza solo esa parte de
 `publico.js`, sin tocar el resto de la página.
+
+### Cobros con Mercado Pago (sección "Viajes nacionales")
+
+Cada flyer tiene un botón **"Pagar con Mercado Pago"**. Es un link fijo, no
+una integración con API: no requiere ninguna clave ni tocar el servidor, y
+funciona igual en local y en Vercel. Para activar el cobro de un viaje real:
+
+1. Entrá a tu cuenta de Mercado Pago → **Tu negocio → Cobros → Links de
+   pago** (o "Cobrar" → "Crear link de pago").
+2. Cargá el nombre del viaje y el precio (ahí también se define si se
+   permite pagar en cuotas).
+3. Copiá la URL que te da Mercado Pago y pegala en el `href` del botón
+   correspondiente en `publico.html` (donde hoy dice `href="#"`).
+
+Con eso, el pasajero paga con tarjeta de crédito o débito directamente en
+Mercado Pago; la agencia ve el cobro en su propia cuenta como cualquier otro
+link de pago. Si en algún momento hace falta que la página sepa
+automáticamente si un viaje ya se pagó (por ejemplo para bajarlo solo de la
+web cuando se agotan los cupos), eso requiere pasar a una integración con la
+API de Mercado Pago y guardar un Access Token como variable de entorno —
+hoy no está implementado.
 
 ---
 
