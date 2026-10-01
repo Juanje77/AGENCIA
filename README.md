@@ -87,6 +87,17 @@ variables no estén cargadas en el hosting, el formulario sigue funcionando
 igual que antes: se abre el programa de correo del cliente con la consulta
 ya redactada.
 
+**Los botones de "pedir cotización" o "contacto"** repartidos por todo el
+sitio (el del header, los de cada tarjeta de "Viajes internacionales", los
+"Escribinos" de cada página, etc.) no pasan por ese formulario: abren
+directo una conversación de WhatsApp al +54 9 2954 44-7929, con el mensaje
+ya redactado según de dónde salió el click. La única puerta que sigue
+llevando al formulario es el link "Contacto" de la navegación (header y
+pie de página), para quien prefiera escribir en vez de usar WhatsApp. Si
+cambia el número, el texto a reemplazar es `5492954447929` — aparece en
+`_partes/encabezado.html`, `_partes/pie.html` y en cada página pública que
+tenga uno de estos botones.
+
 **Sobre las fotos:** las 4 tarjetas de "Destinos" (sol y mar, metrópolis,
 aire libre, a medida), los 4 flyers de "Viajes nacionales" y los 4 destinos
 de "Viajes internacionales" ya tienen la foto real que mandó la agencia,
