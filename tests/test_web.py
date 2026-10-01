@@ -150,6 +150,73 @@ def test_lista_los_mayoristas(servidor):
     assert "agencia" in datos
 
 
+# --- contacto ------------------------------------------------------------------
+
+def _consulta():
+    return {
+        "nombre": "Juana Perez",
+        "email": "juana@example.com",
+        "telefono": "2954111111",
+        "destino": "Bariloche",
+        "mensaje": "Quisiera cotizar un viaje en enero.",
+    }
+
+
+def test_contacto_sin_smtp_configurado_avisa_para_caer_al_mailto(servidor, monkeypatch):
+    """Sin SMTP_HOST, el sitio sigue funcionando: el frontend cae al mailto de siempre."""
+    monkeypatch.delenv("SMTP_HOST", raising=False)
+    datos = json.loads(_post(servidor, "/api/contacto", _consulta())[1])
+    assert datos["enviado"] is False
+    assert "SMTP_HOST" in datos["aviso"]
+
+
+def test_contacto_sin_nombre_devuelve_400(servidor):
+    with pytest.raises(urllib.error.HTTPError) as exc:
+        _post(servidor, "/api/contacto", {**_consulta(), "nombre": ""})
+    assert exc.value.code == 400
+
+
+def test_contacto_con_email_invalido_devuelve_400(servidor):
+    with pytest.raises(urllib.error.HTTPError) as exc:
+        _post(servidor, "/api/contacto", {**_consulta(), "email": "no-es-un-email"})
+    assert exc.value.code == 400
+
+
+def test_contacto_se_manda_por_smtp_si_esta_configurado(servidor, monkeypatch):
+    enviados = []
+
+    class SMTPFalso:
+        def __init__(self, host, puerto, timeout=10):
+            enviados.append((host, puerto))
+
+        def __enter__(self):
+            return self
+
+        def __exit__(self, *exc):
+            return False
+
+        def starttls(self):
+            pass
+
+        def login(self, usuario, clave):
+            enviados.append((usuario, clave))
+
+        def send_message(self, mensaje):
+            enviados.append(mensaje)
+
+    monkeypatch.setenv("SMTP_HOST", "smtp.ejemplo.com")
+    monkeypatch.setenv("SMTP_USUARIO", "bot@esplora.com.ar")
+    monkeypatch.setenv("SMTP_CLAVE", "secreta")
+    monkeypatch.setattr("smtplib.SMTP", SMTPFalso)
+
+    datos = json.loads(_post(servidor, "/api/contacto", _consulta())[1])
+    assert datos["enviado"] is True
+    assert enviados[0] == ("smtp.ejemplo.com", 587)
+    mensaje = enviados[-1]
+    assert mensaje["To"] == "hola@esplora.com.ar"
+    assert mensaje["Reply-To"] == "juana@example.com"
+
+
 # --- cotizacion --------------------------------------------------------------
 
 def _cotizacion():

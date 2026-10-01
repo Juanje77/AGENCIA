@@ -34,26 +34,17 @@ if (disparador && nav) {
   });
 }
 
-// --- formulario de contacto -> mailto --------------------------------------
-// Todavia no hay un servicio de envio de correo conectado: se arma un
-// mailto: con lo que la persona cargo, para que lo mande desde su propio
-// correo. El dia que haya un backend de mail, esto se reemplaza por un
-// fetch a un endpoint propio sin tocar el resto del formulario.
+// --- formulario de contacto -------------------------------------------------
+// Se manda al backend (/api/contacto), que lo envia por correo a la agencia.
+// Si todavia no hay SMTP configurado en el servidor, o la peticion falla por
+// conexion, se cae al mailto: de siempre para no perder la consulta.
 const formulario = $("#formulario-contacto");
 if (formulario) {
-  formulario.addEventListener("submit", (evento) => {
-    evento.preventDefault();
-    const datos = new FormData(formulario);
-    const nombre = (datos.get("nombre") || "").toString().trim();
-    const email = (datos.get("email") || "").toString().trim();
-    const telefono = (datos.get("telefono") || "").toString().trim();
-    const destino = (datos.get("destino") || "").toString().trim();
-    const mensaje = (datos.get("mensaje") || "").toString().trim();
+  const nota = formulario.querySelector(".form-nota");
+  const boton = formulario.querySelector("button[type=submit]");
 
-    // COMPLETAR: reemplazar por el email real de la agencia (el mismo que
-    // figura en la seccion de contacto y en el pie de pagina).
+  function mailtoDeRespaldo({ nombre, email, telefono, destino, mensaje }) {
     const destinatario = "hola@esplora.com.ar";
-
     const asunto = `Consulta de viaje${destino ? " · " + destino : ""}`;
     const cuerpo = [
       `Nombre: ${nombre}`,
@@ -65,8 +56,44 @@ if (formulario) {
     ]
       .filter(Boolean)
       .join("\n");
+    window.location.href = `mailto:${destinatario}?subject=${encodeURIComponent(asunto)}&body=${encodeURIComponent(cuerpo)}`;
+  }
 
-    const enlace = `mailto:${destinatario}?subject=${encodeURIComponent(asunto)}&body=${encodeURIComponent(cuerpo)}`;
-    window.location.href = enlace;
+  formulario.addEventListener("submit", async (evento) => {
+    evento.preventDefault();
+    const datos = new FormData(formulario);
+    const consulta = {
+      nombre: (datos.get("nombre") || "").toString().trim(),
+      email: (datos.get("email") || "").toString().trim(),
+      telefono: (datos.get("telefono") || "").toString().trim(),
+      destino: (datos.get("destino") || "").toString().trim(),
+      mensaje: (datos.get("mensaje") || "").toString().trim(),
+    };
+
+    if (boton) boton.disabled = true;
+    if (nota) nota.textContent = "Enviando tu consulta...";
+
+    let enviado = false;
+    try {
+      const respuesta = await fetch("/api/contacto", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(consulta),
+      });
+      const resultado = await respuesta.json();
+      enviado = respuesta.ok && resultado.enviado === true;
+    } catch (error) {
+      enviado = false;
+    }
+
+    if (enviado) {
+      formulario.reset();
+      if (nota) nota.textContent = "¡Gracias! Te vamos a contactar a la brevedad.";
+      return;
+    }
+
+    mailtoDeRespaldo(consulta);
+    if (boton) boton.disabled = false;
+    if (nota) nota.textContent = "Se abrió tu programa de correo con la consulta ya redactada.";
   });
 }

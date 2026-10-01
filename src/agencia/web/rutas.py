@@ -20,6 +20,7 @@ from ..liquidaciones import ErrorDeLectura
 from ..liquidaciones.factura import leer_factura
 from ..liquidador import Padron, cargar_padron, guardar_padron, operacion_desde_comprobante
 from ..presupuestos.cotizacion import TIPOS_SERVICIO, calcular_cotizacion
+from .contacto import consulta_desde_dict, enviar_consulta
 from .informes import (
     informe_cotizacion_agencia,
     informe_cotizacion_cliente,
@@ -122,19 +123,27 @@ PAGINAS_PUBLICAS = {
 RUTAS_PUBLICAS_DE_PAGINA = (
     ("/", "/index.html", "/publico.html") + tuple(PAGINAS_PUBLICAS) + RUTAS_PANEL
 )
+# El formulario de contacto lo manda un cliente potencial, no personal de la
+# agencia: tiene que funcionar aunque el sistema tenga clave puesta.
+RUTAS_PUBLICAS_DE_API = ("/api/contacto",)
 
 
 def _controlar_acceso(peticion: Peticion) -> Respuesta | None:
     """Clave compartida, para cuando el sistema queda publicado en internet.
 
     La pagina del panel se puede cargar sin clave -es solo el cascaron-, pero
-    ninguna llamada a la API funciona sin ella. El sitio publico (/) nunca la
+    ninguna llamada a la API funciona sin ella (salvo las que use el sitio
+    publico, como el formulario de contacto). El sitio publico (/) nunca la
     pide: es lo que ve un cliente potencial, no personal de la agencia.
     """
     clave = clave_de_acceso()
     if not clave:
         return None
-    if peticion.ruta in RUTAS_PUBLICAS_DE_PAGINA or peticion.ruta.startswith("/estatico/"):
+    if (
+        peticion.ruta in RUTAS_PUBLICAS_DE_PAGINA
+        or peticion.ruta in RUTAS_PUBLICAS_DE_API
+        or peticion.ruta.startswith("/estatico/")
+    ):
         return None
     if peticion.cabecera("X-Clave") == clave:
         return None
@@ -184,6 +193,9 @@ def _post(peticion: Peticion) -> Respuesta:
 
     if ruta == "/api/mayoristas":
         return _guardar_mayoristas(datos)
+
+    if ruta == "/api/contacto":
+        return Respuesta.json(enviar_consulta(consulta_desde_dict(datos)))
 
     return Respuesta.error(404, "Recurso no encontrado")
 

@@ -299,3 +299,11 @@ def test_con_la_clave_correcta_entra(wsgi_con_clave):
 
 def test_sin_clave_configurada_la_api_queda_abierta(wsgi):
     assert _get(wsgi, "/api/parametros")[0] == 200
+
+
+def test_el_formulario_de_contacto_funciona_aunque_haya_clave(wsgi_con_clave):
+    """Lo manda un cliente potencial, que no tiene (ni tiene por que saber) la clave."""
+    datos = {"nombre": "Juana", "email": "juana@example.com", "mensaje": "Hola"}
+    codigo, cuerpo = _post(wsgi_con_clave, "/api/contacto", datos)
+    assert codigo == 200
+    assert json.loads(cuerpo)["enviado"] is False  # sin SMTP configurado en el test

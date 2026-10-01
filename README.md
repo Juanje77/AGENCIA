@@ -74,11 +74,18 @@ estirarse en monitores grandes.
 
 | Dónde | Qué reemplazar |
 |---|---|
-| `contacto.html` y `_partes/pie.html` | Teléfono, email, dirección y horario — están marcados con `<!-- COMPLETAR -->` |
-| `contacto.html` | Enlaces de Instagram, Facebook y WhatsApp (hoy apuntan a `#`) |
-| `publico.js` | El email de destino del formulario (`hola@esplora.com.ar` es de ejemplo) |
+| `contacto.html` y `_partes/pie.html` | Email y dirección — están marcados con `<!-- COMPLETAR -->` (el teléfono y el WhatsApp ya son los reales: +54 9 2954 44-7929) |
+| `contacto.html` | Enlaces de Instagram y Facebook (hoy apuntan a `#`; el de WhatsApp ya está) |
+| `contacto.py` | El email de destino del formulario (`hola@esplora.com.ar` es de ejemplo; se puede cambiar sin tocar código con `CONTACTO_EMAIL`, ver [Variables de entorno](#variables-de-entorno)) |
 | `nacionales.html` | 4 flyers de ejemplo (Bariloche, Iguazú, Mendoza, El Calafate) con precio y fecha de referencia — buscá el comentario `<!-- COMPLETAR -->` arriba de `<div class="grilla-flyers">` |
 | `internacionales.html` | 4 destinos de ejemplo (Cancún, Río de Janeiro, París/Roma, Orlando) con precio de referencia — buscá el comentario arriba de `<div class="grilla-flyers">` |
+
+**El formulario de contacto** (`/contacto`) manda la consulta al endpoint
+`/api/contacto`, que la envía por correo a la agencia usando SMTP
+(`SMTP_HOST` y las variables relacionadas, ver abajo). Mientras esas
+variables no estén cargadas en el hosting, el formulario sigue funcionando
+igual que antes: se abre el programa de correo del cliente con la consulta
+ya redactada.
 
 **Sobre las fotos:** las 4 tarjetas de "Destinos" (sol y mar, metrópolis,
 aire libre, a medida), los 4 flyers de "Viajes nacionales" y los 4 destinos
@@ -414,6 +421,11 @@ Se prueban en orden y se usa el primero disponible: `pymupdf`, `pdfplumber`,
 | `AGENCIA_CONFIG_DIR` | Otra carpeta de configuración. |
 | `ANTHROPIC_API_KEY` | Habilita la lectura con IA. Sin ella, solo el lector de reglas. |
 | `AGENCIA_MODELO_IA` | Qué modelo usar (`claude-opus-5` por defecto). |
+| `SMTP_HOST` | Servidor SMTP para mandar el formulario de contacto por correo. Sin esto, el formulario cae al `mailto:` del navegador. |
+| `SMTP_PUERTO` | Puerto del servidor SMTP (587 por defecto, con STARTTLS). |
+| `SMTP_USUARIO` | Usuario para autenticarse en el SMTP (y remitente del correo). |
+| `SMTP_CLAVE` | Contraseña o clave de aplicación de ese usuario. |
+| `CONTACTO_EMAIL` | A dónde llega cada consulta (`hola@esplora.com.ar` por defecto). |
 
 ---
 
