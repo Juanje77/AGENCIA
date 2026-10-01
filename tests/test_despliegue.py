@@ -75,7 +75,7 @@ def test_sirve_el_panel_interno_en_su_ruta(wsgi):
 
 
 def test_sirve_las_paginas_del_sitio_publico(wsgi):
-    for ruta in ("/servicios", "/destinos", "/nacionales", "/internacionales",
+    for ruta in ("/servicios", "/destinos", "/salidas-grupales", "/a-medida",
                  "/nosotros", "/contacto"):
         codigo, cuerpo = _get(wsgi, ruta)
         assert codigo == 200, ruta
@@ -267,7 +267,7 @@ def test_el_sitio_publico_nunca_pide_la_clave(wsgi_con_clave):
     """Lo que ve un cliente potencial no tiene por que saber que existe una clave."""
     assert _get(wsgi_con_clave, "/")[0] == 200
     assert _get(wsgi_con_clave, "/estatico/publico.js")[0] == 200
-    for ruta in ("/servicios", "/destinos", "/nacionales", "/internacionales",
+    for ruta in ("/servicios", "/destinos", "/salidas-grupales", "/a-medida",
                  "/nosotros", "/contacto"):
         assert _get(wsgi_con_clave, ruta)[0] == 200, ruta
 

@@ -59,8 +59,8 @@ def test_cada_seccion_tiene_su_propia_pagina(servidor):
     paginas = {
         "/servicios": "Servicios pensados para cada viaje",
         "/destinos": "Un mundo de posibilidades",
-        "/nacionales": "Viajes nacionales",
-        "/internacionales": "Viajes internacionales",
+        "/salidas-grupales": "Salidas grupales",
+        "/a-medida": "Viajes a medida",
         "/nosotros": "De la idea al viaje",
         "/contacto": "Planeemos tu próximo viaje",
     }
@@ -72,15 +72,17 @@ def test_cada_seccion_tiene_su_propia_pagina(servidor):
         assert "Esplora" in cuerpo and "Acceso agencia" in cuerpo, ruta
 
 
-def test_cada_salida_nacional_tiene_su_itinerario(servidor):
-    """Cada flyer de "Viajes nacionales" linkea a su itinerario detallado."""
+def test_cada_salida_grupal_tiene_su_itinerario(servidor):
+    """Cada flyer de "Salidas grupales" linkea a su itinerario detallado."""
     itinerarios = {
-        "/nacionales/bariloche": "Bariloche",
-        "/nacionales/iguazu": "Cataratas del Iguazú",
-        "/nacionales/mendoza": "Mendoza",
-        "/nacionales/calafate": "El Calafate",
+        "/salidas-grupales/bariloche": "Bariloche",
+        "/salidas-grupales/iguazu": "Cataratas del Iguazú",
+        "/salidas-grupales/mendoza": "Mendoza",
+        "/salidas-grupales/calafate": "El Calafate",
+        "/salidas-grupales/punta-cana": "Punta Cana",
+        "/salidas-grupales/vina-del-mar": "Viña del Mar",
     }
-    _, listado = _get(servidor, "/nacionales")
+    _, listado = _get(servidor, "/salidas-grupales")
     for ruta in itinerarios:
         assert f'href="{ruta}"' in listado, ruta
 
@@ -96,8 +98,8 @@ def test_cada_salida_nacional_tiene_su_itinerario(servidor):
 def test_el_inicio_es_un_resumen_no_todo_apilado(servidor):
     """La home muestra una parte de cada seccion, con un link a la pagina completa."""
     _, cuerpo = _get(servidor, "/")
-    assert 'href="/nacionales"' in cuerpo
-    assert 'href="/internacionales"' in cuerpo
+    assert 'href="/salidas-grupales"' in cuerpo
+    assert 'href="/a-medida"' in cuerpo
     assert 'href="/servicios"' in cuerpo
     assert 'href="/destinos"' in cuerpo
     assert 'href="/nosotros"' in cuerpo

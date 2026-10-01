@@ -28,15 +28,15 @@ Está repartido en varias páginas en vez de una sola muy larga:
 | `/` | Inicio: hero + un resumen breve de cada sección de abajo, con su link a la página completa |
 | `/servicios` | Los 10 servicios completos + "Consejos para elegir tu viaje" |
 | `/destinos` | Las 4 categorías de "Para inspirarte" |
-| `/nacionales` | Los 4 flyers de viajes nacionales, con su botón de Mercado Pago |
-| `/nacionales/bariloche`, `/…/iguazu`, `/…/mendoza`, `/…/calafate` | Itinerario día por día de cada salida grupal, con horarios, incluye/no incluye y el botón de pago |
-| `/internacionales` | Los 4 destinos internacionales de referencia |
+| `/salidas-grupales` | Las salidas con fecha fija, cupo y precio cerrado — nacionales e internacionales juntas —, con su botón de Mercado Pago |
+| `/salidas-grupales/bariloche`, `/…/iguazu`, `/…/mendoza`, `/…/calafate`, `/…/punta-cana`, `/…/vina-del-mar` | Itinerario día por día de cada salida grupal, con horarios, incluye/no incluye y el botón de pago |
+| `/a-medida` | Los destinos de referencia sin fecha fija: el precio final se cotiza caso por caso |
 | `/nosotros` | Cómo trabajamos, paso a paso, y el testimonio |
 | `/contacto` | Datos de contacto y el formulario |
 | `/panel` | Herramientas internas (protegidas por `AGENCIA_CLAVE`) |
 
 Cada página es un archivo en `src/agencia/web/estatico/` (`publico.html`,
-`servicios.html`, `destinos.html`, `nacionales.html`, `internacionales.html`,
+`servicios.html`, `destinos.html`, `salidas-grupales.html`, `a-medida.html`,
 `nosotros.html`, `contacto.html`). El header, el pie de página y los íconos
 SVG **no están duplicados** en cada uno: viven una sola vez en
 `src/agencia/web/estatico/_partes/` (`encabezado.html`, `pie.html`,
@@ -77,8 +77,8 @@ estirarse en monitores grandes.
 | `contacto.html` y `_partes/pie.html` | Email y dirección — están marcados con `<!-- COMPLETAR -->` (el teléfono y el WhatsApp ya son los reales: +54 9 2954 44-7929) |
 | `contacto.html` | Enlaces de Instagram y Facebook (hoy apuntan a `#`; el de WhatsApp ya está) |
 | `contacto.py` | El email de destino del formulario (`hola@esplora.com.ar` es de ejemplo; se puede cambiar sin tocar código con `CONTACTO_EMAIL`, ver [Variables de entorno](#variables-de-entorno)) |
-| `nacionales.html` | 4 flyers de ejemplo (Bariloche, Iguazú, Mendoza, El Calafate) con precio y fecha de referencia — buscá el comentario `<!-- COMPLETAR -->` arriba de `<div class="grilla-flyers">` |
-| `internacionales.html` | 4 destinos de ejemplo (Cancún, Río de Janeiro, París/Roma, Orlando) con precio de referencia — buscá el comentario arriba de `<div class="grilla-flyers">` |
+| `salidas-grupales.html` | 6 salidas de ejemplo: las 4 nacionales (Bariloche, Iguazú, Mendoza, El Calafate) y 2 internacionales (Punta Cana vía el mayorista Ola, y Viña del Mar como salida propia en micro) — buscá el comentario `<!-- COMPLETAR -->` arriba de `<div class="grilla-flyers">` |
+| `a-medida.html` | 4 destinos de ejemplo (Cancún, Río de Janeiro, París/Roma, Orlando) con precio de referencia — buscá el comentario arriba de `<div class="grilla-flyers">` |
 
 **El formulario de contacto** (`/contacto`) manda la consulta al endpoint
 `/api/contacto`, que la envía por correo a la agencia usando SMTP
@@ -88,7 +88,7 @@ igual que antes: se abre el programa de correo del cliente con la consulta
 ya redactada.
 
 **Los botones de "pedir cotización" o "contacto"** repartidos por todo el
-sitio (el del header, los de cada tarjeta de "Viajes internacionales", los
+sitio (el del header, los de cada tarjeta de "A medida", los
 "Escribinos" de cada página, etc.) no pasan por ese formulario: abren
 directo una conversación de WhatsApp al +54 9 2954 44-7929, con el mensaje
 ya redactado según de dónde salió el click. La única puerta que sigue
@@ -99,38 +99,38 @@ cambia el número, el texto a reemplazar es `5492954447929` — aparece en
 tenga uno de estos botones.
 
 **Sobre las fotos:** las 4 tarjetas de "Destinos" (sol y mar, metrópolis,
-aire libre, a medida), los 4 flyers de "Viajes nacionales" y los 4 destinos
-de "Viajes internacionales" ya tienen la foto real que mandó la agencia,
-guardadas en `src/agencia/web/estatico/img/destinos/`, `.../img/flyers/` y
-`.../img/internacionales/` respectivamente. Para cambiar una foto o agregar
-un viaje nuevo, se suma el archivo en la carpeta que corresponda y se apunta
-el `src` del `<img>` — se suben directo al repo, no se enlazan a un sitio
-externo (un intento anterior con fotos de Wikimedia Commons no se veía en
-el sitio publicado).
+aire libre, a medida) y los 4 destinos de "A medida" ya tienen la foto real
+que mandó la agencia, guardadas en `src/agencia/web/estatico/img/destinos/`
+y `.../img/internacionales/` respectivamente. Los 4 flyers nacionales de
+"Salidas grupales" usan sus fotos en `.../img/flyers/`; los 2 internacionales
+de ejemplo (Punta Cana, Viña del Mar) todavía no tienen foto propia y
+reutilizan dos de las de "Destinos" — están marcados con
+`<!-- COMPLETAR -->` para reemplazarlas cuando haya una foto real del viaje.
+Para cambiar una foto o agregar un viaje nuevo, se suma el archivo en la
+carpeta que corresponda y se apunta el `src` del `<img>` — se suben directo
+al repo, no se enlazan a un sitio externo (un intento anterior con fotos de
+Wikimedia Commons no se veía en el sitio publicado).
 
-**"Viajes nacionales" vs "Viajes internacionales":** son dos secciones con
-la misma tarjeta (`.tarjeta-flyer`), pero un botón distinto a propósito. Los
-nacionales son paquetes de precio cerrado, así que el botón cobra directo
-con Mercado Pago. Los internacionales dependen del tipo de cambio y la
-disponibilidad del día, así que llevan un precio "Desde U$S X" de referencia
-y el botón lleva al formulario de contacto para pedir la cotización exacta.
+**"Salidas grupales" vs "A medida":** son dos secciones con la misma
+tarjeta (`.tarjeta-flyer`), pero un botón distinto a propósito. Una salida
+grupal —nacional o internacional, con mayorista o propia— tiene fecha, cupo
+y precio cerrado, así que el botón cobra directo con Mercado Pago. Un viaje
+a medida no tiene fecha fija: depende del tipo de cambio y la disponibilidad
+del día, así que lleva un precio "Desde U$S X" de referencia y el botón abre
+WhatsApp para pedir la cotización exacta.
 
-**Itinerario de cada salida grupal:** cada flyer de "Viajes nacionales"
+**Itinerario de cada salida grupal:** cada flyer de "Salidas grupales"
 tiene, debajo del botón de pago, un link **"Ver itinerario completo"** que
 lleva a su propia página (`itinerario-bariloche.html`, `itinerario-iguazu.html`,
-`itinerario-mendoza.html`, `itinerario-calafate.html`, en las rutas
-`/nacionales/<destino>`) con el día por día, horarios, y qué incluye y qué
-no. Para una salida nueva: copiar uno de esos archivos, agregarlo a
-`PAGINAS_PUBLICAS` en `rutas.py` con su ruta, y linkearlo desde la tarjeta
-correspondiente en `nacionales.html` (y opcionalmente desde el resumen en
-`publico.html`) con la clase `flyer-mas-info`.
+`itinerario-mendoza.html`, `itinerario-calafate.html`, `itinerario-punta-cana.html`,
+`itinerario-vina-del-mar.html`, en las rutas `/salidas-grupales/<destino>`)
+con el día por día, horarios, y qué incluye y qué no. Para una salida nueva:
+copiar uno de esos archivos, agregarlo a `PAGINAS_PUBLICAS` en `rutas.py`
+con su ruta, y linkearlo desde la tarjeta correspondiente en
+`salidas-grupales.html` (y opcionalmente desde el resumen en `publico.html`)
+con la clase `flyer-mas-info`.
 
-El formulario de contacto no tiene backend de envío de mail: arma un
-`mailto:` con lo que la persona cargó y lo abre en su propio correo. Si más
-adelante conectás un servicio de email, se reemplaza solo esa parte de
-`publico.js`, sin tocar el resto de la página.
-
-### Cobros con Mercado Pago (sección "Viajes nacionales")
+### Cobros con Mercado Pago (sección "Salidas grupales")
 
 Cada flyer tiene un botón **"Pagar con Mercado Pago"**. Es un link fijo, no
 una integración con API: no requiere ninguna clave ni tocar el servidor, y
@@ -141,7 +141,9 @@ funciona igual en local y en Vercel. Para activar el cobro de un viaje real:
 2. Cargá el nombre del viaje y el precio (ahí también se define si se
    permite pagar en cuotas).
 3. Copiá la URL que te da Mercado Pago y pegala en el `href` del botón
-   correspondiente en `nacionales.html` (donde hoy dice `href="#"`).
+   correspondiente en `salidas-grupales.html` (donde hoy dice `href="#"`) y
+   en su página de itinerario (`itinerario-<destino>.html`, mismo botón
+   repetido al final de la página).
 
 Con eso, el pasajero paga con tarjeta de crédito o débito directamente en
 Mercado Pago; la agencia ve el cobro en su propia cuenta como cualquier otro
