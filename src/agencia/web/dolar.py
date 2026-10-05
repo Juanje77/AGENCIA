@@ -17,6 +17,14 @@ import urllib.request
 URL_API = "https://dolarapi.com/v1/dolares"
 TIEMPO_DE_CACHE = 300  # 5 minutos
 
+# dolarapi.com devuelve 403 al User-Agent por defecto de urllib
+# ("Python-urllib/3.x"): lo trata como bot. Con un User-Agent de navegador
+# comun, la misma peticion pasa sin problema.
+_CABECERAS = {
+    "User-Agent": "Mozilla/5.0 (compatible; EsploraViajesWeb/1.0; +https://www.esplora.com.ar)",
+    "Accept": "application/json",
+}
+
 # dolarapi.com identifica cada cotizacion con una clave "casa". Elegimos de
 # ahi las 4 que importan para un viaje: oficial (referencia), blue (la que
 # mira la mayoria), bolsa (el MEP) y tarjeta (lo que termina pagando quien
@@ -28,7 +36,8 @@ _cache_momento = 0.0
 
 
 def _pedir_api() -> list[dict]:
-    with urllib.request.urlopen(URL_API, timeout=6) as respuesta:
+    peticion = urllib.request.Request(URL_API, headers=_CABECERAS)
+    with urllib.request.urlopen(peticion, timeout=6) as respuesta:
         return json.loads(respuesta.read().decode("utf-8"))
 
 
