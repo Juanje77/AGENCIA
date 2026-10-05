@@ -18,6 +18,38 @@ function actualizarEncabezado() {
 window.addEventListener("scroll", actualizarEncabezado, { passive: true });
 actualizarEncabezado();
 
+// --- modo claro / oscuro ---------------------------------------------------
+// El <head> de cada pagina ya aplico el tema guardado (si habia uno) antes
+// del primer render, para evitar el parpadeo. Aca solo faltan el click del
+// boton y guardar la eleccion.
+const CLAVE_TEMA = "esplora-tema";
+const disparadorTema = $("#disparador-tema");
+
+function aplicarTema(tema) {
+  document.documentElement.setAttribute("data-theme", tema);
+  if (disparadorTema) {
+    const esClaro = tema === "light";
+    const etiqueta = esClaro ? "Cambiar a modo oscuro" : "Cambiar a modo claro";
+    disparadorTema.setAttribute("aria-label", etiqueta);
+    disparadorTema.title = etiqueta;
+  }
+}
+
+if (disparadorTema) {
+  aplicarTema(document.documentElement.getAttribute("data-theme") === "light" ? "light" : "dark");
+  disparadorTema.addEventListener("click", () => {
+    const actual = document.documentElement.getAttribute("data-theme") === "light" ? "light" : "dark";
+    const siguiente = actual === "light" ? "dark" : "light";
+    aplicarTema(siguiente);
+    try {
+      localStorage.setItem(CLAVE_TEMA, siguiente);
+    } catch (error) {
+      // Sin acceso a localStorage (navegacion privada, etc.): el cambio
+      // sigue andando, solo que no se recuerda en la proxima visita.
+    }
+  });
+}
+
 // --- menu movil -----------------------------------------------------------
 const disparador = $("#disparador-menu");
 const nav = $("#nav-principal");

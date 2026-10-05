@@ -1,16 +1,18 @@
 /* Identidad ESPLORA — Viajes y Turismo.
-   Sistema "Hungry Tiger" adaptado: buttercream como unico acento cromatico
-   (reemplaza al dorado original de esa referencia) contra un monocromo
-   calido de marrones -canvas Ember Rust, superficies Dark Spice y Charred
-   Clove-. Bebas Neue para titulares poster-scale, Inter para el cuerpo. */
+   Sistema "Hungry Tiger" adaptado, con switch de modo claro/oscuro.
+   Oscuro (por defecto): canvas Ember Rust, superficies Dark Spice/Charred
+   Clove, acento buttercream. Claro: canvas buttercream, superficies en un
+   tinte mas calido y acento en marron (Dark Spice). Bebas Neue para
+   titulares poster-scale, Inter para el cuerpo.
+
+   Los colores no viven como hex sueltos en cada regla: se arman en dos
+   capas de variables. La capa de paleta (--buttercream, --ember-rust, etc.)
+   son los colores fijos del sistema. La capa semantica (--fondo, --texto,
+   --acento, etc.) es la que se usa en el resto del archivo, y es la que
+   cambia de valor segun el tema -asi el modo claro/oscuro es un solo
+   bloque [data-theme], no un escaneo de cada regla. */
 
 :root{
-  /* Paleta: un solo acento (buttercream) se despega del monocromo calido de
-     marrones. Saffron Glow es el acento secundario/medio tono, Cardamom
-     Brown las lineas finas, Chili Red queda reservado para alertas tipo
-     "ultimos cupos". Los nombres viejos (--terracota, --tierra, --arena,
-     --carbon, --blanco, --linea, --sombra) se mantienen como alias por
-     compatibilidad con estilos en linea ya existentes. */
   --buttercream:#FFFCE9;
   --buttercream-tenue:rgba(255,252,233,.68);
   --ember-rust:#823513;
@@ -20,25 +22,54 @@
   --cardamom-brown:#6b2e12;
   --chili-red:#d1255c;
 
-  --terracota:var(--buttercream);
-  --terracota-oscuro:#f2e6bb;
-  --arena:var(--buttercream-tenue);
-  --tierra:var(--buttercream);
-  --carbon:var(--buttercream);
-  --carbon-suave:var(--buttercream-tenue);
-  --blanco:var(--dark-spice);
-  --linea:var(--cardamom-brown);
+  /* --- capa semantica: tema oscuro (por defecto) --- */
+  --fondo:var(--ember-rust);
+  --superficie:var(--dark-spice);
+  --superficie-honda:var(--charred-clove);
+  --texto:var(--buttercream);
+  --texto-tenue:var(--buttercream-tenue);
+  --texto-mas-tenue:rgba(255,252,233,.5);
+  --acento:var(--buttercream);
+  --acento-oscuro:#f2e6bb;
+  --acento-texto:var(--charred-clove);
+  --borde:var(--cardamom-brown);
+  --borde-tenue:rgba(255,252,233,.2);
+
+  /* Alias viejos, por compatibilidad con estilos en linea ya existentes. */
+  --terracota:var(--acento);
+  --terracota-oscuro:var(--acento-oscuro);
+  --arena:var(--texto-tenue);
+  --tierra:var(--acento);
+  --carbon:var(--texto);
+  --carbon-suave:var(--texto-tenue);
+  --blanco:var(--superficie);
+  --linea:var(--borde);
   --sombra:none;
 
   --f-display:'Bebas Neue',Impact,'Arial Narrow',sans-serif;
   --f-cuerpo:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
 }
 
+/* --- capa semantica: tema claro --- */
+:root[data-theme="light"]{
+  --fondo:var(--buttercream);
+  --superficie:#F5E9C8;
+  --superficie-honda:#ECDCAA;
+  --texto:var(--charred-clove);
+  --texto-tenue:rgba(40,16,6,.62);
+  --texto-mas-tenue:rgba(40,16,6,.45);
+  --acento:var(--dark-spice);
+  --acento-oscuro:#573018;
+  --acento-texto:var(--buttercream);
+  --borde:rgba(40,16,6,.2);
+  --borde-tenue:rgba(40,16,6,.15);
+}
+
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
-body{margin:0;background:var(--ember-rust);color:var(--buttercream);
+body{margin:0;background:var(--fondo);color:var(--texto);
   font-family:var(--f-cuerpo);line-height:1.6;-webkit-font-smoothing:antialiased;
-  overflow-x:hidden}
+  overflow-x:hidden;transition:background .2s ease,color .2s ease}
 img,svg{max-width:100%;display:block}
 a{color:inherit}
 .envoltorio{max-width:1180px;margin:0 auto;padding:0 24px}
@@ -46,14 +77,14 @@ section{position:relative}
 
 /* --- tipografia general --- */
 h1,h2,h3{font-family:var(--f-display);font-weight:700;margin:0;
-  color:var(--buttercream);letter-spacing:-.01em;text-transform:uppercase;
+  color:var(--texto);letter-spacing:-.01em;text-transform:uppercase;
   line-height:.92}
 .ojo{font-family:var(--f-cuerpo);font-weight:600;font-size:12px;
-  letter-spacing:.16em;text-transform:uppercase;color:var(--buttercream)}
+  letter-spacing:.16em;text-transform:uppercase;color:var(--acento)}
 .acento-manuscrito{font-family:var(--f-display);font-weight:700;
   text-transform:uppercase;letter-spacing:.01em}
 p{margin:0 0 14px}
-.lead{font-size:17px;color:var(--buttercream-tenue);max-width:56ch}
+.lead{font-size:17px;color:var(--texto-tenue);max-width:56ch}
 
 /* --- botones --- */
 .boton{display:inline-flex;align-items:center;gap:9px;padding:14px 30px;white-space:nowrap;
@@ -61,12 +92,12 @@ p{margin:0 0 14px}
   letter-spacing:.03em;text-decoration:none;cursor:pointer;border:1.5px solid transparent;
   transition:transform .15s ease,background .15s ease,color .15s ease}
 .boton:hover{transform:translateY(-1px)}
-.boton-lleno{background:var(--buttercream);color:var(--charred-clove)}
-.boton-lleno:hover{background:var(--terracota-oscuro)}
-.boton-linea,.boton-linea-clara{background:transparent;border-color:var(--buttercream);
-  color:var(--buttercream)}
-.boton-linea:hover,.boton-linea-clara:hover{background:var(--buttercream);
-  color:var(--charred-clove)}
+.boton-lleno{background:var(--acento);color:var(--acento-texto)}
+.boton-lleno:hover{background:var(--acento-oscuro)}
+.boton-linea,.boton-linea-clara{background:transparent;border-color:var(--acento);
+  color:var(--acento)}
+.boton-linea:hover,.boton-linea-clara:hover{background:var(--acento);
+  color:var(--acento-texto)}
 
 /* ======================= LOGO ======================= */
 .logo-esplora{display:flex;align-items:center;gap:12px;text-decoration:none;color:inherit}
@@ -78,18 +109,32 @@ p{margin:0 0 14px}
 .logo-texto span{display:block;font-size:9px;letter-spacing:.22em;
   text-transform:uppercase;color:var(--buttercream-tenue);margin-top:2px}
 
-/* ======================= HEADER ======================= */
+/* ======================= HEADER =======================
+   El header, en su estado base (transparente, sobre la foto del hero),
+   siempre es claro -texto/logo en buttercream literal, sin pasar por la
+   capa semantica- porque esa foto nunca deja de tener el velo oscuro,
+   sin importar el tema del resto del sitio. Solo en su estado solido
+   (con-fondo / pagina-interna) pasa a usar la superficie del tema, y ahi
+   si el texto necesita el override de mas abajo para el tema claro. */
 .encabezado{position:fixed;top:0;left:0;right:0;z-index:50;padding:20px 0;
   transition:background .25s ease,padding .25s ease}
 .encabezado .envoltorio{display:flex;align-items:center;justify-content:space-between;gap:24px}
-.encabezado.con-fondo, body.pagina-interna .encabezado{background:var(--charred-clove);
-  padding:13px 0;border-bottom:1px dotted rgba(255,252,233,.25)}
+.encabezado.con-fondo, body.pagina-interna .encabezado{background:var(--superficie-honda);
+  padding:13px 0;border-bottom:1px dotted var(--borde-tenue)}
 
 .nav-principal{display:flex;align-items:center;gap:24px}
 .nav-principal a{text-decoration:none;color:var(--buttercream);font-size:13.5px;
   font-weight:600;letter-spacing:.03em;transition:opacity .15s}
 .nav-principal a:hover{opacity:.7}
-.nav-derecha{display:flex;align-items:center;gap:16px}
+.nav-derecha{display:flex;align-items:center;gap:14px}
+.disparador-tema{display:flex;align-items:center;justify-content:center;width:34px;height:34px;
+  border-radius:50%;border:1px solid rgba(255,252,233,.35);background:transparent;
+  cursor:pointer;padding:0;flex:none}
+.icono-tema{width:16px;height:16px;stroke:var(--buttercream);fill:none;stroke-width:1.8;
+  stroke-linecap:round;stroke-linejoin:round}
+.icono-tema-luna{display:none}
+:root[data-theme="light"] .icono-tema-sol{display:none}
+:root[data-theme="light"] .icono-tema-luna{display:block}
 .switch-sitio{display:flex;background:rgba(255,252,233,.1);border:1px solid rgba(255,252,233,.3);
   border-radius:999px;padding:3px;gap:2px}
 .switch-opcion{font-family:var(--f-cuerpo);font-weight:600;font-size:11.5px;
@@ -101,7 +146,44 @@ a.switch-opcion:hover{opacity:1}
   cursor:pointer;padding:6px}
 .disparador-menu span{width:24px;height:2px;background:var(--buttercream);border-radius:2px}
 
-/* ======================= HERO ======================= */
+/* Header solido (interior o scrolleado) en tema claro: ahi la superficie
+   del header pasa a ser clara, asi que todo lo de arriba se invierte. */
+:root[data-theme="light"] .encabezado.con-fondo .logo-texto strong,
+:root[data-theme="light"] body.pagina-interna .encabezado .logo-texto strong{color:var(--texto)}
+:root[data-theme="light"] .encabezado.con-fondo .logo-texto span,
+:root[data-theme="light"] body.pagina-interna .encabezado .logo-texto span{color:var(--texto-tenue)}
+:root[data-theme="light"] .encabezado.con-fondo .logo-marca-clara,
+:root[data-theme="light"] body.pagina-interna .encabezado .logo-marca-clara{display:none}
+:root[data-theme="light"] .encabezado.con-fondo .logo-marca-oscura,
+:root[data-theme="light"] body.pagina-interna .encabezado .logo-marca-oscura{display:block}
+:root[data-theme="light"] .encabezado.con-fondo .nav-principal a,
+:root[data-theme="light"] body.pagina-interna .encabezado .nav-principal a{color:var(--texto)}
+:root[data-theme="light"] .encabezado.con-fondo .boton-linea-clara,
+:root[data-theme="light"] body.pagina-interna .encabezado .boton-linea-clara{
+  border-color:var(--texto);color:var(--texto)}
+:root[data-theme="light"] .encabezado.con-fondo .boton-linea-clara:hover,
+:root[data-theme="light"] body.pagina-interna .encabezado .boton-linea-clara:hover{
+  background:var(--texto);color:var(--fondo)}
+:root[data-theme="light"] .encabezado.con-fondo .disparador-tema,
+:root[data-theme="light"] body.pagina-interna .encabezado .disparador-tema{border-color:var(--borde)}
+:root[data-theme="light"] .encabezado.con-fondo .icono-tema,
+:root[data-theme="light"] body.pagina-interna .encabezado .icono-tema{stroke:var(--texto)}
+:root[data-theme="light"] .encabezado.con-fondo .switch-sitio,
+:root[data-theme="light"] body.pagina-interna .encabezado .switch-sitio{
+  background:rgba(40,16,6,.06);border-color:rgba(40,16,6,.2)}
+:root[data-theme="light"] .encabezado.con-fondo .switch-opcion,
+:root[data-theme="light"] body.pagina-interna .encabezado .switch-opcion{color:var(--texto)}
+:root[data-theme="light"] .encabezado.con-fondo .switch-opcion.activo,
+:root[data-theme="light"] body.pagina-interna .encabezado .switch-opcion.activo{
+  background:var(--texto);color:var(--fondo)}
+:root[data-theme="light"] .encabezado.con-fondo .disparador-menu span,
+:root[data-theme="light"] body.pagina-interna .encabezado .disparador-menu span{
+  background:var(--texto)}
+
+/* ======================= HERO =======================
+   El hero siempre muestra texto claro sobre la foto con velo oscuro,
+   tambien sin pasar por el tema: es contraste contra una foto, no contra
+   una superficie de la paleta. */
 .hero{min-height:100vh;display:flex;align-items:flex-end;position:relative;
   overflow:hidden;isolation:isolate;border-bottom:1px dotted var(--buttercream)}
 .hero-ilustracion{position:absolute;inset:0;z-index:-1;background:var(--ember-rust)}
@@ -116,6 +198,8 @@ a.switch-opcion:hover{opacity:1}
   margin:14px 0 20px;color:var(--buttercream)}
 .hero-sub{font-size:17px;color:var(--buttercream-tenue);max-width:52ch;margin-bottom:30px}
 .hero-acciones{display:flex;gap:14px;flex-wrap:wrap}
+.hero-acciones .boton-linea-clara{border-color:var(--buttercream);color:var(--buttercream)}
+.hero-acciones .boton-linea-clara:hover{background:var(--buttercream);color:var(--charred-clove)}
 .hero-scroll{position:absolute;bottom:34px;left:50%;transform:translateX(-50%);
   display:flex;flex-direction:column;align-items:center;gap:8px;color:var(--buttercream);
   opacity:.8;font-size:10px;letter-spacing:.18em;text-transform:uppercase}
@@ -123,8 +207,8 @@ a.switch-opcion:hover{opacity:1}
 @keyframes flotar{0%,100%{transform:translateY(0)}50%{transform:translateY(7px)}}
 
 /* ======================= SECCIONES GENERICAS ======================= */
-.seccion{padding:100px 0;background:var(--ember-rust);color:var(--buttercream);
-  border-bottom:1px dotted var(--buttercream)}
+.seccion{padding:100px 0;background:var(--fondo);color:var(--texto);
+  border-bottom:1px dotted var(--acento);transition:background .2s ease}
 .encabezado-seccion{max-width:640px;margin:0 0 56px}
 .encabezado-seccion.centrado{margin:0 auto 56px;text-align:center}
 
@@ -135,24 +219,26 @@ a.switch-opcion:hover{opacity:1}
 .esencia-marca-img{position:absolute;inset:0;margin:auto;width:38%;max-width:140px;
   height:auto;object-fit:contain}
 .chips{display:flex;flex-wrap:wrap;gap:10px;margin-top:26px}
-.chip{border:1px solid var(--buttercream);color:var(--buttercream);border-radius:999px;
+.chip{border:1px solid var(--acento);color:var(--acento);border-radius:999px;
   padding:7px 16px;font-size:11.5px;font-weight:600;letter-spacing:.05em;
   text-transform:uppercase}
 
 /* --- servicios / iconografia --- */
 .grilla-servicios{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));
   gap:6px 8px}
-.servicio{background:var(--dark-spice);border-radius:6px;padding:30px 20px;
-  text-align:center;transition:transform .18s ease}
+.servicio{background:var(--superficie);border-radius:6px;padding:30px 20px;
+  text-align:center;transition:transform .18s ease,background .2s ease}
 .servicio:hover{transform:translateY(-4px)}
 .servicio-icono{width:58px;height:58px;margin:0 auto 18px;border-radius:50%;
-  border:1.5px solid var(--buttercream);display:flex;align-items:center;justify-content:center}
-.servicio-icono svg{width:26px;height:26px;stroke:var(--buttercream);fill:none;
+  border:1.5px solid var(--acento);display:flex;align-items:center;justify-content:center}
+.servicio-icono svg{width:26px;height:26px;stroke:var(--acento);fill:none;
   stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
 .servicio h3{font-size:16.5px;margin-bottom:6px}
-.servicio p{font-size:13px;color:var(--buttercream-tenue);margin:0}
+.servicio p{font-size:13px;color:var(--texto-tenue);margin:0}
 
-/* --- destinos / categorias --- */
+/* --- destinos / categorias ---
+   El texto de cada tarjeta va sobre la foto con su propio degrade oscuro
+   (igual que el hero): se mantiene claro en los dos temas. */
 .grilla-destinos{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:22px}
 .tarjeta-destino{border-radius:6px;overflow:hidden;position:relative;height:340px;
   display:flex;align-items:flex-end}
@@ -166,18 +252,18 @@ a.switch-opcion:hover{opacity:1}
 
 /* --- salidas grupales / a medida --- */
 .grilla-flyers{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:26px}
-.tarjeta-flyer{background:var(--dark-spice);border-radius:6px;overflow:hidden;
-  display:flex;flex-direction:column}
-.flyer-imagen{position:relative;height:190px;background:var(--charred-clove)}
+.tarjeta-flyer{background:var(--superficie);border-radius:6px;overflow:hidden;
+  display:flex;flex-direction:column;transition:background .2s ease}
+.flyer-imagen{position:relative;height:190px;background:var(--superficie-honda)}
 .flyer-imagen svg,.flyer-imagen img{width:100%;height:100%;display:block;object-fit:cover}
-.flyer-precio{position:absolute;top:14px;right:14px;background:var(--buttercream);
-  color:var(--charred-clove);font-family:var(--f-cuerpo);font-weight:700;font-size:13px;
+.flyer-precio{position:absolute;top:14px;right:14px;background:var(--acento);
+  color:var(--acento-texto);font-family:var(--f-cuerpo);font-weight:700;font-size:13px;
   padding:6px 13px;border-radius:999px}
 .flyer-cuerpo{padding:22px 22px 24px;display:flex;flex-direction:column;gap:2px;flex:1}
 .flyer-cuerpo .ojo{font-size:11px}
 .flyer-cuerpo h3{font-size:22px;margin:2px 0 4px}
-.flyer-fecha{font-size:12.5px;color:var(--buttercream-tenue);margin-bottom:8px}
-.flyer-cuerpo p:not(.flyer-fecha){font-size:13.5px;color:var(--buttercream-tenue);flex:1}
+.flyer-fecha{font-size:12.5px;color:var(--texto-tenue);margin-bottom:8px}
+.flyer-cuerpo p:not(.flyer-fecha){font-size:13.5px;color:var(--texto-tenue);flex:1}
 .boton-mercadopago{display:inline-flex;align-items:center;justify-content:center;gap:9px;
   margin-top:14px;padding:12px 20px;border-radius:999px;background:#009ee3;color:#fff;
   font-family:var(--f-cuerpo);font-weight:700;font-size:13.5px;text-decoration:none;
@@ -186,46 +272,46 @@ a.switch-opcion:hover{opacity:1}
 .boton-mercadopago svg{width:18px;height:18px;flex:none;stroke:currentColor;fill:none;
   stroke-width:1.8}
 .flyer-mas-info{display:block;text-align:center;margin-top:12px;font-size:12.5px;
-  font-weight:600;color:var(--buttercream);text-decoration:none}
+  font-weight:600;color:var(--acento);text-decoration:none}
 .flyer-mas-info:hover{opacity:.75}
 .boton-cotizar{display:inline-flex;align-items:center;justify-content:center;gap:8px;
-  margin-top:14px;padding:12px 20px;border-radius:999px;background:var(--buttercream);
-  color:var(--charred-clove);font-family:var(--f-cuerpo);font-weight:700;font-size:13.5px;
+  margin-top:14px;padding:12px 20px;border-radius:999px;background:var(--acento);
+  color:var(--acento-texto);font-family:var(--f-cuerpo);font-weight:700;font-size:13.5px;
   text-decoration:none;transition:background .15s ease,transform .15s ease}
-.boton-cotizar:hover{background:var(--terracota-oscuro);transform:translateY(-1px)}
+.boton-cotizar:hover{background:var(--acento-oscuro)}
 
 /* --- itinerario de una salida grupal --- */
 .itinerario{max-width:820px}
-.itinerario-volver{display:inline-block;margin-bottom:26px;color:var(--buttercream);
+.itinerario-volver{display:inline-block;margin-bottom:26px;color:var(--acento);
   text-decoration:none;font-size:13px;font-weight:600}
 .itinerario-volver:hover{opacity:.75}
 .itinerario-encabezado{margin-bottom:26px}
 .itinerario-encabezado h1{font-family:var(--f-display);font-weight:700;text-transform:uppercase;
-  font-size:clamp(36px,6vw,64px);margin:10px 0 6px;color:var(--buttercream)}
+  font-size:clamp(36px,6vw,64px);margin:10px 0 6px;color:var(--texto)}
 .itinerario-foto{border-radius:6px;overflow:hidden;margin-bottom:30px}
 .itinerario-foto img{width:100%;height:340px;object-fit:cover;display:block}
 .itinerario-resumen{display:flex;align-items:center;justify-content:space-between;
-  gap:20px;flex-wrap:wrap;background:var(--dark-spice);border:1px solid var(--cardamom-brown);
+  gap:20px;flex-wrap:wrap;background:var(--superficie);border:1px solid var(--borde);
   border-radius:6px;padding:22px 26px;margin-bottom:44px}
 .itinerario-precio{font-family:var(--f-display);font-size:34px;font-weight:700;
-  color:var(--buttercream)}
-.itinerario-precio small{font-size:14px;font-weight:500;color:var(--buttercream-tenue)}
+  color:var(--texto)}
+.itinerario-precio small{font-size:14px;font-weight:500;color:var(--texto-tenue)}
 .itinerario-incluye{display:grid;grid-template-columns:1fr 1fr;gap:40px;margin-bottom:50px}
 .itinerario-incluye h3{font-family:var(--f-display);font-size:19px;margin:0 0 14px}
 .lista-check{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px}
-.lista-check li{position:relative;padding-left:26px;font-size:13.5px;color:var(--buttercream-tenue)}
-.lista-check li::before{content:"✓";position:absolute;left:0;color:var(--buttercream);font-weight:700}
-.lista-check.lista-no li::before{content:"–";color:var(--buttercream)}
+.lista-check li{position:relative;padding-left:26px;font-size:13.5px;color:var(--texto-tenue)}
+.lista-check li::before{content:"✓";position:absolute;left:0;color:var(--acento);font-weight:700}
+.lista-check.lista-no li::before{content:"–";color:var(--acento)}
 .itinerario-dias{display:flex;flex-direction:column;margin-top:24px}
-.itinerario-dia{border-left:3px dotted var(--cardamom-brown);padding:0 0 32px 26px;position:relative}
+.itinerario-dia{border-left:3px dotted var(--borde);padding:0 0 32px 26px;position:relative}
 .itinerario-dia:last-child{padding-bottom:0}
 .itinerario-dia::before{content:"";position:absolute;left:-7px;top:4px;width:11px;height:11px;
-  border-radius:50%;background:var(--buttercream)}
+  border-radius:50%;background:var(--acento)}
 .itinerario-dia h3{font-family:var(--f-display);font-size:19px;margin:0 0 12px;
-  color:var(--buttercream)}
+  color:var(--texto)}
 .itinerario-dia ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px}
-.itinerario-dia li{display:flex;gap:14px;font-size:13.5px;color:var(--buttercream-tenue)}
-.itinerario-hora{font-family:var(--f-cuerpo);font-weight:700;color:var(--buttercream);
+.itinerario-dia li{display:flex;gap:14px;font-size:13.5px;color:var(--texto-tenue)}
+.itinerario-hora{font-family:var(--f-cuerpo);font-weight:700;color:var(--texto);
   min-width:52px;flex:none}
 @media(max-width:600px){
   .itinerario-incluye{grid-template-columns:1fr}
@@ -233,21 +319,21 @@ a.switch-opcion:hover{opacity:1}
 }
 
 /* --- camino (animacion decorativa, pura CSS/SVG, sin JS) --- */
-.camino{background:var(--dark-spice);padding:40px 0 34px;overflow:hidden}
+.camino{background:var(--superficie);padding:40px 0 34px;overflow:hidden;transition:background .2s ease}
 .camino-escena{position:relative;max-width:1100px;margin:0 auto;height:120px;padding:0 24px}
 .camino-ruta{position:absolute;inset:0;width:100%;height:100%}
-.camino-ruta path{fill:none;stroke:var(--buttercream);stroke-width:3;stroke-dasharray:2 15;
+.camino-ruta path{fill:none;stroke:var(--acento);stroke-width:3;stroke-dasharray:2 15;
   stroke-linecap:round;opacity:.5}
 .caminante{position:absolute;top:0;left:0;width:38px;height:56px;
   animation:camino-recorrido 16s ease-in-out infinite alternate}
 .caminante-rebote{width:100%;height:100%;animation:camino-rebote .55s ease-in-out infinite}
 .caminante-figura{width:100%;height:100%;overflow:visible}
 .caminante-figura circle,.caminante-figura polyline,.caminante-figura line{
-  stroke:var(--buttercream);stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round;fill:none}
-.caminante-figura circle{fill:var(--buttercream)}
+  stroke:var(--acento);stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round;fill:none}
+.caminante-figura circle{fill:var(--acento)}
 .caminante-mochila{fill:var(--chili-red);stroke:none}
 .camino-frase{text-align:center;font-family:var(--f-display);font-weight:700;
-  text-transform:uppercase;letter-spacing:.01em;font-size:24px;color:var(--buttercream);margin:6px 0 0}
+  text-transform:uppercase;letter-spacing:.01em;font-size:24px;color:var(--texto);margin:6px 0 0}
 
 @keyframes camino-recorrido{
   0%{left:1%;top:56%;transform:scaleX(1)}
@@ -277,65 +363,73 @@ a.switch-opcion:hover{opacity:1}
   counter-reset:paso}
 .paso{position:relative;padding-top:8px}
 .paso::before{counter-increment:paso;content:counter(paso,decimal-leading-zero);
-  font-family:var(--f-display);font-size:16px;color:var(--buttercream);
-  border:1px solid var(--buttercream);border-radius:50%;width:38px;height:38px;
+  font-family:var(--f-display);font-size:16px;color:var(--acento);
+  border:1px solid var(--acento);border-radius:50%;width:38px;height:38px;
   display:flex;align-items:center;justify-content:center;margin-bottom:16px}
 .paso h3{font-size:18px;margin-bottom:8px}
-.paso p{font-size:13.5px;color:var(--buttercream-tenue)}
+.paso p{font-size:13.5px;color:var(--texto-tenue)}
 
 /* --- testimonios --- */
 .testimonio{max-width:760px;margin:0 auto;text-align:center}
 .testimonio blockquote{font-family:var(--f-display);font-weight:700;text-transform:none;
-  font-size:28px;line-height:1.3;margin:0 0 22px;color:var(--buttercream)}
+  font-size:28px;line-height:1.3;margin:0 0 22px;color:var(--texto)}
 .testimonio cite{font-style:normal;font-size:12.5px;letter-spacing:.08em;
-  text-transform:uppercase;color:var(--buttercream)}
+  text-transform:uppercase;color:var(--acento)}
 
 /* --- contacto --- */
 .contacto{display:grid;grid-template-columns:.95fr 1.05fr;gap:64px}
 .contacto-datos ul{list-style:none;margin:26px 0 0;padding:0;display:flex;
   flex-direction:column;gap:16px}
 .contacto-datos li{display:flex;align-items:center;gap:14px;font-size:14.5px}
-.contacto-datos li svg{width:19px;height:19px;stroke:var(--buttercream);fill:none;
+.contacto-datos li svg{width:19px;height:19px;stroke:var(--acento);fill:none;
   stroke-width:1.7;flex:none}
-.contacto-datos a{text-decoration:none;color:var(--buttercream);font-weight:600}
+.contacto-datos a{text-decoration:none;color:var(--texto);font-weight:600}
 .contacto-datos a:hover{opacity:.75}
 .redes{display:flex;gap:12px;margin-top:30px}
-.redes a{width:38px;height:38px;border-radius:50%;border:1px solid var(--buttercream);
+.redes a{width:38px;height:38px;border-radius:50%;border:1px solid var(--acento);
   display:flex;align-items:center;justify-content:center;text-decoration:none;
   transition:background .15s ease}
-.redes a svg{width:16px;height:16px;stroke:var(--buttercream);fill:none;stroke-width:1.7}
-.redes a:hover{background:var(--buttercream)}
-.redes a:hover svg{stroke:var(--charred-clove)}
+.redes a svg{width:16px;height:16px;stroke:var(--acento);fill:none;stroke-width:1.7}
+.redes a:hover{background:var(--acento)}
+.redes a:hover svg{stroke:var(--acento-texto)}
 
-.formulario{background:var(--dark-spice);border-radius:6px;padding:38px}
+.formulario{background:var(--superficie);border-radius:6px;padding:38px;transition:background .2s ease}
 .campo{margin-bottom:18px}
 .campo label{display:block;font-size:11.5px;font-weight:600;letter-spacing:.06em;
-  text-transform:uppercase;color:var(--buttercream);margin-bottom:7px}
-.campo input,.campo select,.campo textarea{width:100%;border:1px solid var(--cardamom-brown);
+  text-transform:uppercase;color:var(--texto);margin-bottom:7px}
+.campo input,.campo select,.campo textarea{width:100%;border:1px solid var(--borde);
   border-radius:999px;padding:12px 18px;font-family:var(--f-cuerpo);font-size:14px;
-  color:var(--buttercream);background:transparent}
+  color:var(--texto);background:transparent}
 .campo textarea{min-height:100px;resize:vertical;border-radius:18px}
 .campo input:focus,.campo select:focus,.campo textarea:focus{outline:none;
-  border-color:var(--buttercream)}
-.campo input::placeholder,.campo textarea::placeholder{color:var(--buttercream-tenue)}
+  border-color:var(--acento)}
+.campo input::placeholder,.campo textarea::placeholder{color:var(--texto-tenue)}
 .form-fila{display:grid;grid-template-columns:1fr 1fr;gap:16px}
 .formulario .boton{width:100%;justify-content:center;margin-top:6px}
-.form-nota{font-size:12px;color:var(--buttercream-tenue);margin-top:14px;text-align:center}
+.form-nota{font-size:12px;color:var(--texto-tenue);margin-top:14px;text-align:center}
 
-/* ======================= FOOTER ======================= */
-.pie{background:var(--charred-clove);color:var(--buttercream-tenue);padding:64px 0 26px}
+/* ======================= FOOTER =======================
+   El pie siempre es la superficie mas honda del tema -lo que hace que, en
+   claro, siga leyendose como "el cierre" relativo al resto de la pagina
+   aunque ya no sea literalmente oscuro. Como esa superficie cambia de
+   clara a oscura segun el tema, el logo tambien necesita su propio swap
+   de variante (igual que en el header). */
+.pie{background:var(--superficie-honda);color:var(--texto-tenue);padding:64px 0 26px;
+  transition:background .2s ease}
+:root[data-theme="light"] .pie .logo-marca-clara{display:none}
+:root[data-theme="light"] .pie .logo-marca-oscura{display:block}
 .pie-arriba{display:grid;grid-template-columns:1.3fr repeat(3,1fr);gap:40px;
-  padding-bottom:44px;border-bottom:1px dotted rgba(255,252,233,.2)}
+  padding-bottom:44px;border-bottom:1px dotted var(--borde-tenue)}
 .pie h4{font-family:var(--f-cuerpo);font-size:12px;letter-spacing:.1em;
-  text-transform:uppercase;color:var(--buttercream);margin:0 0 18px}
+  text-transform:uppercase;color:var(--texto);margin:0 0 18px}
 .pie ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:11px}
-.pie a{text-decoration:none;color:var(--buttercream-tenue);font-size:13.5px}
-.pie a:hover{color:var(--buttercream)}
-.pie-marca p{color:var(--buttercream-tenue);font-size:13.5px;max-width:34ch;margin:16px 0 0}
+.pie a{text-decoration:none;color:var(--texto-tenue);font-size:13.5px}
+.pie a:hover{color:var(--texto)}
+.pie-marca p{color:var(--texto-tenue);font-size:13.5px;max-width:34ch;margin:16px 0 0}
 .pie-abajo{display:flex;justify-content:space-between;align-items:center;
-  padding-top:24px;font-size:11.5px;color:rgba(255,252,233,.5);flex-wrap:wrap;gap:10px}
-.pie-abajo a{color:rgba(255,252,233,.7);text-decoration:none;border-bottom:1px dashed rgba(255,252,233,.35)}
-.pie-abajo a:hover{color:var(--buttercream)}
+  padding-top:24px;font-size:11.5px;color:var(--texto-mas-tenue);flex-wrap:wrap;gap:10px}
+.pie-abajo a{color:var(--texto-tenue);text-decoration:none;border-bottom:1px dashed var(--borde-tenue)}
+.pie-abajo a:hover{color:var(--texto)}
 
 /* ======================= RESPONSIVE ======================= */
 @media (max-width:900px){
@@ -344,13 +438,17 @@ a.switch-opcion:hover{opacity:1}
 }
 @media (max-width:760px){
   .nav-principal{position:fixed;inset:0 0 0 auto;width:78%;max-width:320px;
-    background:var(--charred-clove);flex-direction:column;align-items:flex-start;
+    background:var(--superficie-honda);flex-direction:column;align-items:flex-start;
     padding:100px 30px 30px;gap:26px;transform:translateX(100%);
-    transition:transform .3s ease;z-index:40}
+    transition:transform .3s ease,background .2s ease;z-index:40}
   .nav-principal.abierto{transform:translateX(0)}
-  .nav-principal a{color:var(--buttercream);font-size:16px}
+  .nav-principal a{color:var(--texto);font-size:16px}
   .disparador-menu{display:flex}
   .nav-derecha .boton-linea-clara{display:none}
+  /* El switch "Publico/Interno" se oculta para que entre el toggle de
+     tema junto al menu: el panel interno sigue accesible desde "Acceso
+     agencia" en el pie de pagina. */
+  .nav-derecha .switch-sitio{display:none}
   .seccion{padding:70px 0}
   .form-fila{grid-template-columns:1fr}
   .pie-arriba{grid-template-columns:1fr}
