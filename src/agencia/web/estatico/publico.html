@@ -12,18 +12,15 @@
 <meta property="og:title" content="ESPLORA · Viajes y Turismo">
 <meta property="og:description" content="Agencia de viajes. Diseñamos experiencias a medida: el mundo te espera.">
 <meta property="og:url" content="https://www.esplora.com.ar/">
-<meta property="og:image" content="https://www.esplora.com.ar/estatico/img/hero-playa.jpg">
+<meta property="og:image" content="https://www.esplora.com.ar/estatico/img/hero-esplora.jpg">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="ESPLORA · Viajes y Turismo">
 <meta name="twitter:description" content="Agencia de viajes. Diseñamos experiencias a medida: el mundo te espera.">
-<meta name="twitter:image" content="https://www.esplora.com.ar/estatico/img/hero-playa.jpg">
+<meta name="twitter:image" content="https://www.esplora.com.ar/estatico/img/hero-esplora.jpg">
 <link rel="canonical" href="https://www.esplora.com.ar/">
 <link rel="icon" type="image/png" href="/estatico/img/favicon-32.png" sizes="32x32">
 <link rel="icon" type="image/png" href="/estatico/img/favicon-64.png" sizes="64x64">
 <link rel="apple-touch-icon" href="/estatico/img/apple-touch-icon.png">
-<meta property="og:title" content="Esplora — Viajes y Turismo">
-<meta property="og:description" content="Diseñamos experiencias a medida: el mundo te espera.">
-<meta property="og:image" content="/estatico/img/hero-esplora.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&display=swap">
@@ -38,7 +35,18 @@
 <!-- ============================= HERO ============================= -->
 <section class="hero">
   <div class="hero-ilustracion" aria-hidden="true">
-    <img src="/estatico/img/hero-playa.jpg" alt="">
+    <picture>
+      <source type="image/webp" srcset="/estatico/img/hero-playa-480.webp 480w,
+        /estatico/img/hero-playa-800.webp 800w,
+        /estatico/img/hero-playa-1280.webp 1280w,
+        /estatico/img/hero-playa.webp 1717w" sizes="100vw">
+      <img src="/estatico/img/hero-playa.jpg"
+        srcset="/estatico/img/hero-playa-480.jpg 480w,
+        /estatico/img/hero-playa-800.jpg 800w,
+        /estatico/img/hero-playa-1280.jpg 1280w,
+        /estatico/img/hero-playa.jpg 1717w"
+        sizes="100vw" alt="" width="1717" height="916" fetchpriority="high">
+    </picture>
   </div>
   <div class="hero-velo" aria-hidden="true"></div>
 
@@ -133,12 +141,18 @@
 
     <div class="grilla-destinos">
       <article class="tarjeta-destino">
-        <img src="/estatico/img/destinos/sol-y-mar.jpg" alt="" loading="lazy">
+        <picture>
+          <source type="image/webp" srcset="/estatico/img/destinos/sol-y-mar.webp">
+          <img src="/estatico/img/destinos/sol-y-mar.jpg" alt="" loading="lazy" width="678" height="452">
+        </picture>
         <div class="capa"><span class="ojo">Costas e islas</span>
           <h3>Sol y mar</h3><p>Playas del Caribe, el Mediterráneo y nuestra costa atlántica.</p></div>
       </article>
       <article class="tarjeta-destino">
-        <img src="/estatico/img/destinos/aire-libre.jpg" alt="" loading="lazy">
+        <picture>
+          <source type="image/webp" srcset="/estatico/img/destinos/aire-libre.webp">
+          <img src="/estatico/img/destinos/aire-libre.jpg" alt="" loading="lazy" width="678" height="452">
+        </picture>
         <div class="capa"><span class="ojo">Naturaleza y aventura</span>
           <h3>Al aire libre</h3><p>Montaña, trekking y paisajes que se viven a fondo.</p></div>
       </article>
@@ -163,7 +177,10 @@
     <div class="grilla-flyers">
       <article class="tarjeta-flyer">
         <div class="flyer-imagen">
-          <img src="/estatico/img/flyers/bariloche.jpg" alt="Centro Cívico de Bariloche, en invierno" loading="lazy">
+          <picture>
+            <source type="image/webp" srcset="/estatico/img/flyers/bariloche.webp">
+            <img src="/estatico/img/flyers/bariloche.jpg" alt="Centro Cívico de Bariloche, en invierno" loading="lazy" width="736" height="416">
+          </picture>
           <span class="flyer-precio">$450.000 <span style="font-weight:500">p/persona</span></span>
         </div>
         <div class="flyer-cuerpo">
@@ -178,7 +195,10 @@
 
       <article class="tarjeta-flyer">
         <div class="flyer-imagen">
-          <img src="/estatico/img/flyers/iguazu.jpg" alt="Cataratas del Iguazú" loading="lazy">
+          <picture>
+            <source type="image/webp" srcset="/estatico/img/flyers/iguazu.webp">
+            <img src="/estatico/img/flyers/iguazu.jpg" alt="Cataratas del Iguazú" loading="lazy" width="547" height="365">
+          </picture>
           <span class="flyer-precio">$320.000 <span style="font-weight:500">p/persona</span></span>
         </div>
         <div class="flyer-cuerpo">
@@ -193,7 +213,10 @@
 
       <article class="tarjeta-flyer">
         <div class="flyer-imagen">
-          <img src="/estatico/img/destinos/sol-y-mar.jpg" alt="Playa de Punta Cana, República Dominicana" loading="lazy">
+          <picture>
+            <source type="image/webp" srcset="/estatico/img/destinos/sol-y-mar.webp">
+            <img src="/estatico/img/destinos/sol-y-mar.jpg" alt="Playa de Punta Cana, República Dominicana" loading="lazy" width="678" height="452">
+          </picture>
           <span class="flyer-precio">U$S 1.350 <span style="font-weight:500">p/persona</span></span>
         </div>
         <div class="flyer-cuerpo">
@@ -226,7 +249,10 @@
     <div class="grilla-flyers">
       <article class="tarjeta-flyer">
         <div class="flyer-imagen">
-          <img src="/estatico/img/internacionales/cancun.jpg" alt="Cancún, México" loading="lazy">
+          <picture>
+            <source type="image/webp" srcset="/estatico/img/internacionales/cancun.webp">
+            <img src="/estatico/img/internacionales/cancun.jpg" alt="Cancún, México" loading="lazy" width="678" height="452">
+          </picture>
           <span class="flyer-precio">Desde U$S 1.200 <span style="font-weight:500">p/persona</span></span>
         </div>
         <div class="flyer-cuerpo">
@@ -241,7 +267,10 @@
 
       <article class="tarjeta-flyer">
         <div class="flyer-imagen">
-          <img src="/estatico/img/internacionales/rio-de-janeiro.jpg" alt="Río de Janeiro, Brasil" loading="lazy">
+          <picture>
+            <source type="image/webp" srcset="/estatico/img/internacionales/rio-de-janeiro.webp">
+            <img src="/estatico/img/internacionales/rio-de-janeiro.jpg" alt="Río de Janeiro, Brasil" loading="lazy" width="547" height="365">
+          </picture>
           <span class="flyer-precio">Desde U$S 850 <span style="font-weight:500">p/persona</span></span>
         </div>
         <div class="flyer-cuerpo">

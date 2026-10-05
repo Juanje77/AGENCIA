@@ -113,6 +113,24 @@ carpeta que corresponda y se apunta el `src` del `<img>` — se suben directo
 al repo, no se enlazan a un sitio externo (un intento anterior con fotos de
 Wikimedia Commons no se veía en el sitio publicado).
 
+**Fotos livianas para celular:** cada `<img>` de una foto de viaje va
+envuelto en un `<picture>` con una fuente `.webp` (25–40% más liviana que
+el `.jpg` al lado, mismo tamaño) que el navegador prueba primero, cayendo
+al `.jpg` si no la soporta. La del hero, además, tiene `srcset` con cuatro
+anchos (480/800/1280/1717px): un celular baja la de 480px en vez de la
+foto completa de 456 KB. Si cambiás o agregás una foto, hay que generar
+su `.webp` al lado (incluidos los tres anchos extra si es la del hero) —
+no hay paso de build que lo haga solo. Alcanza con:
+
+```python
+from PIL import Image
+im = Image.open("la-foto.jpg").convert("RGB")
+im.save("la-foto.webp", "WEBP", quality=82)
+```
+
+(`pillow` no es una dependencia del sistema — hace falta instalarla aparte
+para correr esto, `pip install pillow`.)
+
 **"Salidas grupales" vs "A medida":** son dos secciones con la misma
 tarjeta (`.tarjeta-flyer`), pero un botón distinto a propósito. Una salida
 grupal —nacional o internacional, con mayorista o propia— tiene fecha, cupo

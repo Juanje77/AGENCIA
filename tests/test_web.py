@@ -152,6 +152,17 @@ def test_sirve_los_logos_reales_con_su_tipo(servidor):
         assert r.headers["Content-Type"] == "image/jpeg"
 
 
+def test_sirve_las_variantes_webp_de_las_fotos(servidor):
+    """Cada foto usada en el sitio tiene su alternativa .webp, mas liviana,
+    que las paginas sirven primero via <picture>."""
+    with urllib.request.urlopen(f"{servidor}/estatico/img/destinos/sol-y-mar.webp") as r:
+        assert r.status == 200
+        assert r.headers["Content-Type"] == "image/webp"
+    with urllib.request.urlopen(f"{servidor}/estatico/img/hero-playa-480.webp") as r:
+        assert r.status == 200
+        assert r.headers["Content-Type"] == "image/webp"
+
+
 def test_no_deja_salir_del_directorio_estatico(servidor):
     with pytest.raises(urllib.error.HTTPError) as exc:
         _get(servidor, "/estatico/../../../etc/passwd")

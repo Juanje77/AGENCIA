@@ -398,6 +398,8 @@ def tipo_de(nombre: str) -> str:
         return "image/png"
     if nombre.endswith(".jpg") or nombre.endswith(".jpeg"):
         return "image/jpeg"
+    if nombre.endswith(".webp"):
+        return "image/webp"
     if nombre.endswith(".ico"):
         return "image/x-icon"
     return "application/octet-stream"
