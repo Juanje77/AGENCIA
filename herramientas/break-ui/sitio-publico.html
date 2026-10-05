@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>break-ui · sitio público (SOLO DESARROLLO)</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Montserrat:wght@400;500;600;700&family=Allura&display=swap">
+<link rel="stylesheet" href="/src/agencia/web/estatico/publico.css">
+<style>
+  /* Chrome del arnes: neutro, fuera del diseño bajo prueba */
+  .bu-toggle{position:fixed;left:50%;bottom:12px;transform:translateX(-50%);z-index:999;
+    display:flex;gap:2px;padding:3px;border-radius:999px;background:#d8d8d8;
+    font:12px/1 system-ui,sans-serif;max-width:calc(100vw - 16px);overflow-x:auto}
+  .bu-toggle a{padding:7px 12px;border-radius:999px;color:#333;text-decoration:none;white-space:nowrap}
+  .bu-toggle a.on{background:#fff;box-shadow:0 1px 2px rgba(0,0,0,.2)}
+</style>
+</head>
+<body class="pagina-interna">
+<!-- Encabezado real, tal cual lo arma rutas.py -->
+<div id="parte-encabezado"></div>
+
+<section class="seccion seccion-clara"><div class="envoltorio">
+  <div class="encabezado-seccion centrado"><span class="ojo">Servicios</span><h2>Todo lo que hacemos</h2></div>
+  <div class="grilla-servicios" id="servicios"></div>
+</div></section>
+
+<section class="seccion seccion-arena"><div class="envoltorio">
+  <div class="encabezado-seccion centrado"><span class="ojo">Destinos</span><h2>Categorías</h2></div>
+  <div class="grilla-destinos" id="destinos"></div>
+</div></section>
+
+<section class="seccion seccion-clara"><div class="envoltorio">
+  <div class="encabezado-seccion centrado"><span class="ojo">Viajes nacionales</span><h2>Salidas grupales</h2></div>
+  <div class="grilla-flyers" id="flyers"></div>
+</div></section>
+
+<section class="seccion seccion-arena"><div class="envoltorio itinerario" id="itinerario"></div></section>
+
+<section class="seccion seccion-clara"><div class="envoltorio">
+  <form class="formulario" id="form-bu" style="max-width:560px;margin:auto"></form>
+</div></section>
+
+<nav class="bu-toggle" id="toggle"></nav>
+
+<script>
+const IMG_ROTA = "/no-existe.jpg";
+const D = {
+  servicios:[["Vuelos","Tarifas nacionales e internacionales con la mejor conexión."],
+             ["Alojamientos","Desde hoteles boutique hasta resorts todo incluido."],
+             ["Experiencias","Actividades y excursiones curadas en cada destino."]],
+  destinos:[["Costas e islas","Sol y mar","Playas del Caribe, el Mediterráneo y nuestra costa atlántica.","/estatico/img/destinos/sol-y-mar.jpg"]],
+  flyers:[["$450.000","Semana de vacaciones de invierno","Bariloche","14 al 19 de julio · 5 noches",
+           "Hotel 3 estrellas con desayuno, traslados aeropuerto-hotel y excursión al Cerro Catedral incluida.","/estatico/img/flyers/bariloche.jpg"]],
+  hora:"10:00", item:"Desayuno y salida hacia el Cerro Catedral", precio:["$450.000","p/persona"],
+  form:{nombre:"Ana Pérez",tel:"2954 123456",email:"ana@correo.com",destino:"Bariloche",msg:"Somos 4, en julio."}
+};
+const W = {
+  servicios:[["Asistencia al viajero y seguros médicos internacionales","Cobertura médica, de equipaje y cancelación para viajes en familia, grupos de egresados y adultos mayores con condiciones preexistentes."],
+             ["Ñandú","Corto."],
+             ["Cruceros fluviales y marítimos de lujo","Tarifas."]],
+  destinos:[["Naturaleza, aventura y turismo sustentable en áreas protegidas","Islas Malvinas, Tierra del Fuego y Antártida",
+             "Itinerarios de varios días con guía local, equipamiento técnico, seguros y traslados internos incluidos en cada tramo del recorrido.",IMG_ROTA],
+            ["¿¿","Ñu 🌎","",IMG_ROTA]],
+  flyers:[["$12.450.000 p/persona","Semana de vacaciones de invierno para jubilados y grupos de egresados","San Carlos de Bariloche y Villa La Angostura","14 al 19 de julio · 5 noches · salida desde Santa Rosa, General Pico y Realicó",
+           "Hotel 3 estrellas con desayuno, traslados aeropuerto-hotel y excursión al Cerro Catedral incluida. Cena de bienvenida, seguro de asistencia al viajero con cobertura ampliada y coordinador acompañante durante todo el viaje, sin cargo adicional.",IMG_ROTA],
+          ["Consultar","Fin de semana largo","Ushuaia","Sin fecha confirmada","Corto.","/estatico/img/flyers/iguazu.jpg"],
+          ["USD 1.999","","Wiśniewska-Kowalczyk Tours","","",IMG_ROTA]],
+  hora:"10:30 a 12:00", item:"Desayuno buffet en el hotel y salida hacia el Cerro Catedral en micro con guía bilingüe, entrega de equipamiento y charla de seguridad en español, inglés y portugués", precio:["USD 12.450","p/persona en base doble, impuestos y tasas no incluidos"],
+  form:{nombre:"María de los Ángeles Wiśniewska-Kowalczyk de Fernández",tel:"+54 9 2954 44-7929 int. 12",email:"bartholomew.fitzgerald@northwind-industries-holdings.example.com",destino:"Islas Malvinas, Tierra del Fuego y Antártida en crucero",
+        msg:"Hola, somos un grupo de 23 personas ".repeat(60)}
+};
+const VACIO = {...D, servicios:[], destinos:[], flyers:[]};
+const UNO = {...D};
+const MIL = {...D, flyers:Array.from({length:1000},(_, i)=>D.flyers[0])};
+const SETS = {demo:D, worst:W, empty:VACIO, one:UNO, mil:MIL};
+const LABEL = {demo:"Demo data", worst:"Worst case", empty:"Empty", one:"One", mil:"1,000 cards"};
+const key = new URLSearchParams(location.search).get("data") || "demo";
+const S = SETS[key] || D;
+
+const esc = s => String(s).replace(/[&<>"]/g, c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+document.getElementById("servicios").innerHTML = S.servicios.map(([h,p])=>
+  `<article class="servicio"><div class="servicio-icono"><svg><use href="#icono-vuelo"/></svg></div><h3>${esc(h)}</h3><p>${esc(p)}</p></article>`).join("");
+document.getElementById("destinos").innerHTML = S.destinos.map(([o,h,p,img])=>
+  `<article class="tarjeta-destino"><img src="${img}" alt=""><div class="capa"><span class="ojo">${esc(o)}</span><h3>${esc(h)}</h3><p>${esc(p)}</p></div></article>`).join("");
+document.getElementById("flyers").innerHTML = S.flyers.map(([pr,o,h,f,p,img])=>
+  `<article class="tarjeta-flyer"><div class="flyer-imagen"><img src="${img}" alt=""><span class="flyer-precio">${esc(pr)}</span></div>
+   <div class="flyer-cuerpo"><span class="ojo">${esc(o)}</span><h3>${esc(h)}</h3><p class="flyer-fecha">${esc(f)}</p><p>${esc(p)}</p>
+   <a href="#" class="boton-cotizar">Ver itinerario completo →</a></div></article>`).join("");
+document.getElementById("itinerario").innerHTML =
+  `<div class="itinerario-resumen"><div><span class="itinerario-precio">${esc(S.precio[0])} <small>${esc(S.precio[1])}</small></span></div>
+   <a href="#" class="boton-mercadopago">Pagar con Mercado Pago</a></div>
+   <div class="itinerario-dias"><div class="itinerario-dia"><h3>Día 1 · Llegada y traslado</h3><ul><li><span class="itinerario-hora">${esc(S.hora)}</span><span>${esc(S.item)}</span></li></ul></div></div>`;
+const f=S.form;
+document.getElementById("form-bu").innerHTML =
+ `<div class="form-fila"><div class="campo"><label>Nombre</label><input value="${esc(f.nombre)}"></div><div class="campo"><label>Teléfono</label><input value="${esc(f.tel)}"></div></div>
+  <div class="campo"><label>Email</label><input value="${esc(f.email)}"></div>
+  <div class="campo"><label>Destino de interés</label><input value="${esc(f.destino)}"></div>
+  <div class="campo"><label>Contanos más</label><textarea>${esc(f.msg)}</textarea></div>
+  <button type="button" class="boton boton-lleno">Enviar consulta</button>`;
+document.getElementById("toggle").innerHTML = Object.keys(SETS).map(k=>
+  `<a href="?data=${k}" class="${k===key?"on":""}">${LABEL[k]}</a>`).join("");
+fetch("/src/agencia/web/estatico/_partes/encabezado.html").then(r=>r.text()).then(h=>{
+  document.getElementById("parte-encabezado").innerHTML=h;
+  const b=document.getElementById("disparador-menu"),n=document.getElementById("nav-principal");
+  b&&b.addEventListener("click",()=>n.classList.toggle("abierto"));
+});
+</script>
+</body>
+</html>
