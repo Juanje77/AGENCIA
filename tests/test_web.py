@@ -108,6 +108,16 @@ def test_el_inicio_es_un_resumen_no_todo_apilado(servidor):
     assert 'id="formulario-contacto"' not in cuerpo
 
 
+def test_el_resumen_de_servicios_del_inicio_usa_el_catalogo_real(servidor):
+    """La vidriera de 'Servicios pensados para cada viaje' del home tiene que
+    linkear a paginas de servicio reales, no a categorias genericas viejas."""
+    _, cuerpo = _get(servidor, "/")
+    assert 'href="/servicios/aereos" class="servicio"' in cuerpo
+    assert 'href="/servicios/hoteles" class="servicio"' in cuerpo
+    assert 'href="/servicios/cruceros" class="servicio"' in cuerpo
+    assert 'href="/servicios/disney" class="servicio"' in cuerpo
+
+
 def test_la_franja_de_servicios_esta_en_todas_las_paginas(servidor):
     """Los accesos rapidos del header (icono + link) viven en _partes/encabezado.html."""
     for ruta in ("/", "/servicios", "/salidas-grupales", "/a-medida"):
