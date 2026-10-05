@@ -18,6 +18,37 @@ function actualizarEncabezado() {
 window.addEventListener("scroll", actualizarEncabezado, { passive: true });
 actualizarEncabezado();
 
+// --- entradas al scrollear -------------------------------------------------
+// Una sola vez por elemento. Dentro de una grilla, escalonado 60ms (tope 4).
+if ("IntersectionObserver" in window) {
+  const grupos = ".grilla-servicios, .grilla-destinos, .grilla-flyers, .pasos, .esencia, .itinerario-incluye";
+  const sueltos = ".encabezado-seccion, .testimonio, .formulario, .contacto-datos, .itinerario-foto, .itinerario-resumen, .itinerario-dia";
+  const objetivos = new Set();
+  document.querySelectorAll(grupos).forEach((grupo) => {
+    [...grupo.children].forEach((hijo, i) => {
+      hijo.style.setProperty("--d", Math.min(i, 4) * 60 + "ms");
+      objetivos.add(hijo);
+    });
+  });
+  document.querySelectorAll(sueltos).forEach((el) => objetivos.add(el));
+
+  document.documentElement.classList.add("js-reveal");
+  const observador = new IntersectionObserver(
+    (entradas) => {
+      entradas.forEach((entrada) => {
+        if (!entrada.isIntersecting) return;
+        entrada.target.classList.add("visible");
+        observador.unobserve(entrada.target);
+      });
+    },
+    { rootMargin: "0px 0px -8% 0px", threshold: 0.08 }
+  );
+  objetivos.forEach((el) => {
+    el.classList.add("reveal");
+    observador.observe(el);
+  });
+}
+
 // --- menu movil -----------------------------------------------------------
 const disparador = $("#disparador-menu");
 const nav = $("#nav-principal");
