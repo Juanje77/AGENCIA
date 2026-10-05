@@ -199,6 +199,24 @@ a.switch-opcion:hover{opacity:1}
 .franja-servicio span{font-size:10.5px;font-weight:600;text-align:center;
   line-height:1.2;letter-spacing:.01em}
 
+/* --- franja del dolar ---
+   Debajo de la franja de servicios, en todas las paginas. Arranca con
+   hidden (ver _partes/encabezado.html) asi que no necesita padding-top
+   propio: cuando aparece, la franja de servicios ya limpio el header fijo. */
+.franja-dolar{background:var(--superficie-honda);border-bottom:1px dotted var(--borde);
+  transition:background .2s ease}
+.franja-dolar-envoltorio{display:flex;flex-wrap:wrap;justify-content:center;
+  max-width:1180px;margin:0 auto;padding:7px 24px}
+.franja-dolar-item{display:flex;align-items:baseline;gap:6px;font-size:11.5px;
+  padding:2px 14px;border-right:1px dotted var(--borde)}
+.franja-dolar-item:last-child{border-right:none}
+.franja-dolar-nombre{color:var(--texto-tenue);font-weight:600;text-transform:uppercase;
+  letter-spacing:.04em}
+.franja-dolar-valor{color:var(--texto);font-weight:700;font-variant-numeric:tabular-nums}
+@media(max-width:620px){
+  .franja-dolar-item{padding:2px 9px;font-size:10.5px}
+}
+
 /* ======================= HERO =======================
    Franja compacta, sin foto: el sitio de referencia (ola.com.ar) no abre
    con una foto de tapa, va directo a la informacion organizada en

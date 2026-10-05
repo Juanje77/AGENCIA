@@ -150,6 +150,17 @@ def test_la_franja_de_servicios_esta_en_todas_las_paginas(servidor):
         assert 'href="/a-medida" class="franja-servicio"' in cuerpo, ruta
 
 
+def test_el_widget_del_dolar_esta_en_todas_las_paginas_pero_arranca_oculto(servidor):
+    """Vive junto a la franja de servicios en _partes/encabezado.html. Arranca
+    con 'hidden': publico.js recien la muestra si /api/dolar responde bien."""
+    for ruta in ("/", "/servicios", "/salidas-grupales", "/a-medida"):
+        _, cuerpo = _get(servidor, ruta)
+        assert 'id="franja-dolar"' in cuerpo, ruta
+        assert "hidden" in cuerpo.split('id="franja-dolar"')[1].split(">")[0], ruta
+        for clave in ("oficial", "blue", "mep", "tarjeta"):
+            assert f'data-dolar="{clave}"' in cuerpo, (ruta, clave)
+
+
 def test_la_home_tiene_los_banners_de_productos(servidor):
     _, cuerpo = _get(servidor, "/")
     assert 'class="franja-banners"' in cuerpo

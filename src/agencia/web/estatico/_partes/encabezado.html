@@ -54,3 +54,23 @@
     <a href="/servicios/enjoy" class="franja-servicio"><svg><use href="#icono-enjoy"/></svg><span>Enjoy</span></a>
   </div>
 </nav>
+
+<!-- ======= FRANJA DEL DOLAR (oficial / blue / MEP / tarjeta) =======
+     Arranca oculta: publico.js la completa con /api/dolar y recien ahi la
+     muestra. Si la API no responde se queda oculta, nunca con guiones. -->
+<aside class="franja-dolar" id="franja-dolar" aria-label="Cotización del dólar" hidden>
+  <div class="franja-dolar-envoltorio">
+    <span class="franja-dolar-item" data-dolar="oficial">
+      <span class="franja-dolar-nombre">Oficial</span><span class="franja-dolar-valor">—</span>
+    </span>
+    <span class="franja-dolar-item" data-dolar="blue">
+      <span class="franja-dolar-nombre">Blue</span><span class="franja-dolar-valor">—</span>
+    </span>
+    <span class="franja-dolar-item" data-dolar="mep">
+      <span class="franja-dolar-nombre">MEP</span><span class="franja-dolar-valor">—</span>
+    </span>
+    <span class="franja-dolar-item" data-dolar="tarjeta">
+      <span class="franja-dolar-nombre">Tarjeta</span><span class="franja-dolar-valor">—</span>
+    </span>
+  </div>
+</aside>

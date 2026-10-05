@@ -66,6 +66,34 @@ if (disparador && nav) {
   });
 }
 
+// --- cotizacion del dolar ---------------------------------------------------
+// Pide /api/dolar (cacheado 5 min del lado del servidor) y completa la
+// franja del header. Si no esta disponible -sin red, API caida- la franja
+// se queda oculta en vez de mostrar guiones sueltos.
+const franjaDolar = $("#franja-dolar");
+if (franjaDolar) {
+  const formatoPeso = new Intl.NumberFormat("es-AR", { maximumFractionDigits: 0 });
+  fetch("/api/dolar")
+    .then((respuesta) => respuesta.json())
+    .then((datos) => {
+      if (!datos.disponible) return;
+      let completo = true;
+      franjaDolar.querySelectorAll("[data-dolar]").forEach((item) => {
+        const cotizacion = datos.cotizaciones[item.dataset.dolar];
+        const valor = item.querySelector(".franja-dolar-valor");
+        if (cotizacion && cotizacion.venta && valor) {
+          valor.textContent = "$" + formatoPeso.format(cotizacion.venta);
+        } else {
+          completo = false;
+        }
+      });
+      if (completo) franjaDolar.hidden = false;
+    })
+    .catch(() => {
+      // Sin red o API caida: la franja se queda oculta, no rompe la pagina.
+    });
+}
+
 // --- formulario de contacto -------------------------------------------------
 // Se manda al backend (/api/contacto), que lo envia por correo a la agencia.
 // Si todavia no hay SMTP configurado en el servidor, o la peticion falla por
