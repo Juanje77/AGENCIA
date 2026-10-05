@@ -200,30 +200,22 @@ a.switch-opcion:hover{opacity:1}
   line-height:1.2;letter-spacing:.01em}
 
 /* ======================= HERO =======================
-   El hero siempre muestra texto claro sobre la foto con velo oscuro,
-   tambien sin pasar por el tema: es contraste contra una foto, no contra
-   una superficie de la paleta. */
-.hero{min-height:100vh;display:flex;align-items:flex-end;position:relative;
-  overflow:hidden;isolation:isolate;border-bottom:1px dotted var(--buttercream)}
-.hero-ilustracion{position:absolute;inset:0;z-index:-1;background:var(--ember-rust)}
-.hero-ilustracion svg,.hero-ilustracion img{width:100%;height:100%;display:block;object-fit:cover}
-.hero-velo{position:absolute;inset:0;z-index:-1;
-  background:linear-gradient(180deg,rgba(40,16,6,.4) 0%,rgba(40,16,6,.82) 72%,rgba(40,16,6,.94) 100%)}
-.hero-contenido{position:relative;padding:0 24px 110px;max-width:1180px;margin:0 auto;
-  width:100%;color:var(--buttercream)}
+   Franja compacta, sin foto: el sitio de referencia (ola.com.ar) no abre
+   con una foto de tapa, va directo a la informacion organizada en
+   franjas y grillas. El fondo queda literal (no pasa por el tema) por la
+   misma razon que antes: el header arranca transparente con texto claro
+   encima de esta franja hasta que el scroll le pone superficie solida. */
+.hero{background:var(--ember-rust);position:relative;
+  border-bottom:1px dotted var(--buttercream);padding:168px 0 64px}
+.hero-contenido{color:var(--buttercream)}
 .hero-contenido .ojo{color:var(--buttercream)}
 .hero-tagline{font-family:var(--f-display);font-weight:700;text-transform:uppercase;
-  font-size:clamp(52px,10vw,160px);line-height:.85;letter-spacing:-.02em;
-  margin:14px 0 20px;color:var(--buttercream)}
-.hero-sub{font-size:17px;color:var(--buttercream-tenue);max-width:52ch;margin-bottom:30px}
+  font-size:clamp(38px,6vw,84px);line-height:.92;letter-spacing:-.02em;
+  margin:14px 0 18px;color:var(--buttercream)}
+.hero-sub{font-size:16px;color:var(--buttercream-tenue);max-width:60ch;margin-bottom:26px}
 .hero-acciones{display:flex;gap:14px;flex-wrap:wrap}
 .hero-acciones .boton-linea-clara{border-color:var(--buttercream);color:var(--buttercream)}
 .hero-acciones .boton-linea-clara:hover{background:var(--buttercream);color:var(--charred-clove)}
-.hero-scroll{position:absolute;bottom:34px;left:50%;transform:translateX(-50%);
-  display:flex;flex-direction:column;align-items:center;gap:8px;color:var(--buttercream);
-  opacity:.8;font-size:10px;letter-spacing:.18em;text-transform:uppercase}
-.hero-scroll svg{width:16px;height:16px;animation:flotar 2.1s ease-in-out infinite}
-@keyframes flotar{0%,100%{transform:translateY(0)}50%{transform:translateY(7px)}}
 
 /* ======================= FRANJA DE CONFIANZA =======================
    Franja angosta pegada abajo del hero, antes de los banners: no vende
