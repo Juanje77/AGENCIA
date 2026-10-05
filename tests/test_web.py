@@ -279,6 +279,72 @@ def test_lista_los_mayoristas(servidor):
     assert "agencia" in datos
 
 
+# --- cotizacion del dolar --------------------------------------------------------
+
+_RESPUESTA_API_FALSA = [
+    {"casa": "oficial", "compra": 915.0, "venta": 955.0, "fechaActualizacion": "2024-01-01T13:00:00Z"},
+    {"casa": "blue", "compra": 1180.0, "venta": 1200.0, "fechaActualizacion": "2024-01-01T13:00:00Z"},
+    {"casa": "bolsa", "compra": 1050.0, "venta": 1060.0, "fechaActualizacion": "2024-01-01T13:00:00Z"},
+    {"casa": "mayorista", "compra": 910.0, "venta": 912.0, "fechaActualizacion": "2024-01-01T13:00:00Z"},
+    {"casa": "tarjeta", "compra": 0.0, "venta": 1241.5, "fechaActualizacion": "2024-01-01T13:00:00Z"},
+]
+
+
+@pytest.fixture
+def _sin_cache_de_dolar(monkeypatch):
+    """Cada test arranca sin el cache en memoria del modulo, para no depender
+    del orden en que corren los demas tests."""
+    monkeypatch.setattr("agencia.web.dolar._cache", None)
+    monkeypatch.setattr("agencia.web.dolar._cache_momento", 0.0)
+
+
+def test_dolar_devuelve_oficial_blue_mep_y_tarjeta(servidor, monkeypatch, _sin_cache_de_dolar):
+    monkeypatch.setattr("agencia.web.dolar._pedir_api", lambda: _RESPUESTA_API_FALSA)
+    datos = json.loads(_get(servidor, "/api/dolar")[1])
+    assert datos["disponible"] is True
+    assert set(datos["cotizaciones"]) == {"oficial", "blue", "mep", "tarjeta"}
+    assert datos["cotizaciones"]["blue"] == {"compra": 1180.0, "venta": 1200.0}
+    # "mayorista" y "cripto" no son de las 4 que importan para un viaje.
+    assert "mayorista" not in datos["cotizaciones"]
+
+
+def test_dolar_cachea_y_no_pide_de_nuevo_antes_de_tiempo(servidor, monkeypatch, _sin_cache_de_dolar):
+    pedidos = []
+    monkeypatch.setattr(
+        "agencia.web.dolar._pedir_api", lambda: (pedidos.append(1), _RESPUESTA_API_FALSA)[1]
+    )
+    _get(servidor, "/api/dolar")
+    _get(servidor, "/api/dolar")
+    assert len(pedidos) == 1
+
+
+def test_dolar_si_la_api_falla_sin_cache_avisa_en_vez_de_romper(servidor, monkeypatch, _sin_cache_de_dolar):
+    def _falla():
+        raise urllib.error.URLError("sin red")
+
+    monkeypatch.setattr("agencia.web.dolar._pedir_api", _falla)
+    datos = json.loads(_get(servidor, "/api/dolar")[1])
+    assert datos["disponible"] is False
+    assert datos["aviso"]
+
+
+def test_dolar_si_la_api_falla_pero_hay_cache_devuelve_el_ultimo_valor(
+    monkeypatch, _sin_cache_de_dolar
+):
+    from agencia.web import dolar as dolar_modulo
+
+    monkeypatch.setattr(dolar_modulo, "_pedir_api", lambda: _RESPUESTA_API_FALSA)
+    dolar_modulo.obtener_cotizaciones(forzar=True)
+
+    def _falla():
+        raise urllib.error.URLError("se cayo justo ahora")
+
+    monkeypatch.setattr(dolar_modulo, "_pedir_api", _falla)
+    datos = dolar_modulo.obtener_cotizaciones(forzar=True)
+    assert datos["disponible"] is True
+    assert datos["cotizaciones"]["oficial"]["venta"] == 955.0
+
+
 # --- contacto ------------------------------------------------------------------
 
 def _consulta():

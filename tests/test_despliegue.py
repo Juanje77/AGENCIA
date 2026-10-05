@@ -313,3 +313,11 @@ def test_robots_y_sitemap_funcionan_aunque_haya_clave(wsgi_con_clave):
     """Los piden buscadores, que tampoco tienen la clave."""
     assert _get(wsgi_con_clave, "/robots.txt")[0] == 200
     assert _get(wsgi_con_clave, "/sitemap.xml")[0] == 200
+
+
+def test_el_dolar_funciona_aunque_haya_clave(wsgi_con_clave, monkeypatch):
+    """Lo muestra el sitio publico, que nunca pide clave."""
+    monkeypatch.setattr("agencia.web.dolar._cache", None)
+    monkeypatch.setattr("agencia.web.dolar._cache_momento", 0.0)
+    monkeypatch.setattr("agencia.web.dolar._pedir_api", lambda: [])
+    assert _get(wsgi_con_clave, "/api/dolar")[0] == 200

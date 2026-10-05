@@ -21,6 +21,7 @@ from ..liquidaciones.factura import leer_factura
 from ..liquidador import Padron, cargar_padron, guardar_padron, operacion_desde_comprobante
 from ..presupuestos.cotizacion import TIPOS_SERVICIO, calcular_cotizacion
 from .contacto import consulta_desde_dict, enviar_consulta
+from .dolar import obtener_cotizaciones
 from .informes import (
     informe_cotizacion_agencia,
     informe_cotizacion_cliente,
@@ -139,8 +140,9 @@ RUTAS_PUBLICAS_DE_PAGINA = (
 # El formulario de contacto lo manda un cliente potencial, no personal de la
 # agencia: tiene que funcionar aunque el sistema tenga clave puesta. Lo mismo
 # para robots.txt y sitemap.xml: los piden los buscadores, que no tienen
-# (ni pueden tener) la clave.
-RUTAS_PUBLICAS_DE_API = ("/api/contacto", "/robots.txt", "/sitemap.xml")
+# (ni pueden tener) la clave. La cotizacion del dolar tambien: la va a
+# mostrar el sitio publico, que nunca pide clave.
+RUTAS_PUBLICAS_DE_API = ("/api/contacto", "/api/dolar", "/robots.txt", "/sitemap.xml")
 
 # COMPLETAR: el dominio real una vez que la agencia lo tenga (propio o el
 # *.vercel.app del despliegue). Mientras tanto, sitemap.xml y los tags
@@ -186,6 +188,8 @@ def _get(peticion: Peticion) -> Respuesta:
         return Respuesta.json(_parametros())
     if ruta == "/api/mayoristas":
         return Respuesta.json(cargar_padron().a_dict())
+    if ruta == "/api/dolar":
+        return Respuesta.json(obtener_cotizaciones())
     if ruta.startswith("/estatico/"):
         return _estatico(ruta[len("/estatico/") :])
     return Respuesta.error(404, "Recurso no encontrado")

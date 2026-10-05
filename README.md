@@ -94,6 +94,15 @@ variables no estén cargadas en el hosting, el formulario sigue funcionando
 igual que antes: se abre el programa de correo del cliente con la consulta
 ya redactada.
 
+**La cotización del dólar** (`/api/dolar`, implementada en `dolar.py`)
+consulta [dolarapi.com](https://dolarapi.com) —pública, sin necesidad de
+clave— y devuelve oficial, blue, MEP y tarjeta. El resultado queda
+cacheado en memoria 5 minutos para no pedirlo de nuevo en cada visita; si
+la API no responde, se devuelve el último valor cacheado si hay uno, o
+`{"disponible": false, "aviso": "..."}` en vez de romper la página. Es un
+endpoint público (no pide `AGENCIA_CLAVE`, igual que `/api/contacto`):
+está pensado para mostrarse en el sitio público, no solo en el panel.
+
 **Los botones de "pedir cotización" o "contacto"** repartidos por todo el
 sitio (el del header, los de cada tarjeta de "A medida", los
 "Escribinos" de cada página, etc.) no pasan por ese formulario: abren
