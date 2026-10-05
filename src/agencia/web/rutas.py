@@ -126,8 +126,15 @@ RUTAS_PUBLICAS_DE_PAGINA = (
     ("/", "/index.html", "/publico.html") + tuple(PAGINAS_PUBLICAS) + RUTAS_PANEL
 )
 # El formulario de contacto lo manda un cliente potencial, no personal de la
-# agencia: tiene que funcionar aunque el sistema tenga clave puesta.
-RUTAS_PUBLICAS_DE_API = ("/api/contacto",)
+# agencia: tiene que funcionar aunque el sistema tenga clave puesta. Lo mismo
+# para robots.txt y sitemap.xml: los piden los buscadores, que no tienen
+# (ni pueden tener) la clave.
+RUTAS_PUBLICAS_DE_API = ("/api/contacto", "/robots.txt", "/sitemap.xml")
+
+# COMPLETAR: el dominio real una vez que la agencia lo tenga (propio o el
+# *.vercel.app del despliegue). Mientras tanto, sitemap.xml y los tags
+# Open Graph de cada pagina usan este como referencia.
+DOMINIO_PUBLICO = "https://www.esplora.com.ar"
 
 
 def _controlar_acceso(peticion: Peticion) -> Respuesta | None:
@@ -160,6 +167,10 @@ def _get(peticion: Peticion) -> Respuesta:
         return _pagina_publica(PAGINAS_PUBLICAS[ruta])
     if ruta in RUTAS_PANEL:
         return _estatico("index.html")
+    if ruta == "/robots.txt":
+        return Respuesta(200, "text/plain; charset=utf-8", _robots_txt().encode("utf-8"))
+    if ruta == "/sitemap.xml":
+        return Respuesta(200, "application/xml; charset=utf-8", _sitemap_xml().encode("utf-8"))
     if ruta == "/api/parametros":
         return Respuesta.json(_parametros())
     if ruta == "/api/mayoristas":
@@ -345,6 +356,31 @@ def _pagina_publica(nombre: str) -> Respuesta:
     ):
         pagina = pagina.replace(marcador, (PARTES / archivo).read_text(encoding="utf-8"))
     return Respuesta(200, HTML, pagina.encode("utf-8"))
+
+
+def _robots_txt() -> str:
+    return (
+        "User-agent: *\n"
+        "Allow: /\n"
+        "Disallow: /panel\n"
+        "Disallow: /api/\n"
+        f"Sitemap: {DOMINIO_PUBLICO}/sitemap.xml\n"
+    )
+
+
+def _sitemap_xml() -> str:
+    """Todas las paginas publicas, generado a partir de PAGINAS_PUBLICAS para
+    no mantener la lista de rutas por duplicado."""
+    rutas = ("/",) + tuple(PAGINAS_PUBLICAS)
+    urls = "".join(
+        f"  <url><loc>{DOMINIO_PUBLICO}{ruta}</loc></url>\n" for ruta in rutas
+    )
+    return (
+        '<?xml version="1.0" encoding="UTF-8"?>\n'
+        '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
+        f"{urls}"
+        "</urlset>\n"
+    )
 
 
 def tipo_de(nombre: str) -> str:

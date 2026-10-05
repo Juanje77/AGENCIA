@@ -307,3 +307,9 @@ def test_el_formulario_de_contacto_funciona_aunque_haya_clave(wsgi_con_clave):
     codigo, cuerpo = _post(wsgi_con_clave, "/api/contacto", datos)
     assert codigo == 200
     assert json.loads(cuerpo)["enviado"] is False  # sin SMTP configurado en el test
+
+
+def test_robots_y_sitemap_funcionan_aunque_haya_clave(wsgi_con_clave):
+    """Los piden buscadores, que tampoco tienen la clave."""
+    assert _get(wsgi_con_clave, "/robots.txt")[0] == 200
+    assert _get(wsgi_con_clave, "/sitemap.xml")[0] == 200

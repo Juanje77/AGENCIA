@@ -108,6 +108,33 @@ def test_el_inicio_es_un_resumen_no_todo_apilado(servidor):
     assert 'id="formulario-contacto"' not in cuerpo
 
 
+def test_robots_txt_permite_el_sitio_y_bloquea_el_panel(servidor):
+    codigo, cuerpo = _get(servidor, "/robots.txt")
+    assert codigo == 200
+    assert "Allow: /" in cuerpo
+    assert "Disallow: /panel" in cuerpo
+    assert "Sitemap:" in cuerpo
+
+
+def test_sitemap_lista_todas_las_paginas_publicas(servidor):
+    codigo, cuerpo = _get(servidor, "/sitemap.xml")
+    assert codigo == 200
+    for ruta in ("/", "/servicios", "/destinos", "/salidas-grupales", "/a-medida",
+                 "/nosotros", "/contacto"):
+        assert f"<loc>https://www.esplora.com.ar{ruta}</loc>" in cuerpo, ruta
+    # El panel no es para buscadores.
+    assert "/panel" not in cuerpo
+
+
+def test_cada_pagina_publica_tiene_sus_tags_open_graph(servidor):
+    for ruta in ("/", "/servicios", "/salidas-grupales", "/salidas-grupales/bariloche"):
+        _, cuerpo = _get(servidor, ruta)
+        assert 'property="og:title"' in cuerpo, ruta
+        assert 'property="og:image"' in cuerpo, ruta
+        assert 'name="twitter:card"' in cuerpo, ruta
+        assert 'rel="canonical"' in cuerpo, ruta
+
+
 def test_sirve_los_estaticos(servidor):
     assert _get(servidor, "/estatico/app.js")[0] == 200
     assert _get(servidor, "/estatico/estilos.css")[0] == 200

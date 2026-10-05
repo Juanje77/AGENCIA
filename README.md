@@ -34,6 +34,7 @@ Está repartido en varias páginas en vez de una sola muy larga:
 | `/nosotros` | Cómo trabajamos, paso a paso, y el testimonio |
 | `/contacto` | Datos de contacto y el formulario |
 | `/panel` | Herramientas internas (protegidas por `AGENCIA_CLAVE`) |
+| `/robots.txt`, `/sitemap.xml` | Para buscadores — se generan solos a partir de `PAGINAS_PUBLICAS` en `rutas.py`, no hay archivos estáticos que tocar |
 
 Cada página es un archivo en `src/agencia/web/estatico/` (`publico.html`,
 `servicios.html`, `destinos.html`, `salidas-grupales.html`, `a-medida.html`,
@@ -79,6 +80,7 @@ estirarse en monitores grandes.
 | `contacto.py` | El email de destino del formulario (`hola@esplora.com.ar` es de ejemplo; se puede cambiar sin tocar código con `CONTACTO_EMAIL`, ver [Variables de entorno](#variables-de-entorno)) |
 | `salidas-grupales.html` | 6 salidas de ejemplo: las 4 nacionales (Bariloche, Iguazú, Mendoza, El Calafate) y 2 internacionales (Punta Cana vía el mayorista Ola, y Viña del Mar como salida propia en micro) — buscá el comentario `<!-- COMPLETAR -->` arriba de `<div class="grilla-flyers">` |
 | `a-medida.html` | 4 destinos de ejemplo (Cancún, Río de Janeiro, París/Roma, Orlando) con precio de referencia — buscá el comentario arriba de `<div class="grilla-flyers">` |
+| `DOMINIO_PUBLICO` en `rutas.py` | Hoy dice `https://www.esplora.com.ar` de referencia — reemplazalo por el dominio real (propio, o el `*.vercel.app` del despliegue) una vez que lo tengas. Lo usan `/sitemap.xml`, `/robots.txt` y los tags Open Graph/Twitter Card de cada página (las imágenes que se comparten al pegar un link en WhatsApp o redes) |
 
 **El formulario de contacto** (`/contacto`) manda la consulta al endpoint
 `/api/contacto`, que la envía por correo a la agencia usando SMTP
