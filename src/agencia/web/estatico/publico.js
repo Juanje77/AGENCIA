@@ -26,6 +26,13 @@ if (disparador && nav) {
     const abierto = nav.classList.toggle("abierto");
     disparador.setAttribute("aria-expanded", String(abierto));
   });
+  // Escape cierra el menu y devuelve el foco al disparador.
+  document.addEventListener("keydown", (e) => {
+    if (e.key !== "Escape" || !nav.classList.contains("abierto")) return;
+    nav.classList.remove("abierto");
+    disparador.setAttribute("aria-expanded", "false");
+    disparador.focus();
+  });
   nav.querySelectorAll("a").forEach((enlace) => {
     enlace.addEventListener("click", () => {
       nav.classList.remove("abierto");
