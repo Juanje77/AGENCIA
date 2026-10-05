@@ -53,16 +53,16 @@
     <form class="formulario" id="formulario-contacto">
       <div class="form-fila">
         <div class="campo"><label for="f-nombre">Nombre</label>
-          <input id="f-nombre" name="nombre" required placeholder="Tu nombre"></div>
+          <input id="f-nombre" name="nombre" maxlength="100" required placeholder="Tu nombre"></div>
         <div class="campo"><label for="f-telefono">Teléfono</label>
-          <input id="f-telefono" name="telefono" placeholder="Opcional"></div>
+          <input id="f-telefono" name="telefono" maxlength="40" placeholder="Opcional"></div>
       </div>
       <div class="campo"><label for="f-email">Email</label>
-        <input id="f-email" name="email" type="email" required placeholder="tu@email.com"></div>
+        <input id="f-email" name="email" type="email" maxlength="254" required placeholder="tu@email.com"></div>
       <div class="campo"><label for="f-destino">Destino de interés</label>
-        <input id="f-destino" name="destino" placeholder="¿A dónde te gustaría ir?"></div>
+        <input id="f-destino" name="destino" maxlength="120" placeholder="¿A dónde te gustaría ir?"></div>
       <div class="campo"><label for="f-mensaje">Contanos más</label>
-        <textarea id="f-mensaje" name="mensaje" placeholder="Fechas tentativas, cantidad de personas, presupuesto..."></textarea></div>
+        <textarea id="f-mensaje" name="mensaje" maxlength="1000" placeholder="Fechas tentativas, cantidad de personas, presupuesto..."></textarea></div>
       <button type="submit" class="boton boton-lleno">Enviar consulta</button>
       <p class="form-nota">Te vamos a contactar a la brevedad.</p>
     </form>

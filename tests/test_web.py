@@ -184,6 +184,18 @@ def test_contacto_con_email_invalido_devuelve_400(servidor):
     assert exc.value.code == 400
 
 
+def test_contacto_con_mensaje_demasiado_largo_devuelve_400(servidor):
+    with pytest.raises(urllib.error.HTTPError) as exc:
+        _post(servidor, "/api/contacto", {**_consulta(), "mensaje": "x" * 1001})
+    assert exc.value.code == 400
+
+
+def test_contacto_con_mensaje_en_el_limite_se_acepta(servidor, monkeypatch):
+    monkeypatch.delenv("SMTP_HOST", raising=False)
+    datos = json.loads(_post(servidor, "/api/contacto", {**_consulta(), "mensaje": "x" * 1000})[1])
+    assert datos["enviado"] is False
+
+
 def test_contacto_se_manda_por_smtp_si_esta_configurado(servidor, monkeypatch):
     enviados = []
 

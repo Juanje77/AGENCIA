@@ -166,7 +166,7 @@ p{margin:0 0 14px}
 
 /* --- destinos / categorias --- */
 .grilla-destinos{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:22px}
-.tarjeta-destino{border-radius:20px;overflow:hidden;position:relative;height:340px;
+.tarjeta-destino{border-radius:20px;overflow:hidden;position:relative;min-height:340px;background:var(--tierra);
   display:flex;align-items:flex-end;box-shadow:0 10px 26px rgba(62,62,62,.12)}
 .tarjeta-destino svg,.tarjeta-destino img{position:absolute;inset:0;width:100%;height:100%;
   z-index:0;object-fit:cover}
@@ -398,3 +398,21 @@ p{margin:0 0 14px}
   .js-reveal .reveal{translate:none;transition:opacity 200ms ease var(--d,0ms)}
 }
 @keyframes entrar-suave{from{opacity:0}to{opacity:1}}
+
+/* ======================= PEOR CASO (break-ui) ======================= */
+/* Imagen que no cargo: se oculta para no mostrar el icono roto; el fondo de
+   la tarjeta (tierra en destinos, arena en flyers) queda como respaldo. */
+img.img-rota{visibility:hidden}
+/* Etiquetas largas: dos lineas y puntos suspensivos, para que la altura de
+   las tarjetas sea predecible. */
+.tarjeta-destino .ojo{display:-webkit-box;-webkit-box-orient:vertical;
+  -webkit-line-clamp:2;line-clamp:2;overflow:hidden}
+/* Precio con aclaracion larga: la aclaracion pasa abajo con su propio interlineado. */
+.itinerario-precio small{display:block;line-height:1.4;margin-top:4px}
+/* Switch Público/Interno: en celulares chicos vive dentro del menu. */
+.solo-movil{display:none}
+@media (max-width:480px){.solo-movil{display:block}}
+@media (max-width:480px){
+  .switch-sitio{display:none}
+  .itinerario-dia li{flex-direction:column;gap:2px}
+}

@@ -20,6 +20,9 @@ from .mapeo import DatosInvalidos
 _EMAIL_VALIDO = re.compile(r"^[^@\s]+@[^@\s]+\.[^@\s]+$")
 DESTINATARIO_POR_DEFECTO = "hola@esplora.com.ar"
 
+# Mismos limites que los maxlength de estatico/contacto.html.
+_LIMITES = {"nombre": 100, "email": 254, "telefono": 40, "destino": 120, "mensaje": 1000}
+
 
 @dataclass
 class ConsultaContacto:
@@ -41,13 +44,17 @@ def consulta_desde_dict(datos: dict) -> ConsultaContacto:
     if not email or not _EMAIL_VALIDO.match(email):
         raise DatosInvalidos("El email no es valido.")
 
-    return ConsultaContacto(
+    consulta = ConsultaContacto(
         nombre=nombre,
         email=email,
         telefono=str(datos.get("telefono") or "").strip(),
         destino=str(datos.get("destino") or "").strip(),
         mensaje=str(datos.get("mensaje") or "").strip(),
     )
+    for campo, maximo in _LIMITES.items():
+        if len(getattr(consulta, campo)) > maximo:
+            raise DatosInvalidos(f"El campo {campo} supera los {maximo} caracteres.")
+    return consulta
 
 
 def _config_smtp() -> dict | None:

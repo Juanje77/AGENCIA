@@ -18,6 +18,14 @@ function actualizarEncabezado() {
 window.addEventListener("scroll", actualizarEncabezado, { passive: true });
 actualizarEncabezado();
 
+// --- imagenes que no cargan -------------------------------------------------
+// Se ocultan (ver img.img-rota) en vez de mostrar el icono de imagen rota.
+document.querySelectorAll("img").forEach((img) => {
+  const marcar = () => img.classList.add("img-rota");
+  img.addEventListener("error", marcar);
+  if (img.complete && img.naturalWidth === 0 && img.getAttribute("src")) marcar();
+});
+
 // --- entradas al scrollear -------------------------------------------------
 // Una sola vez por elemento. Dentro de una grilla, escalonado 60ms (tope 4).
 if ("IntersectionObserver" in window) {
@@ -84,6 +92,8 @@ if (formulario) {
   function mailtoDeRespaldo({ nombre, email, telefono, destino, mensaje }) {
     const destinatario = "hola@esplora.com.ar";
     const asunto = `Consulta de viaje${destino ? " · " + destino : ""}`;
+    // Los clientes de correo cortan los mailto: largos: se recorta el mensaje.
+    mensaje = mensaje.length > 1000 ? mensaje.slice(0, 1000) + "…" : mensaje;
     const cuerpo = [
       `Nombre: ${nombre}`,
       `Email: ${email}`,
