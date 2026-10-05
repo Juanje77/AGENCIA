@@ -108,6 +108,16 @@ def test_el_inicio_es_un_resumen_no_todo_apilado(servidor):
     assert 'id="formulario-contacto"' not in cuerpo
 
 
+def test_el_inicio_muestra_los_4_pasos_de_como_trabajamos(servidor):
+    """La seccion 'De la idea al viaje' del home no es solo titulo y boton:
+    tiene que traer los mismos 4 pasos que ya estan en /nosotros."""
+    _, cuerpo = _get(servidor, "/")
+    assert "Contanos tu idea" in cuerpo
+    assert "Armamos las opciones" in cuerpo
+    assert "Elegís y coordinamos" in cuerpo
+    assert "Viajás tranquilo" in cuerpo
+
+
 def test_el_resumen_de_servicios_del_inicio_usa_el_catalogo_real(servidor):
     """La vidriera de 'Servicios pensados para cada viaje' del home tiene que
     linkear a paginas de servicio reales, no a categorias genericas viejas."""
