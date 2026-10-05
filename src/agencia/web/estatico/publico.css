@@ -180,6 +180,25 @@ a.switch-opcion:hover{opacity:1}
 :root[data-theme="light"] body.pagina-interna .encabezado .disparador-menu span{
   background:var(--texto)}
 
+/* ======================= FRANJA DE SERVICIOS =======================
+   Accesos rapidos debajo del header, en todas las paginas (va en el
+   mismo _partes/encabezado.html). Como el header es position:fixed, esta
+   franja -que si ocupa lugar en el flujo normal- necesita su propio
+   padding-top para no quedar tapada por el. */
+.franja-servicios{background:var(--superficie);border-bottom:1px dotted var(--borde);
+  padding-top:84px;transition:background .2s ease}
+.franja-servicios-envoltorio{display:flex;gap:4px;overflow-x:auto;
+  padding:12px 24px;max-width:1180px;margin:0 auto;scrollbar-width:none}
+.franja-servicios-envoltorio::-webkit-scrollbar{display:none}
+.franja-servicio{display:flex;flex-direction:column;align-items:center;gap:6px;
+  flex:none;width:78px;text-decoration:none;color:var(--texto);
+  padding:8px 2px;border-radius:10px;transition:background .15s ease}
+.franja-servicio:hover{background:var(--superficie-honda)}
+.franja-servicio svg{width:23px;height:23px;stroke:var(--acento);fill:none;
+  stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.franja-servicio span{font-size:10.5px;font-weight:600;text-align:center;
+  line-height:1.2;letter-spacing:.01em}
+
 /* ======================= HERO =======================
    El hero siempre muestra texto claro sobre la foto con velo oscuro,
    tambien sin pasar por el tema: es contraste contra una foto, no contra
@@ -205,6 +224,27 @@ a.switch-opcion:hover{opacity:1}
   opacity:.8;font-size:10px;letter-spacing:.18em;text-transform:uppercase}
 .hero-scroll svg{width:16px;height:16px;animation:flotar 2.1s ease-in-out infinite}
 @keyframes flotar{0%,100%{transform:translateY(0)}50%{transform:translateY(7px)}}
+
+/* ======================= BANNERS DE PRODUCTOS =======================
+   Solo en la home, entre el hero y "Nuestra esencia". A diferencia de las
+   tarjetas de flyers (que son foto + precio), estos son puro tipo/color
+   -como el resto del sistema poster-, para no repetir las mismas fotos
+   que ya se ven mas abajo en "Salidas grupales"/"A medida". */
+.franja-banners{background:var(--fondo);padding:34px 0;border-bottom:1px dotted var(--acento)}
+.grilla-banners{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.banner-producto{display:flex;flex-direction:column;gap:4px;padding:26px 24px;
+  border-radius:6px;text-decoration:none;transition:transform .15s ease}
+.banner-producto:hover{transform:translateY(-3px)}
+.banner-lleno{background:var(--acento);color:var(--acento-texto)}
+.banner-linea{background:transparent;border:1px dotted var(--acento);color:var(--texto)}
+.banner-ojo{font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;
+  opacity:.75}
+.banner-titulo{font-family:var(--f-display);font-weight:700;text-transform:uppercase;
+  font-size:26px;line-height:1;margin:4px 0 6px}
+.banner-bajada{font-size:13px;opacity:.85;max-width:32ch}
+@media(max-width:760px){
+  .grilla-banners{grid-template-columns:1fr}
+}
 
 /* ======================= SECCIONES GENERICAS ======================= */
 .seccion{padding:100px 0;background:var(--fondo);color:var(--texto);

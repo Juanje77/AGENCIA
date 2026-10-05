@@ -108,6 +108,23 @@ def test_el_inicio_es_un_resumen_no_todo_apilado(servidor):
     assert 'id="formulario-contacto"' not in cuerpo
 
 
+def test_la_franja_de_servicios_esta_en_todas_las_paginas(servidor):
+    """Los accesos rapidos del header (icono + link) viven en _partes/encabezado.html."""
+    for ruta in ("/", "/servicios", "/salidas-grupales", "/a-medida"):
+        _, cuerpo = _get(servidor, ruta)
+        assert 'class="franja-servicios"' in cuerpo, ruta
+        assert 'href="/salidas-grupales" class="franja-servicio"' in cuerpo, ruta
+        assert 'href="/a-medida" class="franja-servicio"' in cuerpo, ruta
+
+
+def test_la_home_tiene_los_banners_de_productos(servidor):
+    _, cuerpo = _get(servidor, "/")
+    assert 'class="franja-banners"' in cuerpo
+    assert "Cuotas sin interés" in cuerpo
+    assert "Salidas grupales" in cuerpo
+    assert "Viajes a medida" in cuerpo
+
+
 def test_robots_txt_permite_el_sitio_y_bloquea_el_panel(servidor):
     codigo, cuerpo = _get(servidor, "/robots.txt")
     assert codigo == 200
