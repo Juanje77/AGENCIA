@@ -32,128 +32,183 @@
 
 <!--ENCABEZADO-->
 
-<!-- ============================= HERO ============================= -->
+<!-- ============================= HERO =============================
+     La proxima salida grupal, no una foto de tapa generica: segun el
+     diagnostico es lo que mas convierte. Hoy es Iguazu -se actualiza a
+     mano cuando cambie la salida destacada, igual que el resto del
+     contenido de ejemplo del sitio (ver README). -->
 <section class="hero">
-  <div class="envoltorio hero-contenido">
-    <span class="ojo">Bienvenido a Esplora</span>
-    <h1 class="hero-tagline">El mundo te espera.</h1>
-    <p class="hero-sub">Diseñamos cada viaje a medida: vuelos, alojamiento, experiencias y
-      acompañamiento de principio a fin, para que solo tengas que disfrutar.</p>
-    <div class="hero-acciones">
-      <a href="https://wa.me/5492954447929?text=Hola%21%20Quiero%20m%C3%A1s%20informaci%C3%B3n%20para%20armar%20un%20viaje."
-        class="boton boton-lleno" target="_blank" rel="noopener">Cotizá tu viaje</a>
-      <a href="/salidas-grupales" class="boton boton-linea-clara">Salidas grupales</a>
-      <a href="/a-medida" class="boton boton-linea-clara">Viajes a medida</a>
+  <div class="hero-salida-info">
+    <span class="etiqueta-destacada">Próxima salida grupal</span>
+    <h1>Cataratas del Iguazú</h1>
+    <p class="hero-salida-fechas">8 al 11 de octubre · 3 noches</p>
+    <p class="hero-salida-desc">Hotel a 10 minutos del Parque Nacional, entrada al lado
+      argentino y traslados incluidos.</p>
+    <div class="hero-salida-precio">
+      <strong>$320.000</strong><span>por persona · cuotas con Mercado Pago</span>
     </div>
+    <div class="hero-salida-acciones">
+      <a href="https://wa.me/5492954447929?text=Hola%21%20Quiero%20reservar%20un%20lugar%20en%20la%20salida%20a%20Cataratas%20del%20Iguaz%C3%BA%20%288%20al%2011%20de%20octubre%29."
+        class="boton boton-lleno" target="_blank" rel="noopener">Reservar mi lugar</a>
+      <a href="/salidas-grupales/iguazu" class="boton boton-linea">Ver itinerario</a>
+    </div>
+  </div>
+  <div class="hero-salida-foto">
+    <picture>
+      <source type="image/webp" srcset="/estatico/img/flyers/iguazu.webp">
+      <img src="/estatico/img/flyers/iguazu.jpg" alt="Cataratas del Iguazú" width="547" height="365" fetchpriority="high">
+    </picture>
   </div>
 </section>
 
 <!-- ======================= FRANJA DE CONFIANZA ======================= -->
 <section class="franja-confianza" aria-label="Confianza">
-  <div class="envoltorio lista-confianza">
-    <span class="item-confianza"><svg><use href="#icono-aliado"/></svg>Trabajamos con Ola, mayorista de turismo</span>
-    <span class="item-confianza"><svg><use href="#icono-wa"/></svg>Atención personalizada por WhatsApp</span>
-    <span class="item-confianza"><svg><use href="#icono-tarjeta"/></svg>Pago seguro con tarjeta o Mercado Pago</span>
-    <span class="item-confianza"><svg><use href="#icono-pin"/></svg>Agencia en Santa Rosa, La Pampa</span>
+  <div class="lista-confianza">
+    <span>Cuotas con tarjeta vía Mercado Pago</span>
+    <span>Operamos con Ola, mayorista de turismo</span>
+    <span>Atención personalizada por WhatsApp</span>
+    <span>Agencia en Santa Rosa, La Pampa</span>
   </div>
 </section>
 
-<!-- ======================= BANNERS DE PRODUCTOS ======================= -->
-<section class="franja-banners" aria-label="Promociones">
+<!-- ======================= SALIDAS GRUPALES ======================= -->
+<section class="seccion seccion-clara" id="salidas">
   <div class="envoltorio">
-    <div class="grilla-banners">
-      <a href="https://wa.me/5492954447929?text=Hola%21%20Quiero%20saber%20c%C3%B3mo%20pagar%20en%20cuotas%20mi%20viaje."
-        class="banner-producto banner-lleno" target="_blank" rel="noopener">
-        <span class="banner-ojo">Mercado Pago</span>
-        <span class="banner-titulo">Cuotas sin interés</span>
-        <span class="banner-bajada">Pagá tu viaje con tarjeta de crédito o débito</span>
-      </a>
-      <a href="/salidas-grupales" class="banner-producto banner-linea">
-        <span class="banner-ojo">Fecha fija</span>
-        <span class="banner-titulo">Salidas grupales</span>
-        <span class="banner-bajada">Cupos limitados — reservá tu lugar hoy</span>
-      </a>
-      <a href="/a-medida" class="banner-producto banner-linea">
-        <span class="banner-ojo">Sin fecha fija</span>
-        <span class="banner-titulo">Viajes a medida</span>
-        <span class="banner-bajada">Tu cotización exacta en 24 horas</span>
-      </a>
-    </div>
-  </div>
-</section>
-
-<!-- ============================ ESENCIA ============================ -->
-<section class="seccion seccion-clara" id="esencia">
-  <div class="envoltorio esencia">
-    <div>
-      <span class="ojo">Nuestra esencia</span>
-      <h2 style="font-size:clamp(28px,3.6vw,40px);margin:12px 0 20px">
-        Más que un destino,<br>una experiencia.
-      </h2>
-      <p class="lead">En Esplora creemos que viajar es descubrir, sentir y conectar.
-        Diseñamos experiencias únicas para que cada viaje sea una historia para siempre —
-        acompañándote desde la primera idea hasta la vuelta a casa.</p>
-      <div class="chips">
-        <span class="chip">Exclusividad</span>
-        <span class="chip">Confianza</span>
-        <span class="chip">Experiencias</span>
-        <span class="chip">Personalización</span>
-        <span class="chip">Pasión</span>
-        <span class="chip">Exploración</span>
+    <div class="encabezado-seccion-fila">
+      <div class="encabezado-seccion">
+        <h2 style="font-size:clamp(28px,3.6vw,38px);margin:0">Salidas grupales</h2>
+        <p class="lead" style="margin-top:8px">Fecha fija, cupo y precio cerrado. Reservás tu
+          lugar y pagás online.</p>
+      </div>
+      <div class="filtro-segmentado" role="group" aria-label="Filtrar salidas grupales">
+        <button type="button" class="filtro-opcion" data-filtro="todas" aria-pressed="true">Todas</button>
+        <button type="button" class="filtro-opcion" data-filtro="nacionales" aria-pressed="false">Nacionales</button>
+        <button type="button" class="filtro-opcion" data-filtro="internacionales" aria-pressed="false">Internacionales</button>
       </div>
     </div>
-    <div class="esencia-marca" aria-hidden="true">
-      <svg viewBox="0 0 300 300">
-        <circle cx="150" cy="150" r="128" fill="none" stroke="#FFFCE9" stroke-width="1.5"/>
-      </svg>
-      <img src="/estatico/img/logo-icono-claro.png" alt="" class="esencia-marca-img">
-    </div>
-  </div>
-</section>
 
-<!-- =========================== SERVICIOS (resumen) =========================== -->
-<section class="seccion seccion-arena">
-  <div class="envoltorio">
-    <div class="encabezado-seccion centrado">
-      <span class="ojo">Qué hacemos</span>
-      <h2 style="font-size:clamp(28px,3.6vw,38px);margin-top:12px">
-        Servicios pensados para cada viaje</h2>
-    </div>
-    <div class="grilla-servicios">
-      <a href="/servicios/aereos" class="servicio">
-        <div class="servicio-icono"><svg><use href="#icono-vuelo"/></svg></div>
-        <h3>Aéreos</h3><p>Tarifas nacionales e internacionales con la mejor conexión.</p>
-      </a>
-      <a href="/servicios/hoteles" class="servicio">
-        <div class="servicio-icono"><svg><use href="#icono-alojamiento"/></svg></div>
-        <h3>Hoteles</h3><p>Desde hoteles boutique hasta resorts todo incluido.</p>
-      </a>
-      <a href="/servicios/cruceros" class="servicio">
-        <div class="servicio-icono"><svg><use href="#icono-crucero"/></svg></div>
-        <h3>Cruceros</h3><p>Caribe, Mediterráneo y más, con cabina a elección.</p>
-      </a>
-      <a href="/servicios/disney" class="servicio">
-        <div class="servicio-icono"><svg><use href="#icono-disney"/></svg></div>
-        <h3>Disney</h3><p>Parques en Orlando, con entradas y hotel ya resueltos.</p>
-      </a>
+    <div class="grilla-salidas">
+      <article class="tarjeta-salida" data-alcance="nacionales" data-fin="2026-11-06">
+        <div class="tarjeta-salida-foto">
+          <picture>
+            <source type="image/webp" srcset="/estatico/img/flyers/calafate.webp">
+            <img src="/estatico/img/flyers/calafate.jpg" alt="Glaciar Perito Moreno" loading="lazy" width="547" height="365">
+          </picture>
+          <span class="tarjeta-salida-precio">$520.000 <span>p/persona</span></span>
+        </div>
+        <div class="tarjeta-salida-cuerpo">
+          <span class="ojo">Trekking en el glaciar</span>
+          <h3>El Calafate</h3>
+          <p class="tarjeta-salida-fechas">2 al 6 de noviembre · 4 noches</p>
+          <p>Hotel con desayuno, excursión de día completo al Glaciar Perito Moreno y
+            traslados incluidos.</p>
+          <div class="tarjeta-salida-acciones">
+            <a href="https://wa.me/5492954447929?text=Hola%21%20Quiero%20reservar%20un%20lugar%20en%20la%20salida%20a%20El%20Calafate%20%282%20al%206%20de%20noviembre%29."
+              class="boton boton-lleno" target="_blank" rel="noopener">Reservar</a>
+            <a href="/salidas-grupales/calafate" class="boton boton-linea">Itinerario</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="tarjeta-salida" data-alcance="internacionales" data-fin="2027-01-13">
+        <div class="tarjeta-salida-foto">
+          <picture>
+            <source type="image/webp" srcset="/estatico/img/destinos/sol-y-mar.webp">
+            <img src="/estatico/img/destinos/sol-y-mar.jpg" alt="Playa de Punta Cana, República Dominicana" loading="lazy" width="678" height="452">
+          </picture>
+          <span class="tarjeta-salida-precio">U$S 1.350 <span>p/persona</span></span>
+        </div>
+        <div class="tarjeta-salida-cuerpo">
+          <span class="ojo">Playas del Caribe · Operado por Ola</span>
+          <h3>Punta Cana, República Dominicana</h3>
+          <p class="tarjeta-salida-fechas">6 al 13 de enero · 7 noches</p>
+          <p>Vuelo + hotel all inclusive frente al mar, con traslados aeropuerto-hotel
+            incluidos.</p>
+          <div class="tarjeta-salida-acciones">
+            <a href="https://wa.me/5492954447929?text=Hola%21%20Quiero%20reservar%20un%20lugar%20en%20la%20salida%20a%20Punta%20Cana%20%286%20al%2013%20de%20enero%29."
+              class="boton boton-lleno" target="_blank" rel="noopener">Reservar</a>
+            <a href="/salidas-grupales/punta-cana" class="boton boton-linea">Itinerario</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="tarjeta-salida" data-alcance="internacionales" data-fin="2027-02-10">
+        <div class="tarjeta-salida-foto">
+          <picture>
+            <source type="image/webp" srcset="/estatico/img/destinos/a-medida.webp">
+            <img src="/estatico/img/destinos/a-medida.jpg" alt="Viña del Mar" loading="lazy" width="513" height="598">
+          </picture>
+          <span class="tarjeta-salida-precio">$380.000 <span>p/persona</span></span>
+        </div>
+        <div class="tarjeta-salida-cuerpo">
+          <span class="ojo">Salida propia en micro</span>
+          <h3>Viña del Mar y Valparaíso</h3>
+          <p class="tarjeta-salida-fechas">4 al 10 de febrero · 4 noches en destino</p>
+          <p>Cruce de la cordillera en micro desde Santa Rosa, alojamiento frente a la
+            playa y excursión a Valparaíso.</p>
+          <div class="tarjeta-salida-acciones">
+            <a href="https://wa.me/5492954447929?text=Hola%21%20Quiero%20reservar%20un%20lugar%20en%20la%20salida%20a%20Vi%C3%B1a%20del%20Mar%20y%20Valpara%C3%ADso%20%284%20al%2010%20de%20febrero%29."
+              class="boton boton-lleno" target="_blank" rel="noopener">Reservar</a>
+            <a href="/salidas-grupales/vina-del-mar" class="boton boton-linea">Itinerario</a>
+          </div>
+        </div>
+      </article>
     </div>
     <p style="text-align:center;margin-top:36px">
-      <a href="/servicios" class="boton boton-linea">Ver todos los servicios</a>
+      <a href="/salidas-grupales" class="boton boton-linea">Ver todas las salidas grupales</a>
     </p>
   </div>
 </section>
 
-<!-- ============================ DESTINOS (resumen) ============================ -->
-<section class="seccion seccion-clara">
+<!-- ======================= VIAJES A MEDIDA ======================= -->
+<section class="franja-a-medida" id="a-medida">
   <div class="envoltorio">
-    <div class="encabezado-seccion centrado">
-      <span class="ojo">Para inspirarte</span>
-      <h2 style="font-size:clamp(28px,3.6vw,38px);margin-top:12px">Un mundo de posibilidades</h2>
-      <p class="lead" style="margin:14px auto 0">Categorías para empezar a imaginar tu
-        próximo viaje. Contanos qué te interesa y armamos la propuesta.</p>
+    <div class="a-medida-intro">
+      <h2 style="font-size:clamp(28px,3.6vw,38px);margin:0">Viajes a medida</h2>
+      <p>Sin fecha fija: elegís cuándo viajar y te mandamos la cotización exacta en 24 horas.</p>
+      <a href="#contacto" class="boton boton-linea">Pedir cotización</a>
     </div>
+    <div class="a-medida-filas">
+      <a href="https://wa.me/5492954447929?text=Hola%21%20Quiero%20cotizar%20un%20viaje%20a%20medida%20a%20Canc%C3%BAn%2C%20M%C3%A9xico."
+        class="fila-a-medida" target="_blank" rel="noopener">
+        <span class="fila-a-medida-foto">
+          <picture>
+            <source type="image/webp" srcset="/estatico/img/internacionales/cancun.webp">
+            <img src="/estatico/img/internacionales/cancun.jpg" alt="" loading="lazy" width="88" height="88">
+          </picture>
+        </span>
+        <span class="fila-a-medida-texto">
+          <strong>Cancún, México</strong>
+          <span>7 noches · vuelo + hotel</span>
+          <span class="fila-a-medida-precio"><strong>Desde U$S 1.200</strong><em>Cotizar →</em></span>
+        </span>
+      </a>
+      <a href="https://wa.me/5492954447929?text=Hola%21%20Quiero%20cotizar%20un%20viaje%20a%20medida%20a%20R%C3%ADo%20de%20Janeiro%2C%20Brasil."
+        class="fila-a-medida" target="_blank" rel="noopener">
+        <span class="fila-a-medida-foto">
+          <picture>
+            <source type="image/webp" srcset="/estatico/img/internacionales/rio-de-janeiro.webp">
+            <img src="/estatico/img/internacionales/rio-de-janeiro.jpg" alt="" loading="lazy" width="88" height="88">
+          </picture>
+        </span>
+        <span class="fila-a-medida-texto">
+          <strong>Río de Janeiro, Brasil</strong>
+          <span>5 noches · vuelo + hotel</span>
+          <span class="fila-a-medida-precio"><strong>Desde U$S 850</strong><em>Cotizar →</em></span>
+        </span>
+      </a>
+    </div>
+  </div>
+</section>
 
-    <div class="grilla-destinos">
+<!-- ======================= DESTINOS PARA INSPIRARTE ======================= -->
+<section class="seccion seccion-clara" id="destinos">
+  <div class="envoltorio">
+    <div class="encabezado-seccion-fila">
+      <h2 style="font-size:clamp(28px,3.6vw,38px);margin:0">Destinos para inspirarte</h2>
+      <a href="/destinos" style="font-weight:600;color:var(--acento);text-decoration:none">Ver todos los destinos →</a>
+    </div>
+    <div class="grilla-destinos grilla-destinos-inicio">
       <article class="tarjeta-destino">
         <picture>
           <source type="image/webp" srcset="/estatico/img/destinos/sol-y-mar.webp">
@@ -170,198 +225,64 @@
         <div class="capa"><span class="ojo">Naturaleza y aventura</span>
           <h3>Al aire libre</h3><p>Montaña, trekking y paisajes que se viven a fondo.</p></div>
       </article>
+      <article class="tarjeta-destino">
+        <picture>
+          <source type="image/webp" srcset="/estatico/img/destinos/metropolis.webp">
+          <img src="/estatico/img/destinos/metropolis.jpg" alt="" loading="lazy" width="547" height="365">
+        </picture>
+        <div class="capa"><span class="ojo">Ciudades con historia</span>
+          <h3>Metrópolis del mundo</h3><p>Arte, arquitectura y vida urbana en cada capital.</p></div>
+      </article>
     </div>
-    <p style="text-align:center;margin-top:36px">
-      <a href="/destinos" class="boton boton-linea">Ver todos los destinos</a>
-    </p>
   </div>
 </section>
 
-<!-- ======================= SALIDAS GRUPALES (resumen) ======================= -->
-<section class="seccion seccion-arena">
-  <div class="envoltorio">
-    <div class="encabezado-seccion centrado">
-      <span class="ojo">Salidas con fecha fija</span>
-      <h2 style="font-size:clamp(28px,3.6vw,38px);margin-top:12px">Salidas grupales</h2>
-      <p class="lead" style="margin:14px auto 0">Viajes armados con fecha, cupo y precio
-        cerrado — nacionales e internacionales. Reservá tu lugar y aboná online con
-        Mercado Pago.</p>
-    </div>
-
-    <div class="grilla-flyers">
-      <article class="tarjeta-flyer">
-        <div class="flyer-imagen">
-          <picture>
-            <source type="image/webp" srcset="/estatico/img/flyers/bariloche.webp">
-            <img src="/estatico/img/flyers/bariloche.jpg" alt="Centro Cívico de Bariloche, en invierno" loading="lazy" width="736" height="416">
-          </picture>
-          <span class="flyer-precio">$450.000 <span style="font-weight:500">p/persona</span></span>
-        </div>
-        <div class="flyer-cuerpo">
-          <span class="ojo">Semana de vacaciones de invierno</span>
-          <h3>Bariloche</h3>
-          <p class="flyer-fecha">14 al 19 de julio · 5 noches</p>
-          <p>Hotel 3 estrellas con desayuno, traslados aeropuerto-hotel y excursión al
-            Cerro Catedral incluida.</p>
-          <a href="/salidas-grupales/bariloche" class="boton-cotizar">Ver itinerario completo →</a>
-        </div>
-      </article>
-
-      <article class="tarjeta-flyer">
-        <div class="flyer-imagen">
-          <picture>
-            <source type="image/webp" srcset="/estatico/img/flyers/iguazu.webp">
-            <img src="/estatico/img/flyers/iguazu.jpg" alt="Cataratas del Iguazú" loading="lazy" width="547" height="365">
-          </picture>
-          <span class="flyer-precio">$320.000 <span style="font-weight:500">p/persona</span></span>
-        </div>
-        <div class="flyer-cuerpo">
-          <span class="ojo">Escapada de fin de semana largo</span>
-          <h3>Cataratas del Iguazú</h3>
-          <p class="flyer-fecha">8 al 11 de octubre · 3 noches</p>
-          <p>Hotel a 10 minutos del Parque Nacional, entrada al lado argentino y
-            traslados incluidos.</p>
-          <a href="/salidas-grupales/iguazu" class="boton-cotizar">Ver itinerario completo →</a>
-        </div>
-      </article>
-
-      <article class="tarjeta-flyer">
-        <div class="flyer-imagen">
-          <picture>
-            <source type="image/webp" srcset="/estatico/img/destinos/sol-y-mar.webp">
-            <img src="/estatico/img/destinos/sol-y-mar.jpg" alt="Playa de Punta Cana, República Dominicana" loading="lazy" width="678" height="452">
-          </picture>
-          <span class="flyer-precio">U$S 1.350 <span style="font-weight:500">p/persona</span></span>
-        </div>
-        <div class="flyer-cuerpo">
-          <span class="ojo">Playas del Caribe · Operado por Ola</span>
-          <h3>Punta Cana, República Dominicana</h3>
-          <p class="flyer-fecha">6 al 13 de enero · 7 noches</p>
-          <p>Vuelo + hotel all inclusive frente al mar, con traslados
-            aeropuerto-hotel incluidos.</p>
-          <a href="/salidas-grupales/punta-cana" class="boton-cotizar">Ver itinerario completo →</a>
-        </div>
-      </article>
-    </div>
-    <p style="text-align:center;margin-top:36px">
-      <a href="/salidas-grupales" class="boton boton-linea">Ver todas las salidas grupales</a>
-    </p>
-  </div>
-</section>
-
-<!-- ======================= A MEDIDA (resumen) ======================= -->
-<section class="seccion seccion-clara">
-  <div class="envoltorio">
-    <div class="encabezado-seccion centrado">
-      <span class="ojo">Presupuesto a medida</span>
-      <h2 style="font-size:clamp(28px,3.6vw,38px);margin-top:12px">Viajes a medida</h2>
-      <p class="lead" style="margin:14px auto 0">Sin fecha fija: el precio final depende de
-        fechas, tipo de cambio y disponibilidad. Pedí tu cotización y te armamos la propuesta
-        exacta.</p>
-    </div>
-
-    <div class="grilla-flyers">
-      <article class="tarjeta-flyer">
-        <div class="flyer-imagen">
-          <picture>
-            <source type="image/webp" srcset="/estatico/img/internacionales/cancun.webp">
-            <img src="/estatico/img/internacionales/cancun.jpg" alt="Cancún, México" loading="lazy" width="678" height="452">
-          </picture>
-          <span class="flyer-precio">Desde U$S 1.200 <span style="font-weight:500">p/persona</span></span>
-        </div>
-        <div class="flyer-cuerpo">
-          <span class="ojo">Playas del Caribe</span>
-          <h3>Cancún, México</h3>
-          <p class="flyer-fecha">7 noches · vuelo + hotel</p>
-          <p>Hotel frente al mar con opción all inclusive y traslados
-            aeropuerto-hotel incluidos.</p>
-          <a href="/a-medida" class="boton-cotizar">Ver este viaje →</a>
-        </div>
-      </article>
-
-      <article class="tarjeta-flyer">
-        <div class="flyer-imagen">
-          <picture>
-            <source type="image/webp" srcset="/estatico/img/internacionales/rio-de-janeiro.webp">
-            <img src="/estatico/img/internacionales/rio-de-janeiro.jpg" alt="Río de Janeiro, Brasil" loading="lazy" width="547" height="365">
-          </picture>
-          <span class="flyer-precio">Desde U$S 850 <span style="font-weight:500">p/persona</span></span>
-        </div>
-        <div class="flyer-cuerpo">
-          <span class="ojo">Playas y ciudad</span>
-          <h3>Río de Janeiro, Brasil</h3>
-          <p class="flyer-fecha">5 noches · vuelo + hotel</p>
-          <p>Alojamiento en Copacabana o Ipanema, con traslados y city tour
-            opcional a Pan de Azúcar.</p>
-          <a href="/a-medida" class="boton-cotizar">Ver este viaje →</a>
-        </div>
-      </article>
-    </div>
-    <p style="text-align:center;margin-top:36px">
-      <a href="/a-medida" class="boton boton-linea">Ver todos los viajes a medida</a>
-    </p>
-  </div>
-</section>
-
-<!-- ======================= CAMINO (decorativo) ======================= -->
-<section class="camino" aria-hidden="true">
-  <div class="camino-escena">
-    <svg class="camino-ruta" viewBox="0 0 1000 120" preserveAspectRatio="none">
-      <path d="M0,80 C150,40 300,110 500,70 C700,30 850,100 1000,60"/>
-    </svg>
-    <div class="caminante">
-      <div class="caminante-rebote">
-        <svg class="caminante-figura" viewBox="0 0 40 60">
-          <circle cx="20" cy="9" r="6"/>
-          <rect class="caminante-mochila" x="12" y="16" width="9" height="14" rx="3"/>
-          <line x1="20" y1="15" x2="20" y2="36"/>
-          <polyline points="20,18 13,28"/>
-          <polyline points="20,18 29,26"/>
-          <polyline points="20,36 16,44 11,52"/>
-          <polyline points="20,36 24,46 29,54"/>
-        </svg>
-      </div>
-    </div>
-  </div>
-  <p class="camino-frase">Cada viaje empieza con un paso.</p>
-</section>
-
-<!-- ============================ NOSOTROS (resumen) ============================ -->
-<section class="seccion seccion-oscura">
+<!-- ============================ COMO TRABAJAMOS ============================ -->
+<section class="seccion seccion-oscura" id="como">
   <div class="envoltorio">
     <div class="encabezado-seccion centrado" style="max-width:680px">
       <span class="ojo">Cómo trabajamos</span>
-      <h2 style="font-size:clamp(28px,3.6vw,38px);margin-top:12px">De la idea al viaje, paso a paso</h2>
-      <p class="lead" style="margin:14px auto 0">Te acompañamos desde la primera idea hasta la
-        vuelta a casa, con asesoramiento en cada etapa del viaje.</p>
+      <h2 style="font-size:clamp(28px,3.6vw,38px);margin-top:12px">De la idea al viaje</h2>
     </div>
     <div class="pasos" style="margin-top:50px">
       <div class="paso"><h3>Contanos tu idea</h3>
-        <p>Destino, fechas, presupuesto aproximado y qué tipo de viaje estás buscando.</p></div>
+        <p>Destino, fechas, presupuesto aproximado y qué tipo de viaje buscás.</p></div>
       <div class="paso"><h3>Armamos las opciones</h3>
-        <p>Comparamos entre mayoristas y proveedores para ofrecerte las mejores alternativas.</p></div>
+        <p>Comparamos entre mayoristas y proveedores para darte las mejores alternativas.</p></div>
       <div class="paso"><h3>Elegís y coordinamos</h3>
         <p>Reservas, documentación y cada detalle, resuelto por nosotros.</p></div>
       <div class="paso"><h3>Viajás tranquilo</h3>
-        <p>Con acompañamiento antes y durante el viaje, ante cualquier imprevisto.</p></div>
+        <p>Te acompañamos antes y durante el viaje, ante cualquier imprevisto.</p></div>
     </div>
-    <p style="text-align:center;margin-top:50px">
-      <a href="/nosotros" class="boton boton-linea-clara">Conocé cómo trabajamos</a>
-    </p>
   </div>
 </section>
 
-<!-- ============================ CONTACTO (resumen) ============================ -->
-<section class="seccion seccion-clara">
-  <div class="envoltorio" style="text-align:center;max-width:680px">
-    <span class="ojo">Empecemos</span>
-    <h2 style="font-size:clamp(28px,3.6vw,38px);margin:12px 0 16px">Planeemos tu próximo viaje</h2>
-    <p class="lead" style="margin:0 auto">Escribinos y te contactamos para armar juntos la
-      propuesta que mejor se ajuste a lo que estás buscando.</p>
-    <p style="margin-top:30px">
-      <a href="https://wa.me/5492954447929?text=Hola%21%20Quiero%20m%C3%A1s%20informaci%C3%B3n%20para%20armar%20un%20viaje."
-        class="boton boton-lleno" target="_blank" rel="noopener">Contactanos</a>
-    </p>
+<!-- ============================ CONTACTO ============================
+     Formulario corto sin backend: arma el mensaje en publico.js y abre
+     WhatsApp. El formulario completo (mas campos) sigue viviendo en
+     /contacto para quien prefiera no usar WhatsApp. -->
+<section class="seccion seccion-clara" id="contacto">
+  <div class="envoltorio">
+    <div class="bloque-contacto">
+      <div class="bloque-contacto-info">
+        <h2 style="font-size:clamp(28px,3.6vw,38px);margin:0">Planeemos tu próximo viaje</h2>
+        <p>Completá tres datos y te escribimos por WhatsApp con la propuesta.</p>
+        <p class="telefono">O llamanos: <a href="tel:+5492954447929">+54 9 2954 44-7929</a></p>
+      </div>
+      <div class="bloque-contacto-form" id="form-contacto-rapido">
+        <label class="campo-rapido">Tu nombre
+          <input class="input-rapido" id="rapido-nombre" placeholder="Nombre y apellido">
+        </label>
+        <label class="campo-rapido">¿A dónde querés ir?
+          <input class="input-rapido" id="rapido-destino" placeholder="Destino o tipo de viaje">
+        </label>
+        <label class="campo-rapido">¿Cuándo?
+          <input class="input-rapido" id="rapido-cuando" placeholder="Mes o fechas aproximadas">
+        </label>
+        <a href="https://wa.me/5492954447929" target="_blank" rel="noopener"
+          class="boton boton-lleno boton-ancho" id="rapido-enviar">Enviar por WhatsApp</a>
+      </div>
+    </div>
   </div>
 </section>
 

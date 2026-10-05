@@ -25,7 +25,7 @@ Está repartido en varias páginas en vez de una sola muy larga:
 
 | Página | Contenido |
 |---|---|
-| `/` | Inicio: hero + un resumen breve de cada sección de abajo, con su link a la página completa |
+| `/` | Inicio: abre con la próxima salida grupal (hoy, Iguazú — actualizar a mano cuando cambie), franja de confianza, salidas grupales con filtro Todas/Nacionales/Internacionales, viajes a medida, destinos, cómo trabajamos y un formulario corto que arma el mensaje de WhatsApp en `publico.js` (sin backend) |
 | `/servicios` | Grilla con los productos que se venden (espejo de la franja del header) + "Consejos para elegir tu viaje" |
 | `/servicios/aereos`, `/…/hoteles`, `/…/circuitos`, `/…/assist-card`, `/…/cruceros`, `/…/actividades`, `/…/autos`, `/…/traslados`, `/…/disney`, `/…/universal`, `/…/enjoy` | Una página propia por cada producto — misma lista y mismo orden que el menú de servicios de **ola.com.ar** (el mayorista con el que se trabaja), para que cada ítem de la franja del header lleve a su propia página en vez de todo apilado en `/servicios` |
 | `/destinos` | Las 4 categorías de "Para inspirarte" |

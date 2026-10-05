@@ -103,101 +103,61 @@ p{margin:0 0 14px}
 .logo-esplora{display:flex;align-items:center;gap:12px;text-decoration:none;color:inherit}
 .logo-marca{width:42px;height:42px;flex:none;object-fit:contain}
 .logo-marca-oscura{display:none}
+:root[data-theme="light"] .logo-marca-clara{display:none}
+:root[data-theme="light"] .logo-marca-oscura{display:block}
 .logo-texto{line-height:1}
 .logo-texto strong{display:block;font-family:var(--f-display);font-weight:700;
-  text-transform:uppercase;font-size:22px;letter-spacing:.02em;color:var(--buttercream)}
+  text-transform:uppercase;font-size:22px;letter-spacing:.02em;color:var(--texto)}
 .logo-texto span{display:block;font-size:9px;letter-spacing:.22em;
-  text-transform:uppercase;color:var(--buttercream-tenue);margin-top:2px}
+  text-transform:uppercase;color:var(--texto-tenue);margin-top:2px}
 
 /* ======================= HEADER =======================
-   El header, en su estado base (transparente, sobre la foto del hero),
-   siempre es claro -texto/logo en buttercream literal, sin pasar por la
-   capa semantica- porque esa foto nunca deja de tener el velo oscuro,
-   sin importar el tema del resto del sitio. Solo en su estado solido
-   (con-fondo / pagina-interna) pasa a usar la superficie del tema, y ahi
-   si el texto necesita el override de mas abajo para el tema claro. */
-.encabezado{position:fixed;top:0;left:0;right:0;z-index:50;padding:20px 0;
-  transition:background .25s ease,padding .25s ease}
-.encabezado .envoltorio{display:flex;align-items:center;justify-content:space-between;gap:24px}
-.encabezado.con-fondo, body.pagina-interna .encabezado{background:var(--superficie-honda);
-  padding:13px 0;border-bottom:1px dotted var(--borde-tenue)}
+   Fondo solido siempre (no hay mas foto de tapa detras para justificar un
+   estado transparente): usa los mismos tokens de tema que el resto del
+   sitio, asi que claro/oscuro lo resuelve la capa semantica sola. */
+.encabezado{position:fixed;top:0;left:0;right:0;z-index:50;padding:18px 0;
+  background:var(--fondo);transition:background .2s ease,padding .25s ease}
+.encabezado .envoltorio{display:flex;align-items:center;gap:20px}
+.encabezado.con-fondo, body.pagina-interna .encabezado{padding:13px 0;
+  border-bottom:1px dotted var(--borde-tenue)}
 
-.nav-principal{display:flex;align-items:center;gap:24px}
-.nav-principal a{text-decoration:none;color:var(--buttercream);font-size:13.5px;
+.logo-esplora{flex:none}
+.nav-principal{flex:1 1 0;min-width:0;display:flex;align-items:center;justify-content:center;
+  flex-wrap:wrap;gap:6px 22px}
+.nav-principal a{text-decoration:none;color:var(--texto);font-size:13.5px;
   font-weight:600;letter-spacing:.03em;transition:opacity .15s}
 .nav-principal a:hover{opacity:.7}
-.nav-derecha{display:flex;align-items:center;gap:14px}
+.nav-derecha{flex:none;display:flex;align-items:center;gap:14px}
 .disparador-tema{display:flex;align-items:center;justify-content:center;width:34px;height:34px;
-  border-radius:50%;border:1px solid rgba(255,252,233,.35);background:transparent;
+  border-radius:50%;border:1px solid var(--borde);background:transparent;
   cursor:pointer;padding:0;flex:none}
-.icono-tema{width:16px;height:16px;stroke:var(--buttercream);fill:none;stroke-width:1.8;
+.icono-tema{width:16px;height:16px;stroke:var(--texto);fill:none;stroke-width:1.8;
   stroke-linecap:round;stroke-linejoin:round}
 .icono-tema-luna{display:none}
 :root[data-theme="light"] .icono-tema-sol{display:none}
 :root[data-theme="light"] .icono-tema-luna{display:block}
-.switch-sitio{display:flex;background:rgba(255,252,233,.1);border:1px solid rgba(255,252,233,.3);
-  border-radius:999px;padding:3px;gap:2px}
-.switch-opcion{font-family:var(--f-cuerpo);font-weight:600;font-size:11.5px;
-  padding:6px 12px;border-radius:999px;text-decoration:none;color:var(--buttercream);
-  opacity:.8;line-height:1;white-space:nowrap;transition:opacity .15s,background .15s,color .15s}
-.switch-opcion.activo{background:var(--buttercream);color:var(--charred-clove);opacity:1}
-a.switch-opcion:hover{opacity:1}
 .disparador-menu{display:none;flex-direction:column;gap:5px;background:none;border:none;
   cursor:pointer;padding:6px}
-.disparador-menu span{width:24px;height:2px;background:var(--buttercream);border-radius:2px}
-
-/* Header solido (interior o scrolleado) en tema claro: ahi la superficie
-   del header pasa a ser clara, asi que todo lo de arriba se invierte. */
-:root[data-theme="light"] .encabezado.con-fondo .logo-texto strong,
-:root[data-theme="light"] body.pagina-interna .encabezado .logo-texto strong{color:var(--texto)}
-:root[data-theme="light"] .encabezado.con-fondo .logo-texto span,
-:root[data-theme="light"] body.pagina-interna .encabezado .logo-texto span{color:var(--texto-tenue)}
-:root[data-theme="light"] .encabezado.con-fondo .logo-marca-clara,
-:root[data-theme="light"] body.pagina-interna .encabezado .logo-marca-clara{display:none}
-:root[data-theme="light"] .encabezado.con-fondo .logo-marca-oscura,
-:root[data-theme="light"] body.pagina-interna .encabezado .logo-marca-oscura{display:block}
-:root[data-theme="light"] .encabezado.con-fondo .nav-principal a,
-:root[data-theme="light"] body.pagina-interna .encabezado .nav-principal a{color:var(--texto)}
-:root[data-theme="light"] .encabezado.con-fondo .boton-linea-clara,
-:root[data-theme="light"] body.pagina-interna .encabezado .boton-linea-clara{
-  border-color:var(--texto);color:var(--texto)}
-:root[data-theme="light"] .encabezado.con-fondo .boton-linea-clara:hover,
-:root[data-theme="light"] body.pagina-interna .encabezado .boton-linea-clara:hover{
-  background:var(--texto);color:var(--fondo)}
-:root[data-theme="light"] .encabezado.con-fondo .disparador-tema,
-:root[data-theme="light"] body.pagina-interna .encabezado .disparador-tema{border-color:var(--borde)}
-:root[data-theme="light"] .encabezado.con-fondo .icono-tema,
-:root[data-theme="light"] body.pagina-interna .encabezado .icono-tema{stroke:var(--texto)}
-:root[data-theme="light"] .encabezado.con-fondo .switch-sitio,
-:root[data-theme="light"] body.pagina-interna .encabezado .switch-sitio{
-  background:rgba(40,16,6,.06);border-color:rgba(40,16,6,.2)}
-:root[data-theme="light"] .encabezado.con-fondo .switch-opcion,
-:root[data-theme="light"] body.pagina-interna .encabezado .switch-opcion{color:var(--texto)}
-:root[data-theme="light"] .encabezado.con-fondo .switch-opcion.activo,
-:root[data-theme="light"] body.pagina-interna .encabezado .switch-opcion.activo{
-  background:var(--texto);color:var(--fondo)}
-:root[data-theme="light"] .encabezado.con-fondo .disparador-menu span,
-:root[data-theme="light"] body.pagina-interna .encabezado .disparador-menu span{
-  background:var(--texto)}
+.disparador-menu span{width:24px;height:2px;background:var(--texto);border-radius:2px}
 
 /* ======================= FRANJA DE SERVICIOS =======================
    Accesos rapidos debajo del header, en todas las paginas (va en el
    mismo _partes/encabezado.html). Como el header es position:fixed, esta
    franja -que si ocupa lugar en el flujo normal- necesita su propio
    padding-top para no quedar tapada por el. */
-.franja-servicios{background:var(--superficie);border-bottom:1px dotted var(--borde);
+.franja-servicios{background:var(--fondo);border-top:1px solid var(--borde);
   padding-top:84px;transition:background .2s ease}
-.franja-servicios-envoltorio{display:flex;gap:4px;overflow-x:auto;
-  padding:12px 24px;max-width:1180px;margin:0 auto;scrollbar-width:none}
+.franja-servicios-envoltorio{display:flex;gap:2px;overflow-x:auto;justify-content:safe center;
+  padding:8px 16px;max-width:1180px;margin:0 auto;scrollbar-width:none}
 .franja-servicios-envoltorio::-webkit-scrollbar{display:none}
-.franja-servicio{display:flex;flex-direction:column;align-items:center;gap:6px;
-  flex:none;width:78px;text-decoration:none;color:var(--texto);
-  padding:8px 2px;border-radius:10px;transition:background .15s ease}
-.franja-servicio:hover{background:var(--superficie-honda)}
-.franja-servicio svg{width:23px;height:23px;stroke:var(--acento);fill:none;
+.franja-servicio{display:flex;align-items:center;gap:8px;flex:none;
+  text-decoration:none;color:var(--texto);font-size:14px;font-weight:500;white-space:nowrap;
+  padding:4px 10px 4px 4px;border-radius:999px;transition:background .15s ease}
+.franja-servicio:hover{background:rgba(209,37,92,.18)}
+.franja-servicio-circulo{width:30px;height:30px;border-radius:50%;flex:none;
+  border:1.5px solid var(--borde-tenue);display:flex;align-items:center;justify-content:center}
+.franja-servicio-circulo svg{width:16px;height:16px;stroke:currentColor;fill:none;
   stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
-.franja-servicio span{font-size:10.5px;font-weight:600;text-align:center;
-  line-height:1.2;letter-spacing:.01em}
 
 /* --- franja del dolar ---
    Debajo de la franja de servicios, en todas las paginas. Arranca con
@@ -218,37 +178,38 @@ a.switch-opcion:hover{opacity:1}
 }
 
 /* ======================= HERO =======================
-   Franja compacta, sin foto: el sitio de referencia (ola.com.ar) no abre
-   con una foto de tapa, va directo a la informacion organizada en
-   franjas y grillas. El fondo queda literal (no pasa por el tema) por la
-   misma razon que antes: el header arranca transparente con texto claro
-   encima de esta franja hasta que el scroll le pone superficie solida. */
-.hero{background:var(--ember-rust);position:relative;
-  border-bottom:1px dotted var(--buttercream);padding:168px 0 64px}
-.hero-contenido{color:var(--buttercream)}
-.hero-contenido .ojo{color:var(--buttercream)}
-.hero-tagline{font-family:var(--f-display);font-weight:700;text-transform:uppercase;
-  font-size:clamp(38px,6vw,84px);line-height:.92;letter-spacing:-.02em;
-  margin:14px 0 18px;color:var(--buttercream)}
-.hero-sub{font-size:16px;color:var(--buttercream-tenue);max-width:60ch;margin-bottom:26px}
-.hero-acciones{display:flex;gap:14px;flex-wrap:wrap}
-.hero-acciones .boton-linea-clara{border-color:var(--buttercream);color:var(--buttercream)}
-.hero-acciones .boton-linea-clara:hover{background:var(--buttercream);color:var(--charred-clove)}
+   La home abre con la proxima salida grupal, no con una foto de tapa
+   generica: es lo que mas conversion genera, segun el informe de
+   diagnostico. padding-top incluye el alto del header fijo. */
+.hero{padding:132px 24px 56px;max-width:1180px;margin:0 auto;
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));
+  gap:40px;align-items:center}
+.etiqueta-destacada{display:inline-flex;align-self:flex-start;align-items:center;
+  font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;
+  padding:5px 14px;border-radius:999px;background:var(--superficie-honda);
+  color:var(--texto-tenue)}
+.hero-salida-info{display:flex;flex-direction:column;gap:16px}
+.hero-salida-info h1{font-size:clamp(38px,5.5vw,64px);line-height:.98;text-transform:none}
+.hero-salida-fechas{font-size:19px;font-weight:600;color:var(--acento-oscuro);margin:0}
+.hero-salida-desc{font-size:17px;color:var(--texto-tenue);max-width:46ch;margin:0}
+.hero-salida-precio{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+.hero-salida-precio strong{font-family:var(--f-display);font-size:38px;color:var(--texto)}
+.hero-salida-precio span{font-size:14px;color:var(--texto-tenue)}
+.hero-salida-acciones{display:flex;gap:12px;flex-wrap:wrap;margin-top:4px}
+.hero-salida-foto{aspect-ratio:1/1;border-radius:50% 50% 28px 50%;overflow:hidden}
+.hero-salida-foto img{width:100%;height:100%;object-fit:cover;display:block;
+  filter:saturate(.75) contrast(.92) brightness(1.06)}
 
 /* ======================= FRANJA DE CONFIANZA =======================
-   Franja angosta pegada abajo del hero, antes de los banners: no vende
-   un producto puntual (eso ya lo hacen los banners), son señales rapidas
-   de confianza para alguien que recien llega al sitio. */
-.franja-confianza{background:var(--superficie);padding:18px 0;
-  border-bottom:1px dotted var(--borde);transition:background .2s ease}
-.lista-confianza{display:flex;flex-wrap:wrap;justify-content:center;gap:28px 40px}
-.item-confianza{display:flex;align-items:center;gap:10px;color:var(--texto-tenue);
-  font-size:13px;font-weight:500}
-.item-confianza svg{width:19px;height:19px;flex:none;stroke:var(--acento);fill:none;
-  stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+   Una sola pill con 4 señales de confianza, pegada abajo del hero. No
+   vende un producto puntual (eso lo hacen las secciones de abajo), son
+   afirmaciones verificables con lo que ya existe en el sitio. */
+.franja-confianza{padding:0 24px 56px;max-width:1180px;margin:0 auto}
+.lista-confianza{display:flex;flex-wrap:wrap;gap:12px 32px;padding:16px 28px;
+  border-radius:999px;background:var(--superficie-honda);color:var(--texto-tenue);
+  font-size:15px;font-weight:500}
 @media(max-width:620px){
-  .lista-confianza{gap:16px 24px}
-  .item-confianza{font-size:12px}
+  .lista-confianza{gap:10px 20px;padding:14px 22px;font-size:13.5px}
 }
 
 /* ======================= BANNERS DE PRODUCTOS =======================
@@ -273,7 +234,7 @@ a.switch-opcion:hover{opacity:1}
 }
 
 /* ======================= SECCIONES GENERICAS ======================= */
-.seccion{padding:100px 0;background:var(--fondo);color:var(--texto);
+.seccion{padding:72px 0;background:var(--fondo);color:var(--texto);
   border-bottom:1px dotted var(--acento);transition:background .2s ease}
 .encabezado-seccion{max-width:640px;margin:0 0 56px}
 .encabezado-seccion.centrado{margin:0 auto 56px;text-align:center}
@@ -309,6 +270,11 @@ a.switch-opcion:hover{opacity:1}
 .grilla-destinos{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:22px}
 .tarjeta-destino{border-radius:6px;overflow:hidden;position:relative;height:340px;
   display:flex;align-items:flex-end}
+/* En el inicio son solo 3 tarjetas de inspiracion rapida, mas chicas que
+   en /destinos -donde son la pagina entera-, asi que acá se superpone
+   altura y radio sin tocar la clase base. */
+.grilla-destinos-inicio{grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr))}
+.grilla-destinos-inicio .tarjeta-destino{height:220px;border-radius:28px}
 .tarjeta-destino svg,.tarjeta-destino img{position:absolute;inset:0;width:100%;height:100%;
   z-index:0;object-fit:cover}
 .tarjeta-destino .capa{position:relative;z-index:1;padding:26px;color:var(--buttercream);
@@ -346,6 +312,71 @@ a.switch-opcion:hover{opacity:1}
   color:var(--acento-texto);font-family:var(--f-cuerpo);font-weight:700;font-size:13.5px;
   text-decoration:none;transition:background .15s ease,transform .15s ease}
 .boton-cotizar:hover{background:var(--acento-oscuro)}
+
+/* --- home: encabezado de seccion con filtro al lado --- */
+.encabezado-seccion-fila{display:flex;justify-content:space-between;align-items:flex-end;
+  gap:24px;flex-wrap:wrap;margin-bottom:28px}
+.filtro-segmentado{display:flex;gap:4px;padding:4px;border-radius:999px;
+  background:var(--superficie)}
+.filtro-opcion{border:0;border-radius:999px;padding:10px 18px;font:inherit;font-size:14px;
+  font-weight:600;cursor:pointer;background:transparent;color:var(--texto);
+  transition:background .15s ease,color .15s ease}
+.filtro-opcion[aria-pressed="true"]{background:var(--acento);color:var(--acento-texto)}
+
+/* --- home: tarjetas de salidas grupales (vidriera) --- */
+.grilla-salidas{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,300px),1fr));
+  gap:28px}
+.tarjeta-salida{background:var(--superficie);border-radius:28px;overflow:hidden;
+  display:flex;flex-direction:column;transition:background .2s ease}
+.tarjeta-salida[hidden]{display:none}
+.tarjeta-salida-foto{position:relative;height:190px}
+.tarjeta-salida-foto img{width:100%;height:100%;object-fit:cover;display:block}
+.tarjeta-salida-precio{position:absolute;left:14px;bottom:14px;padding:6px 14px;
+  border-radius:999px;background:var(--fondo);color:var(--texto);
+  font-weight:700;font-size:16px}
+.tarjeta-salida-precio span{font-weight:500;font-size:13px}
+.tarjeta-salida-cuerpo{padding:20px 22px 22px;display:flex;flex-direction:column;gap:8px;flex:1}
+.tarjeta-salida-cuerpo .ojo{font-size:13px}
+.tarjeta-salida-cuerpo h3{font-size:24px;text-transform:none;line-height:1.1}
+.tarjeta-salida-fechas{font-size:15px;font-weight:600;color:var(--acento-oscuro);margin:0}
+.tarjeta-salida-cuerpo p:not(.tarjeta-salida-fechas){font-size:14.5px;color:var(--texto-tenue);
+  flex:1;margin:0}
+.tarjeta-salida-acciones{display:flex;gap:8px;flex-wrap:wrap;padding-top:6px}
+
+/* --- home: viajes a medida (banda + filas con foto circular) --- */
+.franja-a-medida{background:var(--superficie-honda);transition:background .2s ease}
+.franja-a-medida .envoltorio{padding:72px 24px;display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(min(100%,340px),1fr));gap:40px;align-items:start}
+.a-medida-intro{display:flex;flex-direction:column;gap:14px;align-items:flex-start}
+.a-medida-intro p{font-size:17px;color:var(--texto-tenue);max-width:40ch;margin:0}
+.a-medida-filas{display:flex;flex-direction:column;gap:16px}
+.fila-a-medida{display:grid;grid-template-columns:88px minmax(0,1fr);gap:16px;align-items:center;
+  padding:12px 24px 12px 12px;border-radius:28px;background:var(--fondo);
+  text-decoration:none;color:var(--texto)}
+.fila-a-medida-foto{width:88px;height:88px;border-radius:50%;overflow:hidden;flex:none}
+.fila-a-medida-foto img{width:100%;height:100%;object-fit:cover;display:block}
+.fila-a-medida-texto{display:flex;flex-direction:column;gap:4px;min-width:0}
+.fila-a-medida-texto strong{font-family:var(--f-display);font-weight:700;font-size:19px;
+  line-height:1.15;text-transform:none}
+.fila-a-medida-texto span{font-size:14px;color:var(--texto-tenue)}
+.fila-a-medida-precio{display:flex;gap:12px;flex-wrap:wrap;align-items:baseline}
+.fila-a-medida-precio strong{font-weight:700;font-size:15px;font-family:var(--f-cuerpo)}
+.fila-a-medida-precio em{font-style:normal;font-weight:600;font-size:14px;color:var(--acento-oscuro)}
+
+/* --- home: formulario corto de contacto (manda a WhatsApp, sin backend) --- */
+.bloque-contacto{border-radius:28px;background:var(--superficie);
+  padding:clamp(28px,5vw,56px);display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr));gap:40px;align-items:center}
+.bloque-contacto-info{display:flex;flex-direction:column;gap:12px}
+.bloque-contacto-info p{font-size:17px;color:var(--texto-tenue);max-width:40ch;margin:0}
+.bloque-contacto-info p.telefono{font-size:15px}
+.bloque-contacto-info a{color:var(--texto);font-weight:600}
+.bloque-contacto-form{display:flex;flex-direction:column;gap:14px}
+.campo-rapido{display:flex;flex-direction:column;gap:6px;font-size:14px;font-weight:600}
+.input-rapido{border-radius:999px;padding:12px 18px;font:inherit;font-weight:400;font-size:14px;
+  border:1px solid var(--borde);background:var(--fondo);color:var(--texto)}
+.input-rapido:focus-visible{outline:2px solid var(--acento);outline-offset:1px}
+.boton-ancho{width:100%;justify-content:center;padding:14px;font-size:15px}
 
 /* --- itinerario de una salida grupal --- */
 .itinerario{max-width:820px}
@@ -430,8 +461,8 @@ a.switch-opcion:hover{opacity:1}
   counter-reset:paso}
 .paso{position:relative;padding-top:8px}
 .paso::before{counter-increment:paso;content:counter(paso,decimal-leading-zero);
-  font-family:var(--f-display);font-size:16px;color:var(--acento);
-  border:1px solid var(--acento);border-radius:50%;width:38px;height:38px;
+  font-family:var(--f-display);font-size:18px;color:var(--acento-texto);
+  background:var(--acento);border-radius:50%;width:44px;height:44px;
   display:flex;align-items:center;justify-content:center;margin-bottom:16px}
 .paso h3{font-size:18px;margin-bottom:8px}
 .paso p{font-size:13.5px;color:var(--texto-tenue)}

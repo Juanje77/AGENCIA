@@ -94,6 +94,54 @@ if (franjaDolar) {
     });
 }
 
+// --- filtro de salidas grupales (Todas / Nacionales / Internacionales) ------
+const filtrosSalidas = document.querySelectorAll(".filtro-opcion");
+const tarjetasSalida = document.querySelectorAll(".tarjeta-salida[data-alcance]");
+filtrosSalidas.forEach((boton) => {
+  boton.addEventListener("click", () => {
+    filtrosSalidas.forEach((b) => b.setAttribute("aria-pressed", String(b === boton)));
+    const alcance = boton.dataset.filtro;
+    tarjetasSalida.forEach((tarjeta) => {
+      tarjeta.hidden = alcance !== "todas" && tarjeta.dataset.alcance !== alcance;
+    });
+  });
+});
+
+// --- ocultar salidas grupales ya vencidas -----------------------------------
+// Se vuelve a chequear en cada visita: si la fecha de fin ya paso, la tarjeta
+// desaparece sola, sin tener que editar el HTML antes de cada viaje.
+const hoy = new Date();
+document.querySelectorAll("[data-fin]").forEach((el) => {
+  const fin = new Date(el.dataset.fin + "T23:59:59");
+  if (fin < hoy) el.hidden = true;
+});
+
+// --- formulario corto de contacto -> WhatsApp (home) ------------------------
+// A diferencia del formulario completo de /contacto, este no tiene backend:
+// arma el mensaje en el momento y abre WhatsApp directo, sin backend que lo
+// reciba primero.
+const formRapido = $("#form-contacto-rapido");
+if (formRapido) {
+  const campoNombre = $("#rapido-nombre");
+  const campoDestino = $("#rapido-destino");
+  const campoCuando = $("#rapido-cuando");
+  const botonEnviar = $("#rapido-enviar");
+
+  function actualizarLinkWhatsappRapido() {
+    let mensaje = "Hola!";
+    if (campoNombre.value.trim()) mensaje += ` Soy ${campoNombre.value.trim()}.`;
+    mensaje += " Quiero armar un viaje";
+    if (campoDestino.value.trim()) mensaje += ` a ${campoDestino.value.trim()}`;
+    if (campoCuando.value.trim()) mensaje += ` para ${campoCuando.value.trim()}`;
+    mensaje += ".";
+    botonEnviar.href = `https://wa.me/5492954447929?text=${encodeURIComponent(mensaje)}`;
+  }
+  [campoNombre, campoDestino, campoCuando].forEach((campo) =>
+    campo.addEventListener("input", actualizarLinkWhatsappRapido)
+  );
+  actualizarLinkWhatsappRapido();
+}
+
 // --- formulario de contacto -------------------------------------------------
 // Se manda al backend (/api/contacto), que lo envia por correo a la agencia.
 // Si todavia no hay SMTP configurado en el servidor, o la peticion falla por

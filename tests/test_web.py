@@ -69,7 +69,7 @@ def test_cada_seccion_tiene_su_propia_pagina(servidor):
         assert codigo == 200, ruta
         assert texto_esperado in cuerpo, ruta
         # Header y footer compartidos, iguales en todas las paginas.
-        assert "Esplora" in cuerpo and "Acceso agencia" in cuerpo, ruta
+        assert "Esplora" in cuerpo and "Acceso interno" in cuerpo, ruta
 
 
 def test_cada_salida_grupal_tiene_su_itinerario(servidor):
@@ -92,7 +92,7 @@ def test_cada_salida_grupal_tiene_su_itinerario(servidor):
         assert destino in cuerpo, ruta
         assert "Itinerario día por día" in cuerpo, ruta
         assert "Pagar con Mercado Pago" in cuerpo, ruta
-        assert "Esplora" in cuerpo and "Acceso agencia" in cuerpo, ruta
+        assert "Esplora" in cuerpo and "Acceso interno" in cuerpo, ruta
 
 
 def test_el_inicio_es_un_resumen_no_todo_apilado(servidor):
@@ -118,27 +118,62 @@ def test_el_inicio_muestra_los_4_pasos_de_como_trabajamos(servidor):
     assert "Viajás tranquilo" in cuerpo
 
 
-def test_el_resumen_de_servicios_del_inicio_usa_el_catalogo_real(servidor):
-    """La vidriera de 'Servicios pensados para cada viaje' del home tiene que
-    linkear a paginas de servicio reales, no a categorias genericas viejas."""
-    _, cuerpo = _get(servidor, "/")
-    assert 'href="/servicios/aereos" class="servicio"' in cuerpo
-    assert 'href="/servicios/hoteles" class="servicio"' in cuerpo
-    assert 'href="/servicios/cruceros" class="servicio"' in cuerpo
-    assert 'href="/servicios/disney" class="servicio"' in cuerpo
-
-
 def test_el_inicio_tiene_la_franja_de_confianza_cerca_del_hero(servidor):
     """Senales rapidas de confianza, pegadas abajo del hero: no se repiten
-    en el resto de las paginas (como los banners de productos)."""
+    en el resto de las paginas."""
     _, cuerpo = _get(servidor, "/")
     assert 'class="franja-confianza"' in cuerpo
-    assert "Trabajamos con Ola" in cuerpo
+    assert "Operamos con Ola, mayorista de turismo" in cuerpo
     assert "Atención personalizada por WhatsApp" in cuerpo
-    assert "Pago seguro" in cuerpo
-    assert "Santa Rosa, La Pampa" in cuerpo
+    assert "Cuotas con tarjeta vía Mercado Pago" in cuerpo
+    assert "Agencia en Santa Rosa, La Pampa" in cuerpo
     _, otra = _get(servidor, "/servicios")
     assert 'class="franja-confianza"' not in otra
+
+
+def test_el_hero_del_inicio_muestra_la_proxima_salida_grupal(servidor):
+    """El hero vende la salida mas cercana (hoy, Iguazu), no un saludo generico."""
+    _, cuerpo = _get(servidor, "/")
+    assert 'class="hero"' in cuerpo
+    assert "Próxima salida grupal" in cuerpo
+    assert "Cataratas del Iguazú" in cuerpo
+    assert "Reservar mi lugar" in cuerpo
+    assert 'href="/salidas-grupales/iguazu"' in cuerpo
+
+
+def test_las_salidas_grupales_del_inicio_tienen_filtro_y_vencimiento(servidor):
+    """Filtro Todas/Nacionales/Internacionales (JS en publico.js) y data-fin
+    para que publico.js oculte solas las que ya vencieron."""
+    _, cuerpo = _get(servidor, "/")
+    assert 'class="filtro-segmentado"' in cuerpo
+    for filtro in ("todas", "nacionales", "internacionales"):
+        assert f'data-filtro="{filtro}"' in cuerpo
+    assert 'data-alcance="nacionales"' in cuerpo
+    assert 'data-alcance="internacionales"' in cuerpo
+    assert cuerpo.count('class="tarjeta-salida"') == 3
+    assert cuerpo.count("data-fin=") == 3
+
+
+def test_a_medida_y_destinos_del_inicio(servidor):
+    _, cuerpo = _get(servidor, "/")
+    assert 'class="franja-a-medida"' in cuerpo
+    assert "Cancún, México" in cuerpo
+    assert "Río de Janeiro, Brasil" in cuerpo
+    assert cuerpo.count('class="tarjeta-destino"') == 3
+    assert "Metrópolis del mundo" in cuerpo
+
+
+def test_el_formulario_rapido_del_inicio_arma_whatsapp_sin_backend(servidor):
+    """A diferencia de /contacto, este formulario no tiene backend: lo arma
+    publico.js en el momento y abre WhatsApp."""
+    _, cuerpo = _get(servidor, "/")
+    assert 'id="form-contacto-rapido"' in cuerpo
+    assert 'id="rapido-nombre"' in cuerpo
+    assert 'id="rapido-destino"' in cuerpo
+    assert 'id="rapido-cuando"' in cuerpo
+    assert 'id="rapido-enviar"' in cuerpo
+    # No es un <form>: evita el submit implicito al apretar Enter.
+    assert "<form" not in cuerpo
 
 
 def test_la_franja_de_servicios_esta_en_todas_las_paginas(servidor):
@@ -159,14 +194,6 @@ def test_el_widget_del_dolar_esta_en_todas_las_paginas_pero_arranca_oculto(servi
         assert "hidden" in cuerpo.split('id="franja-dolar"')[1].split(">")[0], ruta
         for clave in ("oficial", "blue", "mep", "tarjeta"):
             assert f'data-dolar="{clave}"' in cuerpo, (ruta, clave)
-
-
-def test_la_home_tiene_los_banners_de_productos(servidor):
-    _, cuerpo = _get(servidor, "/")
-    assert 'class="franja-banners"' in cuerpo
-    assert "Cuotas sin interés" in cuerpo
-    assert "Salidas grupales" in cuerpo
-    assert "Viajes a medida" in cuerpo
 
 
 RUTAS_DE_SERVICIO = (
