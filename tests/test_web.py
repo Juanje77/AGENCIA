@@ -128,6 +128,19 @@ def test_el_resumen_de_servicios_del_inicio_usa_el_catalogo_real(servidor):
     assert 'href="/servicios/disney" class="servicio"' in cuerpo
 
 
+def test_el_inicio_tiene_la_franja_de_confianza_cerca_del_hero(servidor):
+    """Senales rapidas de confianza, pegadas abajo del hero: no se repiten
+    en el resto de las paginas (como los banners de productos)."""
+    _, cuerpo = _get(servidor, "/")
+    assert 'class="franja-confianza"' in cuerpo
+    assert "Trabajamos con Ola" in cuerpo
+    assert "Atención personalizada por WhatsApp" in cuerpo
+    assert "Pago seguro" in cuerpo
+    assert "Santa Rosa, La Pampa" in cuerpo
+    _, otra = _get(servidor, "/servicios")
+    assert 'class="franja-confianza"' not in otra
+
+
 def test_la_franja_de_servicios_esta_en_todas_las_paginas(servidor):
     """Los accesos rapidos del header (icono + link) viven en _partes/encabezado.html."""
     for ruta in ("/", "/servicios", "/salidas-grupales", "/a-medida"):

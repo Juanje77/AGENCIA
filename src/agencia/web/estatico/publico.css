@@ -225,6 +225,22 @@ a.switch-opcion:hover{opacity:1}
 .hero-scroll svg{width:16px;height:16px;animation:flotar 2.1s ease-in-out infinite}
 @keyframes flotar{0%,100%{transform:translateY(0)}50%{transform:translateY(7px)}}
 
+/* ======================= FRANJA DE CONFIANZA =======================
+   Franja angosta pegada abajo del hero, antes de los banners: no vende
+   un producto puntual (eso ya lo hacen los banners), son señales rapidas
+   de confianza para alguien que recien llega al sitio. */
+.franja-confianza{background:var(--superficie);padding:18px 0;
+  border-bottom:1px dotted var(--borde);transition:background .2s ease}
+.lista-confianza{display:flex;flex-wrap:wrap;justify-content:center;gap:28px 40px}
+.item-confianza{display:flex;align-items:center;gap:10px;color:var(--texto-tenue);
+  font-size:13px;font-weight:500}
+.item-confianza svg{width:19px;height:19px;flex:none;stroke:var(--acento);fill:none;
+  stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+@media(max-width:620px){
+  .lista-confianza{gap:16px 24px}
+  .item-confianza{font-size:12px}
+}
+
 /* ======================= BANNERS DE PRODUCTOS =======================
    Solo en la home, entre el hero y "Nuestra esencia". A diferencia de las
    tarjetas de flyers (que son foto + precio), estos son puro tipo/color
