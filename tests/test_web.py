@@ -125,6 +125,45 @@ def test_la_home_tiene_los_banners_de_productos(servidor):
     assert "Viajes a medida" in cuerpo
 
 
+RUTAS_DE_SERVICIO = (
+    "/servicios/aereos",
+    "/servicios/hoteles",
+    "/servicios/circuitos",
+    "/servicios/assist-card",
+    "/servicios/cruceros",
+    "/servicios/actividades",
+    "/servicios/autos",
+    "/servicios/traslados",
+    "/servicios/disney",
+    "/servicios/universal",
+    "/servicios/enjoy",
+)
+
+
+def test_cada_servicio_de_ola_tiene_su_propia_pagina(servidor):
+    """Igual que en ola.com.ar: cada producto de la franja tiene su propia pagina,
+    no todos apilados en /servicios."""
+    for ruta in RUTAS_DE_SERVICIO:
+        codigo, cuerpo = _get(servidor, ruta)
+        assert codigo == 200, ruta
+        assert 'class="franja-servicios"' in cuerpo, ruta
+        assert 'boton-lleno' in cuerpo, ruta
+
+
+def test_la_franja_de_servicios_enlaza_a_cada_pagina_propia(servidor):
+    _, cuerpo = _get(servidor, "/")
+    for ruta in RUTAS_DE_SERVICIO:
+        assert f'href="{ruta}" class="franja-servicio"' in cuerpo, ruta
+
+
+def test_la_pagina_de_servicios_enlaza_a_cada_producto(servidor):
+    _, cuerpo = _get(servidor, "/servicios")
+    for ruta in RUTAS_DE_SERVICIO:
+        assert f'href="{ruta}" class="servicio"' in cuerpo, ruta
+    assert 'href="/salidas-grupales" class="servicio"' in cuerpo
+    assert 'href="/a-medida" class="servicio"' in cuerpo
+
+
 def test_robots_txt_permite_el_sitio_y_bloquea_el_panel(servidor):
     codigo, cuerpo = _get(servidor, "/robots.txt")
     assert codigo == 200

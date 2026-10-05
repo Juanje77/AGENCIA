@@ -267,7 +267,8 @@ a.switch-opcion:hover{opacity:1}
 .grilla-servicios{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));
   gap:6px 8px}
 .servicio{background:var(--superficie);border-radius:6px;padding:30px 20px;
-  text-align:center;transition:transform .18s ease,background .2s ease}
+  text-align:center;transition:transform .18s ease,background .2s ease;
+  display:block;text-decoration:none;color:inherit}
 .servicio:hover{transform:translateY(-4px)}
 .servicio-icono{width:58px;height:58px;margin:0 auto 18px;border-radius:50%;
   border:1.5px solid var(--acento);display:flex;align-items:center;justify-content:center}

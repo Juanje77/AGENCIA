@@ -26,7 +26,8 @@ Está repartido en varias páginas en vez de una sola muy larga:
 | Página | Contenido |
 |---|---|
 | `/` | Inicio: hero + un resumen breve de cada sección de abajo, con su link a la página completa |
-| `/servicios` | Los 10 servicios completos + "Consejos para elegir tu viaje" |
+| `/servicios` | Grilla con los productos que se venden (espejo de la franja del header) + "Consejos para elegir tu viaje" |
+| `/servicios/aereos`, `/…/hoteles`, `/…/circuitos`, `/…/assist-card`, `/…/cruceros`, `/…/actividades`, `/…/autos`, `/…/traslados`, `/…/disney`, `/…/universal`, `/…/enjoy` | Una página propia por cada producto — misma lista y mismo orden que el menú de servicios de **ola.com.ar** (el mayorista con el que se trabaja), para que cada ítem de la franja del header lleve a su propia página en vez de todo apilado en `/servicios` |
 | `/destinos` | Las 4 categorías de "Para inspirarte" |
 | `/salidas-grupales` | Las salidas con fecha fija, cupo y precio cerrado — nacionales e internacionales juntas —, con su botón de Mercado Pago |
 | `/salidas-grupales/bariloche`, `/…/iguazu`, `/…/mendoza`, `/…/calafate`, `/…/punta-cana`, `/…/vina-del-mar` | Itinerario día por día de cada salida grupal, con horarios, incluye/no incluye y el botón de pago |
@@ -37,8 +38,12 @@ Está repartido en varias páginas en vez de una sola muy larga:
 | `/robots.txt`, `/sitemap.xml` | Para buscadores — se generan solos a partir de `PAGINAS_PUBLICAS` en `rutas.py`, no hay archivos estáticos que tocar |
 
 Cada página es un archivo en `src/agencia/web/estatico/` (`publico.html`,
-`servicios.html`, `destinos.html`, `salidas-grupales.html`, `a-medida.html`,
-`nosotros.html`, `contacto.html`). El header, el pie de página y los íconos
+`servicios.html`, `servicio-aereos.html`, `servicio-hoteles.html`,
+`servicio-circuitos.html`, `servicio-assist-card.html`, `servicio-cruceros.html`,
+`servicio-actividades.html`, `servicio-autos.html`, `servicio-traslados.html`,
+`servicio-disney.html`, `servicio-universal.html`, `servicio-enjoy.html`,
+`destinos.html`, `salidas-grupales.html`, `a-medida.html`, `nosotros.html`,
+`contacto.html`). El header, el pie de página y los íconos
 SVG **no están duplicados** en cada uno: viven una sola vez en
 `src/agencia/web/estatico/_partes/` (`encabezado.html`, `pie.html`,
 `iconos.html`) y el servidor los inserta al vuelo donde cada página tiene el

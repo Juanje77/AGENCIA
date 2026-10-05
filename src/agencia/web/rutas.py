@@ -110,6 +110,17 @@ def despachar(peticion: Peticion) -> Respuesta:
 RUTAS_PANEL = ("/panel", "/panel/", "/panel/index.html")
 PAGINAS_PUBLICAS = {
     "/servicios": "servicios.html",
+    "/servicios/aereos": "servicio-aereos.html",
+    "/servicios/hoteles": "servicio-hoteles.html",
+    "/servicios/circuitos": "servicio-circuitos.html",
+    "/servicios/assist-card": "servicio-assist-card.html",
+    "/servicios/cruceros": "servicio-cruceros.html",
+    "/servicios/actividades": "servicio-actividades.html",
+    "/servicios/autos": "servicio-autos.html",
+    "/servicios/traslados": "servicio-traslados.html",
+    "/servicios/disney": "servicio-disney.html",
+    "/servicios/universal": "servicio-universal.html",
+    "/servicios/enjoy": "servicio-enjoy.html",
     "/destinos": "destinos.html",
     "/salidas-grupales": "salidas-grupales.html",
     "/salidas-grupales/bariloche": "itinerario-bariloche.html",
