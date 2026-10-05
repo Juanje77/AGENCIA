@@ -29,7 +29,7 @@
 *{box-sizing:border-box}
 
 /* ======================= BASE MOVIL ======================= */
-:root{--ease-out:cubic-bezier(.23,1,.32,1)}
+:root{--ease-out:cubic-bezier(.23,1,.32,1);--ease-drawer:cubic-bezier(.32,.72,0,1)}
 html{-webkit-tap-highlight-color:transparent;-webkit-text-size-adjust:100%}
 a,button,[role=button],.boton{touch-action:manipulation}
 button,.boton,.disparador-menu,.switch-opcion,.chip{
@@ -83,10 +83,14 @@ p{margin:0 0 14px}
 /* ======================= HEADER ======================= */
 .encabezado{position:fixed;top:0;left:0;right:0;z-index:50;
   padding:calc(20px + env(safe-area-inset-top)) 0 20px;
-  transition:background .25s ease,box-shadow .25s ease,padding .25s ease}
+  }
+/* Capa de fondo: solo cambia su opacidad (el padding salta, no se anima). */
+.encabezado::before{content:"";position:absolute;inset:0;z-index:-1;background:var(--buttercream);
+  box-shadow:0 2px 18px rgba(62,62,62,.08);opacity:0;pointer-events:none;
+  transition:opacity 250ms var(--ease-out)}
+.encabezado.con-fondo::before, body.pagina-interna .encabezado::before{opacity:1}
 .encabezado .envoltorio{display:flex;align-items:center;justify-content:space-between;gap:24px}
-.encabezado.con-fondo, body.pagina-interna .encabezado{background:var(--buttercream);
-  box-shadow:0 2px 18px rgba(62,62,62,.08);padding:calc(13px + env(safe-area-inset-top)) 0 13px}
+.encabezado.con-fondo, body.pagina-interna .encabezado{padding:calc(13px + env(safe-area-inset-top)) 0 13px}
 .encabezado.con-fondo .logo-esplora.claro .logo-texto strong, body.pagina-interna .encabezado .logo-esplora.claro .logo-texto strong{color:var(--carbon)}
 .encabezado.con-fondo .logo-esplora.claro .logo-texto span, body.pagina-interna .encabezado .logo-esplora.claro .logo-texto span{color:var(--tierra)}
 .encabezado.con-fondo .nav-principal a, body.pagina-interna .encabezado .nav-principal a{color:var(--carbon)}
@@ -107,9 +111,13 @@ p{margin:0 0 14px}
 .encabezado.con-fondo .switch-opcion, body.pagina-interna .encabezado .switch-opcion{color:var(--carbon-suave)}
 .encabezado.con-fondo .switch-opcion.activo, body.pagina-interna .encabezado .switch-opcion.activo{background:var(--terracota);color:var(--carbon)}
 .disparador-menu{display:none;flex-direction:column;gap:5px;background:none;border:none;
-  cursor:pointer;padding:12px 10px;margin:-6px -4px}
+  cursor:pointer;padding:12px 10px;margin:-6px -4px;position:relative;z-index:41}
 .disparador-menu span{width:24px;height:2px;background:var(--buttercream);border-radius:2px;
-  transition:background .2s}
+  transition:transform 200ms var(--ease-out),opacity 150ms ease,background 200ms ease}
+#disparador-menu[aria-expanded="true"] span{background:var(--buttercream)}
+#disparador-menu[aria-expanded="true"] span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+#disparador-menu[aria-expanded="true"] span:nth-child(2){opacity:0}
+#disparador-menu[aria-expanded="true"] span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
 
 /* ======================= HERO ======================= */
 .hero{min-height:100vh;min-height:100svh;display:flex;align-items:flex-end;position:relative;
@@ -128,7 +136,7 @@ p{margin:0 0 14px}
 .hero-scroll{position:absolute;bottom:34px;left:50%;transform:translateX(-50%);
   display:flex;flex-direction:column;align-items:center;gap:8px;color:var(--buttercream);
   opacity:.8;font-size:10px;letter-spacing:.18em;text-transform:uppercase}
-.hero-scroll svg{width:16px;height:16px;animation:flotar 2.1s ease-in-out infinite}
+.hero-scroll svg{width:16px;height:16px;animation:flotar 2.1s ease-in-out 3}
 @keyframes flotar{0%,100%{transform:translateY(0)}50%{transform:translateY(7px)}}
 
 /* ======================= SECCIONES GENERICAS ======================= */
@@ -156,7 +164,10 @@ p{margin:0 0 14px}
 .grilla-servicios{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));
   gap:6px 8px}
 .servicio{background:var(--buttercream);border-radius:18px;padding:30px 20px;
-  text-align:center;transition:transform .18s ease,box-shadow .18s ease}
+  text-align:center;position:relative;isolation:isolate;
+  transition:transform 180ms var(--ease-out)}
+.servicio::after{content:"";position:absolute;inset:0;z-index:-1;border-radius:inherit;
+  box-shadow:var(--sombra);opacity:0;pointer-events:none;transition:opacity 180ms var(--ease-out)}
 .servicio-icono{width:58px;height:58px;margin:0 auto 18px;border-radius:50%;
   border:1.5px solid var(--tierra);display:flex;align-items:center;justify-content:center}
 .servicio-icono svg{width:26px;height:26px;stroke:var(--tierra);fill:none;
@@ -321,7 +332,8 @@ p{margin:0 0 14px}
   .encabezado.con-fondo .boton-linea-clara:hover, body.pagina-interna .encabezado .boton-linea-clara:hover{background:var(--terracota);color:var(--carbon);border-color:var(--terracota)}
   .nav-principal a:hover{opacity:.7}
   a.switch-opcion:hover{opacity:1}
-  .servicio:hover{transform:translateY(-4px);box-shadow:var(--sombra)}
+  .servicio:hover{transform:translateY(-2px)}
+  .servicio:hover::after{opacity:1}
   .boton-mercadopago:hover{background:#0086c3;transform:translateY(-1px)}
   .flyer-mas-info:hover{color:var(--carbon)}
   .boton-cotizar:hover{background:var(--terracota-oscuro);transform:translateY(-1px)}
@@ -344,8 +356,12 @@ p{margin:0 0 14px}
     padding:calc(100px + env(safe-area-inset-top)) 30px calc(30px + env(safe-area-inset-bottom));
     gap:8px;transform:translateX(100%);visibility:hidden;
     overflow-y:auto;overscroll-behavior:contain;
-    transition:transform 280ms var(--ease-out),visibility 0s linear 280ms;z-index:40}
-  .nav-principal.abierto{transform:translateX(0);visibility:visible;transition-delay:0s}
+    transition:transform 200ms var(--ease-drawer),visibility 0s linear 200ms;z-index:40}
+  .nav-principal.abierto{transform:translateX(0);visibility:visible;transition-delay:0s;
+    transition-duration:280ms}
+  .menu-fondo{position:fixed;inset:0;z-index:30;background:rgba(0,0,0,.42);opacity:0;
+    visibility:hidden;transition:opacity 200ms ease,visibility 0s linear 200ms}
+  .menu-fondo.abierto{opacity:1;visibility:visible;transition-delay:0s}
   .nav-principal a{color:var(--buttercream);font-size:16px;padding:12px 0;width:100%}
   /* El panel movil siempre es oscuro, sin importar si el header esta en su
      modo solido (con-fondo o pagina-interna) -que pinta el texto oscuro-;
@@ -372,7 +388,12 @@ p{margin:0 0 14px}
 @media (prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
   .hero-scroll svg{animation:none}
-  .nav-principal,.servicio,.boton,.boton-mercadopago,.boton-cotizar{transition-duration:.01ms}
+  .nav-principal{transition-duration:.01ms}
+  .servicio:hover,.boton:hover,.boton-mercadopago:hover,.boton-cotizar:hover,
+  .boton:active,.boton-mercadopago:active,.boton-cotizar:active{transform:none}
+  #disparador-menu span{transition:opacity 150ms ease,background 200ms ease}
+  #disparador-menu[aria-expanded="true"] span:nth-child(1),
+  #disparador-menu[aria-expanded="true"] span:nth-child(3){transform:none;opacity:0}
 }
 
 /* ======================= ENTRADAS (marketing, una sola vez) =======================
@@ -380,17 +401,17 @@ p{margin:0 0 14px}
    propiedad individual `translate` para no pisar el `transform` de hover/press.
    Sin JS (html sin .js-reveal) todo es visible. */
 @keyframes entrar{from{opacity:0;translate:0 14px}to{opacity:1;translate:0 0}}
-.hero-contenido > *{animation:entrar 600ms var(--ease-out) both;
-  animation-delay:calc(var(--i,0) * 80ms + 100ms)}
+.hero-contenido > *{animation:entrar 400ms var(--ease-out) both;
+  animation-delay:calc(var(--i,0) * 60ms + 80ms)}
 .hero-contenido > :nth-child(1){--i:0}
 .hero-contenido > :nth-child(2){--i:1}
 .hero-contenido > :nth-child(3){--i:2}
 .hero-contenido > :nth-child(4){--i:3}
 
 .js-reveal .reveal{opacity:0;translate:0 16px;
-  transition:opacity 500ms var(--ease-out) var(--d,0ms),
-             translate 500ms var(--ease-out) var(--d,0ms),
-             transform 180ms var(--ease-out),box-shadow 180ms ease,background 160ms ease}
+  transition:opacity 380ms var(--ease-out) var(--d,0ms),
+             translate 380ms var(--ease-out) var(--d,0ms),
+             transform 180ms var(--ease-out),background 160ms ease}
 .js-reveal .reveal.visible{opacity:1;translate:0 0}
 
 @media (prefers-reduced-motion:reduce){

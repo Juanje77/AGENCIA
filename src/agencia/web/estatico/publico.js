@@ -13,7 +13,10 @@ if (anio) anio.textContent = new Date().getFullYear();
 const encabezado = $("#encabezado");
 function actualizarEncabezado() {
   if (!encabezado) return;
-  encabezado.classList.toggle("con-fondo", window.scrollY > 60);
+  // Dos umbrales (60 para activar, 20 para desactivar): sin parpadeo cerca del limite.
+  const y = window.scrollY;
+  if (y > 60) encabezado.classList.add("con-fondo");
+  else if (y < 20) encabezado.classList.remove("con-fondo");
 }
 window.addEventListener("scroll", actualizarEncabezado, { passive: true });
 actualizarEncabezado();
@@ -30,11 +33,11 @@ document.querySelectorAll("img").forEach((img) => {
 // Una sola vez por elemento. Dentro de una grilla, escalonado 60ms (tope 4).
 if ("IntersectionObserver" in window) {
   const grupos = ".grilla-servicios, .grilla-destinos, .grilla-flyers, .pasos, .esencia, .itinerario-incluye";
-  const sueltos = ".encabezado-seccion, .testimonio, .formulario, .contacto-datos, .itinerario-foto, .itinerario-resumen, .itinerario-dia";
+  const sueltos = ".encabezado-seccion, .testimonio, .itinerario-foto, .itinerario-resumen, .itinerario-dia";
   const objetivos = new Set();
   document.querySelectorAll(grupos).forEach((grupo) => {
     [...grupo.children].forEach((hijo, i) => {
-      hijo.style.setProperty("--d", Math.min(i, 4) * 60 + "ms");
+      hijo.style.setProperty("--d", Math.min(i, 4) * 50 + "ms");
       objetivos.add(hijo);
     });
   });
@@ -51,7 +54,10 @@ if ("IntersectionObserver" in window) {
     },
     { rootMargin: "0px 0px -8% 0px", threshold: 0.08 }
   );
+  const altoPantalla = window.innerHeight;
   objetivos.forEach((el) => {
+    // Lo que ya esta a la vista al cargar no se anima: se ve de entrada.
+    if (el.getBoundingClientRect().top < altoPantalla * 0.9) return;
     el.classList.add("reveal");
     observador.observe(el);
   });
@@ -61,21 +67,25 @@ if ("IntersectionObserver" in window) {
 const disparador = $("#disparador-menu");
 const nav = $("#nav-principal");
 if (disparador && nav) {
-  disparador.addEventListener("click", () => {
-    const abierto = nav.classList.toggle("abierto");
+  const fondoMenu = document.createElement("div");
+  fondoMenu.className = "menu-fondo";
+  document.body.appendChild(fondoMenu);
+  const fijarMenu = (abierto) => {
+    nav.classList.toggle("abierto", abierto);
+    fondoMenu.classList.toggle("abierto", abierto);
     disparador.setAttribute("aria-expanded", String(abierto));
-  });
+  };
+  disparador.addEventListener("click", () => fijarMenu(!nav.classList.contains("abierto")));
+  fondoMenu.addEventListener("click", () => fijarMenu(false));
   // Escape cierra el menu y devuelve el foco al disparador.
   document.addEventListener("keydown", (e) => {
     if (e.key !== "Escape" || !nav.classList.contains("abierto")) return;
-    nav.classList.remove("abierto");
-    disparador.setAttribute("aria-expanded", "false");
+    fijarMenu(false);
     disparador.focus();
   });
   nav.querySelectorAll("a").forEach((enlace) => {
     enlace.addEventListener("click", () => {
-      nav.classList.remove("abierto");
-      disparador.setAttribute("aria-expanded", "false");
+      fijarMenu(false);
     });
   });
 }
