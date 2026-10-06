@@ -142,6 +142,110 @@ if (formRapido) {
   actualizarLinkWhatsappRapido();
 }
 
+// --- chat con IA --------------------------------------------------------
+// Widget flotante en las 24 paginas publicas (lo inserta el servidor antes
+// de </body>, ver _pagina_publica() en rutas.py). El historial vive solo en
+// esta pestaña -no hay backend con estado-, y se le manda al servidor
+// acotado a los ultimos turnos para no inflar el costo de cada consulta.
+const chatIa = $("#chat-ia");
+if (chatIa) {
+  const chatBoton = $("#chat-ia-boton");
+  const chatPanel = $("#chat-ia-panel");
+  const chatMensajes = $("#chat-ia-mensajes");
+  const chatForm = $("#chat-ia-form");
+  const chatInput = $("#chat-ia-input");
+  const chatEnviar = chatForm.querySelector(".chat-ia-enviar");
+  const MAX_TURNOS_CHAT = 8;
+  let historialChat = [];
+
+  function alternarChat() {
+    const abierto = chatIa.classList.toggle("abierto");
+    chatPanel.hidden = !abierto;
+    chatBoton.setAttribute("aria-expanded", String(abierto));
+    if (abierto) chatInput.focus();
+  }
+  chatBoton.addEventListener("click", alternarChat);
+  $("#chat-ia-cerrar").addEventListener("click", alternarChat);
+
+  function agregarBurbuja(texto, clase) {
+    const burbuja = document.createElement("div");
+    burbuja.className = `chat-ia-mensaje ${clase}`;
+    burbuja.textContent = texto;
+    chatMensajes.appendChild(burbuja);
+    chatMensajes.scrollTop = chatMensajes.scrollHeight;
+    return burbuja;
+  }
+
+  function agregarAvisoConWhatsapp(aviso, mensajeOriginal) {
+    const burbuja = document.createElement("div");
+    burbuja.className = "chat-ia-mensaje chat-ia-mensaje-bot";
+    burbuja.textContent = aviso || "No pude responder en este momento.";
+    const enlace = document.createElement("a");
+    enlace.className = "chat-ia-whatsapp";
+    enlace.target = "_blank";
+    enlace.rel = "noopener";
+    enlace.textContent = "Escribinos por WhatsApp";
+    enlace.href = `https://wa.me/5492954447929?text=${encodeURIComponent("Hola! " + mensajeOriginal)}`;
+    burbuja.appendChild(document.createElement("br"));
+    burbuja.appendChild(enlace);
+    chatMensajes.appendChild(burbuja);
+    chatMensajes.scrollTop = chatMensajes.scrollHeight;
+  }
+
+  function agregarCargando() {
+    const burbuja = document.createElement("div");
+    burbuja.className = "chat-ia-mensaje chat-ia-mensaje-bot chat-ia-mensaje-cargando";
+    burbuja.innerHTML = "<span></span><span></span><span></span>";
+    chatMensajes.appendChild(burbuja);
+    chatMensajes.scrollTop = chatMensajes.scrollHeight;
+    return burbuja;
+  }
+
+  chatForm.addEventListener("submit", async (evento) => {
+    evento.preventDefault();
+    const mensaje = chatInput.value.trim();
+    if (!mensaje) return;
+
+    agregarBurbuja(mensaje, "chat-ia-mensaje-usuario");
+    chatInput.value = "";
+    chatInput.disabled = true;
+    chatEnviar.disabled = true;
+    const cargando = agregarCargando();
+
+    try {
+      const respuesta = await fetch("/api/chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ mensaje, historial: historialChat }),
+      });
+      const resultado = await respuesta.json();
+      cargando.remove();
+
+      if (respuesta.ok && resultado.disponible && resultado.respuesta) {
+        agregarBurbuja(resultado.respuesta, "chat-ia-mensaje-bot");
+        historialChat.push({ rol: "usuario", texto: mensaje });
+        historialChat.push({ rol: "bot", texto: resultado.respuesta });
+        historialChat = historialChat.slice(-MAX_TURNOS_CHAT);
+      } else {
+        agregarAvisoConWhatsapp(
+          "Por ahora no puedo responder preguntas acá, pero te contesto al toque por WhatsApp.",
+          mensaje
+        );
+      }
+    } catch (error) {
+      cargando.remove();
+      agregarAvisoConWhatsapp(
+        "No pude conectarme. Escribinos por WhatsApp y te respondemos enseguida.",
+        mensaje
+      );
+    }
+
+    chatInput.disabled = false;
+    chatEnviar.disabled = false;
+    chatInput.focus();
+  });
+}
+
 // --- formulario de contacto -------------------------------------------------
 // Se manda al backend (/api/contacto), que lo envia por correo a la agencia.
 // Si todavia no hay SMTP configurado en el servidor, o la peticion falla por

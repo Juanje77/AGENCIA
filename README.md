@@ -49,7 +49,11 @@ SVG **no están duplicados** en cada uno: viven una sola vez en
 `iconos.html`) y el servidor los inserta al vuelo donde cada página tiene el
 comentario `<!--ENCABEZADO-->`, `<!--PIE-->` o `<!--ICONOS-->` (función
 `_pagina_publica()` en `rutas.py`). Para cambiar un link del menú o algo del
-pie de página alcanza con editar ese archivo una sola vez.
+pie de página alcanza con editar ese archivo una sola vez. El widget de
+chat (`_partes/chat.html`) se suma igual pero sin comentario propio:
+`_pagina_publica()` lo inserta directo antes de `</body>` en las 24
+páginas, así que para cambiarlo también alcanza con editar un solo
+archivo.
 
 Todas las páginas comparten `publico.css`/`publico.js`. Las páginas que no
 son el inicio llevan `<body class="pagina-interna">`: como no tienen la foto
@@ -102,6 +106,21 @@ la API no responde, se devuelve el último valor cacheado si hay uno, o
 `{"disponible": false, "aviso": "..."}` en vez de romper la página. Es un
 endpoint público (no pide `AGENCIA_CLAVE`, igual que `/api/contacto`):
 está pensado para mostrarse en el sitio público, no solo en el panel.
+
+**El chat con IA** (widget flotante abajo a la derecha, en las 24 páginas
+públicas — lo suma `_pagina_publica()` en `rutas.py` antes de `</body>`,
+sin tocar cada archivo) le pega a `/api/chat` (`chat.py`), que usa el mismo
+modelo de Claude que la lectura de facturas (`ANTHROPIC_API_KEY`). El
+`system prompt` lo acota a responder solo sobre los servicios y las
+salidas grupales reales del sitio — tiene instrucción explícita de nunca
+inventar precios, fechas ni disponibilidad, y de derivar a WhatsApp
+cuando alguien quiere cotizar o reservar de verdad. El historial de la
+conversación vive solo en el navegador (sin backend con estado) y se
+reenvía acotado a los últimos 8 turnos para no inflar el costo de cada
+consulta. Sin `ANTHROPIC_API_KEY` configurada, el widget sigue
+apareciendo pero el primer mensaje avisa y ofrece el botón de WhatsApp de
+siempre, igual criterio que el resto de las integraciones. Es un
+endpoint público (no pide `AGENCIA_CLAVE`).
 
 **Los botones de "pedir cotización" o "contacto"** repartidos por todo el
 sitio (el del header, los de cada tarjeta de "A medida", los
@@ -466,8 +485,8 @@ Se prueban en orden y se usa el primero disponible: `pymupdf`, `pdfplumber`,
 | `AGENCIA_PUERTO` | Puerto del servidor local (8000 por defecto). |
 | `AGENCIA_SOLO_LECTURA` | Fuerza el modo sin disco. Se detecta solo en Vercel. |
 | `AGENCIA_CONFIG_DIR` | Otra carpeta de configuración. |
-| `ANTHROPIC_API_KEY` | Habilita la lectura con IA. Sin ella, solo el lector de reglas. |
-| `AGENCIA_MODELO_IA` | Qué modelo usar (`claude-opus-5` por defecto). |
+| `ANTHROPIC_API_KEY` | Habilita la lectura de facturas con IA **y** el chat del sitio público (`/api/chat`). Sin ella, el lector de facturas cae al de reglas y el chat avisa para que el visitante escriba por WhatsApp. |
+| `AGENCIA_MODELO_IA` | Qué modelo usar, compartido por lectura de facturas y chat (`claude-opus-5` para facturas, `claude-opus-5-5` para el chat — cada módulo tiene su propio valor por defecto). |
 | `SMTP_HOST` | Servidor SMTP para mandar el formulario de contacto por correo. Sin esto, el formulario cae al `mailto:` del navegador. |
 | `SMTP_PUERTO` | Puerto del servidor SMTP (587 por defecto, con STARTTLS). |
 | `SMTP_USUARIO` | Usuario para autenticarse en el SMTP (y remitente del correo). |

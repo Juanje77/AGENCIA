@@ -9,6 +9,7 @@ from http.server import ThreadingHTTPServer
 
 import pytest
 
+from agencia.web.mapeo import DatosInvalidos
 from agencia.web.servidor import Manejador
 
 
@@ -172,8 +173,9 @@ def test_el_formulario_rapido_del_inicio_arma_whatsapp_sin_backend(servidor):
     assert 'id="rapido-destino"' in cuerpo
     assert 'id="rapido-cuando"' in cuerpo
     assert 'id="rapido-enviar"' in cuerpo
-    # No es un <form>: evita el submit implicito al apretar Enter.
-    assert "<form" not in cuerpo
+    # No es un <form> (evita el submit implicito al apretar Enter): el
+    # formulario completo de /contacto tampoco aparece acá.
+    assert 'id="formulario-contacto"' not in cuerpo
 
 
 def test_la_franja_de_servicios_esta_en_todas_las_paginas(servidor):
@@ -448,6 +450,140 @@ def test_contacto_se_manda_por_smtp_si_esta_configurado(servidor, monkeypatch):
     mensaje = enviados[-1]
     assert mensaje["To"] == "hola@esplora.com.ar"
     assert mensaje["Reply-To"] == "juana@example.com"
+
+
+# --- chat con IA ---------------------------------------------------------------
+
+class _BloqueDeTexto:
+    def __init__(self, texto):
+        self.type = "text"
+        self.text = texto
+
+
+class _RespuestaDeChatFalsa:
+    def __init__(self, texto, stop_reason="end_turn"):
+        self.content = [_BloqueDeTexto(texto)]
+        self.stop_reason = stop_reason
+
+
+class _ClienteDeChatFalso:
+    """Simula anthropic.Anthropic(): registra como se lo llamo y devuelve
+    lo que se le indique, sin necesitar el paquete real instalado."""
+
+    def __init__(self, texto="¡Hola! Puedo ayudarte con tu viaje.", stop_reason="end_turn", excepcion=None):
+        self.texto = texto
+        self.stop_reason = stop_reason
+        self.excepcion = excepcion
+        self.llamadas = []
+        self.messages = self
+
+    def create(self, **kwargs):
+        self.llamadas.append(kwargs)
+        if self.excepcion:
+            raise self.excepcion
+        return _RespuestaDeChatFalsa(self.texto, self.stop_reason)
+
+
+def test_consulta_desde_dict_valida_el_mensaje():
+    from agencia.web.chat import consulta_desde_dict
+
+    with pytest.raises(DatosInvalidos):
+        consulta_desde_dict({"mensaje": ""})
+    with pytest.raises(DatosInvalidos):
+        consulta_desde_dict({"mensaje": "x" * 1001})
+    with pytest.raises(DatosInvalidos):
+        consulta_desde_dict({"mensaje": "hola", "historial": "no es una lista"})
+
+
+def test_consulta_desde_dict_arma_los_mensajes_con_el_historial():
+    from agencia.web.chat import consulta_desde_dict
+
+    datos = {
+        "mensaje": "¿Y Bariloche?",
+        "historial": [
+            {"rol": "usuario", "texto": "Hola"},
+            {"rol": "bot", "texto": "¡Hola! ¿En qué te ayudo?"},
+            {"rol": "raro", "texto": "se ignora, rol invalido"},
+        ],
+    }
+    _, mensajes = consulta_desde_dict(datos)
+    assert mensajes == [
+        {"role": "user", "content": "Hola"},
+        {"role": "assistant", "content": "¡Hola! ¿En qué te ayudo?"},
+        {"role": "user", "content": "¿Y Bariloche?"},
+    ]
+
+
+def test_consulta_desde_dict_recorta_el_historial_largo():
+    from agencia.web.chat import MAX_TURNOS_HISTORIAL, consulta_desde_dict
+
+    historial = [{"rol": "usuario", "texto": f"mensaje {i}"} for i in range(20)]
+    _, mensajes = consulta_desde_dict({"mensaje": "ultimo", "historial": historial})
+    # +1 por el mensaje nuevo que siempre se agrega al final.
+    assert len(mensajes) == MAX_TURNOS_HISTORIAL + 1
+    assert mensajes[-1] == {"role": "user", "content": "ultimo"}
+
+
+def test_responder_devuelve_el_texto_del_modelo():
+    from agencia.web.chat import responder
+
+    cliente = _ClienteDeChatFalso(texto="Cataratas del Iguazú sale $320.000 por persona.")
+    resultado = responder([{"role": "user", "content": "¿Cuánto sale Iguazú?"}], cliente=cliente)
+    assert resultado == {
+        "disponible": True,
+        "respuesta": "Cataratas del Iguazú sale $320.000 por persona.",
+        "aviso": None,
+    }
+    # El system prompt va en cada pedido, para que nunca invente precios.
+    assert "nunca inventes" in cliente.llamadas[0]["system"].lower()
+
+
+def test_responder_si_el_modelo_rechaza_no_rompe():
+    from agencia.web.chat import responder
+
+    cliente = _ClienteDeChatFalso(stop_reason="refusal")
+    resultado = responder([{"role": "user", "content": "algo raro"}], cliente=cliente)
+    assert resultado["disponible"] is True
+    assert resultado["respuesta"]
+
+
+def test_responder_si_falla_la_llamada_cae_a_whatsapp():
+    from agencia.web.chat import responder
+
+    cliente = _ClienteDeChatFalso(excepcion=RuntimeError("se cayo la conexion"))
+    resultado = responder([{"role": "user", "content": "hola"}], cliente=cliente)
+    assert resultado["disponible"] is False
+    assert resultado["respuesta"] is None
+    assert resultado["aviso"]
+
+
+def test_api_chat_sin_credencial_avisa_en_vez_de_romper(servidor, monkeypatch):
+    """Sin ANTHROPIC_API_KEY (como en este entorno de test), /api/chat sigue
+    respondiendo 200 con disponible=False, para que el frontend caiga a
+    WhatsApp -nunca un 500."""
+    monkeypatch.delenv("ANTHROPIC_API_KEY", raising=False)
+    monkeypatch.delenv("ANTHROPIC_AUTH_TOKEN", raising=False)
+    codigo, cuerpo = _post(servidor, "/api/chat", {"mensaje": "Hola, ¿qué destinos tienen?"})
+    datos = json.loads(cuerpo)
+    assert codigo == 200
+    assert datos["disponible"] is False
+    assert "ANTHROPIC_API_KEY" in datos["aviso"]
+
+
+def test_api_chat_sin_mensaje_devuelve_400(servidor):
+    with pytest.raises(urllib.error.HTTPError) as exc:
+        _post(servidor, "/api/chat", {"mensaje": ""})
+    assert exc.value.code == 400
+
+
+def test_el_widget_de_chat_esta_en_todas_las_paginas_publicas(servidor):
+    for ruta in ("/", "/servicios", "/salidas-grupales", "/contacto"):
+        _, cuerpo = _get(servidor, ruta)
+        assert 'id="chat-ia"' in cuerpo, ruta
+        assert 'id="chat-ia-form"' in cuerpo, ruta
+    # El panel interno no es para clientes: no lleva el chat.
+    _, panel = _get(servidor, "/panel")
+    assert 'id="chat-ia"' not in panel
 
 
 # --- cotizacion --------------------------------------------------------------

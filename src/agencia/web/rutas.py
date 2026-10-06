@@ -20,6 +20,8 @@ from ..liquidaciones import ErrorDeLectura
 from ..liquidaciones.factura import leer_factura
 from ..liquidador import Padron, cargar_padron, guardar_padron, operacion_desde_comprobante
 from ..presupuestos.cotizacion import TIPOS_SERVICIO, calcular_cotizacion
+from .chat import consulta_desde_dict as chat_desde_dict
+from .chat import responder as responder_chat
 from .contacto import consulta_desde_dict, enviar_consulta
 from .dolar import obtener_cotizaciones
 from .informes import (
@@ -140,9 +142,15 @@ RUTAS_PUBLICAS_DE_PAGINA = (
 # El formulario de contacto lo manda un cliente potencial, no personal de la
 # agencia: tiene que funcionar aunque el sistema tenga clave puesta. Lo mismo
 # para robots.txt y sitemap.xml: los piden los buscadores, que no tienen
-# (ni pueden tener) la clave. La cotizacion del dolar tambien: la va a
-# mostrar el sitio publico, que nunca pide clave.
-RUTAS_PUBLICAS_DE_API = ("/api/contacto", "/api/dolar", "/robots.txt", "/sitemap.xml")
+# (ni pueden tener) la clave. La cotizacion del dolar y el chat con IA
+# tambien: los usa el sitio publico, que nunca pide clave.
+RUTAS_PUBLICAS_DE_API = (
+    "/api/contacto",
+    "/api/dolar",
+    "/api/chat",
+    "/robots.txt",
+    "/sitemap.xml",
+)
 
 # COMPLETAR: el dominio real una vez que la agencia lo tenga (propio o el
 # *.vercel.app del despliegue). Mientras tanto, sitemap.xml y los tags
@@ -224,6 +232,10 @@ def _post(peticion: Peticion) -> Respuesta:
 
     if ruta == "/api/contacto":
         return Respuesta.json(enviar_consulta(consulta_desde_dict(datos)))
+
+    if ruta == "/api/chat":
+        _, mensajes = chat_desde_dict(datos)
+        return Respuesta.json(responder_chat(mensajes))
 
     return Respuesta.error(404, "Recurso no encontrado")
 
@@ -361,6 +373,14 @@ def _pagina_publica(nombre: str) -> Respuesta:
     (<!--ICONOS-->, <!--ENCABEZADO-->, <!--PIE-->) que se completan con los
     mismos tres fragmentos en _partes/, para no repetir el header y el
     footer -con sus enlaces, logo y switch- en cada archivo.
+
+    El widget de chat (_partes/chat.html) se suma aparte, justo antes de
+    <script src="/estatico/publico.js">: como va en las 24 paginas
+    publicas por igual, no hace falta un marcador propio en cada archivo.
+    Tiene que quedar ANTES de ese script (no al final, antes de </body>):
+    publico.js corre apenas el parser lo encuentra, asi que si el widget
+    todavia no existe en el DOM en ese momento sus botones quedan sin
+    eventos enganchados, en silencio.
     """
     plantilla = (ESTATICO / nombre).read_text(encoding="utf-8")
     pagina = plantilla
@@ -370,6 +390,10 @@ def _pagina_publica(nombre: str) -> Respuesta:
         ("<!--PIE-->", "pie.html"),
     ):
         pagina = pagina.replace(marcador, (PARTES / archivo).read_text(encoding="utf-8"))
+    chat = (PARTES / "chat.html").read_text(encoding="utf-8")
+    pagina = pagina.replace(
+        '<script src="/estatico/publico.js">', chat + '\n<script src="/estatico/publico.js">'
+    )
     return Respuesta(200, HTML, pagina.encode("utf-8"))
 
 

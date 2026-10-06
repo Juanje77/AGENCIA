@@ -1,0 +1,30 @@
+<!-- ============ CHAT CON IA (todas las paginas publicas) ============
+     Arranca cerrado. Si /api/chat no esta disponible (sin ANTHROPIC_API_KEY
+     configurada), publico.js lo avisa en el primer mensaje y ofrece el
+     boton de WhatsApp de siempre -el widget nunca rompe la pagina. -->
+<div class="chat-ia" id="chat-ia">
+  <div class="chat-ia-panel" id="chat-ia-panel" hidden>
+    <div class="chat-ia-encabezado">
+      <span>Asistente de Esplora</span>
+      <button class="chat-ia-cerrar" id="chat-ia-cerrar" type="button" aria-label="Cerrar el chat">
+        <svg><use href="#icono-cerrar"/></svg>
+      </button>
+    </div>
+    <div class="chat-ia-mensajes" id="chat-ia-mensajes" aria-live="polite">
+      <div class="chat-ia-mensaje chat-ia-mensaje-bot">¡Hola! Soy el asistente de Esplora.
+        Preguntame sobre destinos, servicios o cómo armar tu viaje.</div>
+    </div>
+    <form class="chat-ia-form" id="chat-ia-form">
+      <input class="chat-ia-input" id="chat-ia-input" placeholder="Escribí tu consulta…"
+        autocomplete="off" maxlength="1000">
+      <button class="chat-ia-enviar" type="submit" aria-label="Enviar">
+        <svg><use href="#icono-enviar"/></svg>
+      </button>
+    </form>
+  </div>
+  <button class="chat-ia-boton" id="chat-ia-boton" type="button"
+    aria-label="Abrir el chat" aria-expanded="false" aria-controls="chat-ia-panel">
+    <svg class="chat-ia-boton-icono chat-ia-boton-abrir"><use href="#icono-chat"/></svg>
+    <svg class="chat-ia-boton-icono chat-ia-boton-cerrar"><use href="#icono-cerrar"/></svg>
+  </button>
+</div>
