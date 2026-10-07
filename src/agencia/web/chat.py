@@ -50,8 +50,11 @@ se paga con tarjeta o Mercado Pago-:
   por persona.
 - Viña del Mar y Valparaiso (salida propia en micro): 4 al 10 de febrero,
   $380.000 por persona.
+- Bariloche (semana de vacaciones de invierno): 14 al 19 de julio, $450.000
+  por persona.
 El itinerario completo de cada una esta en /salidas-grupales/<destino>
-(bariloche, iguazu, mendoza, calafate, punta-cana, vina-del-mar).
+(bariloche, iguazu, mendoza, calafate, punta-cana, vina-del-mar). Mendoza
+tiene itinerario publicado pero todavia sin salida activa.
 
 Viajes a medida de ejemplo (sin fecha fija, cotizacion en 24 horas):
 Cancun desde U$S 1.200 por persona, Rio de Janeiro desde U$S 850 por

@@ -33,31 +33,148 @@
 <!--ENCABEZADO-->
 
 <!-- ============================= HERO =============================
-     La proxima salida grupal, no una foto de tapa generica: segun el
-     diagnostico es lo que mas convierte. Hoy es Iguazu -se actualiza a
-     mano cuando cambie la salida destacada, igual que el resto del
-     contenido de ejemplo del sitio (ver README). -->
-<section class="hero">
-  <div class="hero-salida-info">
-    <span class="etiqueta-destacada">Próxima salida grupal</span>
-    <h1>Cataratas del Iguazú</h1>
-    <p class="hero-salida-fechas">8 al 11 de octubre · 3 noches</p>
-    <p class="hero-salida-desc">Hotel a 10 minutos del Parque Nacional, entrada al lado
-      argentino y traslados incluidos.</p>
-    <div class="hero-salida-precio">
-      <strong>$320.000</strong><span>por persona · cuotas con Mercado Pago</span>
-    </div>
-    <div class="hero-salida-acciones">
-      <a href="https://wa.me/5492954447929?text=Hola%21%20Quiero%20reservar%20un%20lugar%20en%20la%20salida%20a%20Cataratas%20del%20Iguaz%C3%BA%20%288%20al%2011%20de%20octubre%29."
-        class="boton boton-lleno" target="_blank" rel="noopener">Reservar mi lugar</a>
-      <a href="/salidas-grupales/iguazu" class="boton boton-linea">Ver itinerario</a>
-    </div>
+     Las proximas salidas grupales, no una foto de tapa generica: segun el
+     diagnostico es lo que mas convierte. Rotan 5 salidas con fecha fija
+     -se actualizan a mano cuando cambie alguna, igual que el resto del
+     contenido de ejemplo del sitio (ver README); cada data-fin hace que,
+     llegada la fecha, esa salida se saque sola de la rotacion. -->
+<section class="hero" aria-roledescription="carrusel" aria-label="Próximas salidas grupales">
+  <div class="hero-slides">
+    <article class="hero-slide" data-fin="2026-10-11">
+      <div class="hero-salida-info">
+        <span class="etiqueta-destacada">Próxima salida grupal</span>
+        <h1>Cataratas del Iguazú</h1>
+        <p class="hero-salida-fechas">8 al 11 de octubre · 3 noches</p>
+        <p class="hero-salida-desc">Hotel a 10 minutos del Parque Nacional, entrada al lado
+          argentino y traslados incluidos.</p>
+        <div class="hero-salida-precio">
+          <strong>$320.000</strong><span>por persona · cuotas con Mercado Pago</span>
+        </div>
+        <div class="hero-salida-acciones">
+          <a href="https://wa.me/5492954447929?text=Hola%21%20Quiero%20reservar%20un%20lugar%20en%20la%20salida%20a%20Cataratas%20del%20Iguaz%C3%BA%20%288%20al%2011%20de%20octubre%29."
+            class="boton boton-lleno" target="_blank" rel="noopener">Reservar mi lugar</a>
+          <a href="/salidas-grupales/iguazu" class="boton boton-linea">Ver itinerario</a>
+        </div>
+      </div>
+      <div class="hero-salida-foto">
+        <picture>
+          <source type="image/webp" srcset="/estatico/img/flyers/iguazu.webp">
+          <img src="/estatico/img/flyers/iguazu.jpg" alt="Cataratas del Iguazú" width="547" height="365" fetchpriority="high">
+        </picture>
+      </div>
+    </article>
+
+    <article class="hero-slide" data-fin="2026-11-06" hidden>
+      <div class="hero-salida-info">
+        <span class="etiqueta-destacada">Trekking en el glaciar</span>
+        <h1>El Calafate</h1>
+        <p class="hero-salida-fechas">2 al 6 de noviembre · 4 noches</p>
+        <p class="hero-salida-desc">Hotel con desayuno, excursión de día completo al
+          Glaciar Perito Moreno y traslados incluidos.</p>
+        <div class="hero-salida-precio">
+          <strong>$520.000</strong><span>por persona · cuotas con Mercado Pago</span>
+        </div>
+        <div class="hero-salida-acciones">
+          <a href="https://wa.me/5492954447929?text=Hola%21%20Quiero%20reservar%20un%20lugar%20en%20la%20salida%20a%20El%20Calafate%20%282%20al%206%20de%20noviembre%29."
+            class="boton boton-lleno" target="_blank" rel="noopener">Reservar mi lugar</a>
+          <a href="/salidas-grupales/calafate" class="boton boton-linea">Ver itinerario</a>
+        </div>
+      </div>
+      <div class="hero-salida-foto">
+        <picture>
+          <source type="image/webp" srcset="/estatico/img/flyers/calafate.webp">
+          <img src="/estatico/img/flyers/calafate.jpg" alt="Glaciar Perito Moreno" width="547" height="365">
+        </picture>
+      </div>
+    </article>
+
+    <article class="hero-slide" data-fin="2027-01-13" hidden>
+      <div class="hero-salida-info">
+        <span class="etiqueta-destacada">Playas del Caribe · Operado por Ola</span>
+        <h1>Punta Cana</h1>
+        <p class="hero-salida-fechas">6 al 13 de enero · 7 noches</p>
+        <p class="hero-salida-desc">Vuelo + hotel all inclusive frente al mar, con
+          traslados aeropuerto-hotel incluidos.</p>
+        <div class="hero-salida-precio">
+          <strong>U$S 1.350</strong><span>por persona</span>
+        </div>
+        <div class="hero-salida-acciones">
+          <a href="https://wa.me/5492954447929?text=Hola%21%20Quiero%20reservar%20un%20lugar%20en%20la%20salida%20a%20Punta%20Cana%20%286%20al%2013%20de%20enero%29."
+            class="boton boton-lleno" target="_blank" rel="noopener">Reservar mi lugar</a>
+          <a href="/salidas-grupales/punta-cana" class="boton boton-linea">Ver itinerario</a>
+        </div>
+      </div>
+      <div class="hero-salida-foto">
+        <picture>
+          <source type="image/webp" srcset="/estatico/img/destinos/sol-y-mar.webp">
+          <img src="/estatico/img/destinos/sol-y-mar.jpg" alt="Playa de Punta Cana, República Dominicana" width="678" height="452">
+        </picture>
+      </div>
+    </article>
+
+    <article class="hero-slide" data-fin="2027-02-10" hidden>
+      <div class="hero-salida-info">
+        <span class="etiqueta-destacada">Salida propia en micro</span>
+        <h1>Viña del Mar y Valparaíso</h1>
+        <p class="hero-salida-fechas">4 al 10 de febrero · 4 noches en destino</p>
+        <p class="hero-salida-desc">Cruce de la cordillera en micro desde Santa Rosa,
+          alojamiento frente a la playa y excursión a Valparaíso.</p>
+        <div class="hero-salida-precio">
+          <strong>$380.000</strong><span>por persona · cuotas con Mercado Pago</span>
+        </div>
+        <div class="hero-salida-acciones">
+          <a href="https://wa.me/5492954447929?text=Hola%21%20Quiero%20reservar%20un%20lugar%20en%20la%20salida%20a%20Vi%C3%B1a%20del%20Mar%20y%20Valpara%C3%ADso%20%284%20al%2010%20de%20febrero%29."
+            class="boton boton-lleno" target="_blank" rel="noopener">Reservar mi lugar</a>
+          <a href="/salidas-grupales/vina-del-mar" class="boton boton-linea">Ver itinerario</a>
+        </div>
+      </div>
+      <div class="hero-salida-foto">
+        <picture>
+          <source type="image/webp" srcset="/estatico/img/destinos/a-medida.webp">
+          <img src="/estatico/img/destinos/a-medida.jpg" alt="Viña del Mar" width="513" height="598">
+        </picture>
+      </div>
+    </article>
+
+    <article class="hero-slide" data-fin="2027-07-19" hidden>
+      <div class="hero-salida-info">
+        <span class="etiqueta-destacada">Semana de vacaciones de invierno</span>
+        <h1>Bariloche</h1>
+        <p class="hero-salida-fechas">14 al 19 de julio · 5 noches</p>
+        <p class="hero-salida-desc">Traslado en micro, 5 noches con desayuno en hotel
+          3 estrellas, excursión al Cerro Catedral y asistencia al viajero.</p>
+        <div class="hero-salida-precio">
+          <strong>$450.000</strong><span>por persona · cuotas con Mercado Pago</span>
+        </div>
+        <div class="hero-salida-acciones">
+          <a href="https://wa.me/5492954447929?text=Hola%21%20Quiero%20reservar%20un%20lugar%20en%20la%20salida%20a%20Bariloche%20%2814%20al%2019%20de%20julio%29."
+            class="boton boton-lleno" target="_blank" rel="noopener">Reservar mi lugar</a>
+          <a href="/salidas-grupales/bariloche" class="boton boton-linea">Ver itinerario</a>
+        </div>
+      </div>
+      <div class="hero-salida-foto">
+        <picture>
+          <source type="image/webp" srcset="/estatico/img/flyers/bariloche.webp">
+          <img src="/estatico/img/flyers/bariloche.jpg" alt="Centro Cívico de Bariloche, en invierno" width="736" height="416">
+        </picture>
+      </div>
+    </article>
   </div>
-  <div class="hero-salida-foto">
-    <picture>
-      <source type="image/webp" srcset="/estatico/img/flyers/iguazu.webp">
-      <img src="/estatico/img/flyers/iguazu.jpg" alt="Cataratas del Iguazú" width="547" height="365" fetchpriority="high">
-    </picture>
+
+  <div class="hero-controles">
+    <button type="button" class="hero-flecha hero-flecha-prev" aria-label="Salida anterior">
+      <svg aria-hidden="true"><use href="#icono-flecha-izq"/></svg>
+    </button>
+    <div class="hero-puntos" role="tablist" aria-label="Elegir salida">
+      <button type="button" class="hero-punto" aria-current="true" aria-label="Cataratas del Iguazú"></button>
+      <button type="button" class="hero-punto" aria-current="false" aria-label="El Calafate"></button>
+      <button type="button" class="hero-punto" aria-current="false" aria-label="Punta Cana"></button>
+      <button type="button" class="hero-punto" aria-current="false" aria-label="Viña del Mar y Valparaíso"></button>
+      <button type="button" class="hero-punto" aria-current="false" aria-label="Bariloche"></button>
+    </div>
+    <button type="button" class="hero-flecha hero-flecha-next" aria-label="Siguiente salida">
+      <svg aria-hidden="true"><use href="#icono-flecha-der"/></svg>
+    </button>
   </div>
 </section>
 

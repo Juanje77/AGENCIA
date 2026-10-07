@@ -142,6 +142,31 @@ def test_el_hero_del_inicio_muestra_la_proxima_salida_grupal(servidor):
     assert 'href="/salidas-grupales/iguazu"' in cuerpo
 
 
+def test_el_hero_del_inicio_rota_cinco_salidas(servidor):
+    """El hero ya no es una sola salida fija: son 5 "hero-slide" (una visible,
+    el resto con [hidden]) que publico.js va rotando, con data-fin para que
+    las vencidas se saquen solas de la rotacion, igual que en la grilla de
+    abajo. Los puntos/flechas del carrusel tambien viven ahi."""
+    _, cuerpo = _get(servidor, "/")
+    assert cuerpo.count('class="hero-slide"') == 5
+    for destino in (
+        "Cataratas del Iguazú",
+        "El Calafate",
+        "Punta Cana",
+        "Viña del Mar y Valparaíso",
+        "Bariloche",
+    ):
+        assert destino in cuerpo
+    bloque_hero = cuerpo.split('class="hero-slides"')[1].split('class="hero-controles"')[0]
+    assert bloque_hero.count("data-fin=") == 5
+    # Solo la primera salida (Iguazu) arranca visible.
+    assert bloque_hero.count(" hidden>") == 4
+    assert 'class="hero-puntos"' in cuerpo
+    assert cuerpo.count('class="hero-punto"') == 5
+    assert 'class="hero-flecha hero-flecha-prev"' in cuerpo
+    assert 'class="hero-flecha hero-flecha-next"' in cuerpo
+
+
 def test_las_salidas_grupales_del_inicio_tienen_filtro_y_vencimiento(servidor):
     """Filtro Todas/Nacionales/Internacionales (JS en publico.js) y data-fin
     para que publico.js oculte solas las que ya vencieron."""
@@ -152,7 +177,8 @@ def test_las_salidas_grupales_del_inicio_tienen_filtro_y_vencimiento(servidor):
     assert 'data-alcance="nacionales"' in cuerpo
     assert 'data-alcance="internacionales"' in cuerpo
     assert cuerpo.count('class="tarjeta-salida"') == 3
-    assert cuerpo.count("data-fin=") == 3
+    bloque_grilla = cuerpo.split('class="grilla-salidas"')[1].split("</section>")[0]
+    assert bloque_grilla.count("data-fin=") == 3
 
 
 def test_a_medida_y_destinos_del_inicio(servidor):

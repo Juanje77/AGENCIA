@@ -116,6 +116,79 @@ document.querySelectorAll("[data-fin]").forEach((el) => {
   if (fin < hoy) el.hidden = true;
 });
 
+// --- carrusel de salidas grupales del hero ----------------------------------
+// Rota automaticamente entre las salidas vigentes (las vencidas ya quedaron
+// hidden arriba). Los puntos/flechas permiten elegir a mano, y pausan el
+// avance automatico mientras el mouse o el foco estan sobre el hero.
+// Nota: la mayoria de los "hero-slide" arrancan con [hidden] en el HTML a
+// proposito (solo el primero se ve sin JS). Por eso la vigencia se calcula
+// de nuevo con data-fin, en vez de mirar el .hidden actual del elemento.
+const heroSeccion = $(".hero");
+const puntosTodos = Array.from(document.querySelectorAll(".hero-punto"));
+const paresHero = Array.from(document.querySelectorAll(".hero-slide"))
+  .map((slide, i) => ({ slide, punto: puntosTodos[i] }))
+  .filter((par) => new Date(par.slide.dataset.fin + "T23:59:59") >= hoy);
+puntosTodos.forEach((punto) => {
+  punto.hidden = !paresHero.some((par) => par.punto === punto);
+});
+const heroSlides = paresHero.map((par) => par.slide);
+if (heroSeccion && heroSlides.length > 1) {
+  const puntos = paresHero.map((par) => par.punto);
+  const botonPrev = $(".hero-flecha-prev");
+  const botonNext = $(".hero-flecha-next");
+  const prefiereMenosMovimiento = window.matchMedia(
+    "(prefers-reduced-motion: reduce)"
+  ).matches;
+  let indiceActual = 0;
+  let temporizador = null;
+
+  function mostrarSlide(indice) {
+    indiceActual = (indice + heroSlides.length) % heroSlides.length;
+    heroSlides.forEach((slide, i) => {
+      slide.hidden = i !== indiceActual;
+    });
+    puntos.forEach((punto, i) => {
+      punto.setAttribute("aria-current", String(i === indiceActual));
+    });
+  }
+
+  function reiniciarAutoavance() {
+    if (temporizador) clearInterval(temporizador);
+    if (prefiereMenosMovimiento) return;
+    temporizador = setInterval(() => mostrarSlide(indiceActual + 1), 6000);
+  }
+
+  puntos.forEach((punto, i) => {
+    punto.addEventListener("click", () => {
+      mostrarSlide(i);
+      reiniciarAutoavance();
+    });
+  });
+  if (botonPrev) {
+    botonPrev.addEventListener("click", () => {
+      mostrarSlide(indiceActual - 1);
+      reiniciarAutoavance();
+    });
+  }
+  if (botonNext) {
+    botonNext.addEventListener("click", () => {
+      mostrarSlide(indiceActual + 1);
+      reiniciarAutoavance();
+    });
+  }
+
+  heroSeccion.addEventListener("mouseenter", () => clearInterval(temporizador));
+  heroSeccion.addEventListener("mouseleave", reiniciarAutoavance);
+  heroSeccion.addEventListener("focusin", () => clearInterval(temporizador));
+  heroSeccion.addEventListener("focusout", reiniciarAutoavance);
+
+  mostrarSlide(0);
+  reiniciarAutoavance();
+} else {
+  const controles = $(".hero-controles");
+  if (controles) controles.hidden = true;
+}
+
 // --- formulario corto de contacto -> WhatsApp (home) ------------------------
 // A diferencia del formulario completo de /contacto, este no tiene backend:
 // arma el mensaje en el momento y abre WhatsApp directo, sin backend que lo
