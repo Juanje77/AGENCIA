@@ -243,6 +243,82 @@ def test_archivo_inexistente():
         leer_factura("/tmp/no-existe-esta-factura.pdf")
 
 
+# --- mayoristas de turismo: pies y parrafos reales -----------------------
+# Varios mayoristas (ademas de las facturas AFIP "clasicas" de mas arriba)
+# mandan liquidaciones de varias paginas con las condiciones del hotel o del
+# traslado pegadas despues del pie de totales. Esos parrafos repiten
+# palabras que en un encabezado si identificarian algo ("Importe total",
+# "Cliente", "Señor") pero en medio de una oracion no identifican nada: estos
+# casos se detectaron leyendo liquidaciones reales de FyA Tour.
+
+def test_una_etiqueta_de_total_perdida_en_un_parrafo_no_tapa_el_total_real():
+    """"Importe total estimado de tasas..." es una frase de las condiciones
+    del hotel, no el pie de la factura: el total real esta mas abajo."""
+    documento = _documento([
+        "FACTURA A Cod. 01",
+        "Importe Neto Gravado: $ 1000,00",
+        "IVA 21%: $ 210,00",
+        "Importe total estimado de tasas y recargos para esta reserva:67.60 Euro",
+        "00:00-11:00.",
+        "Total USD 1210,00",
+    ])
+    c = parsear(documento, "prueba.pdf")
+    assert c.total == D("1210.00")
+    assert c.confiable
+
+
+def test_total_no_encontrado_queda_marcado_como_no_confiable():
+    """Una factura real siempre tiene un total: si no se encontro ninguno,
+    la lectura no se puede dar por buena aunque el resto haya cerrado."""
+    documento = _documento([
+        "FACTURA A Cod. 01",
+        "Importe Neto Gravado: $ 1000,00",
+        "IVA 21%: $ 210,00",
+    ])
+    c = parsear(documento, "prueba.pdf")
+    assert c.total == D("0")
+    assert not c.confiable
+    assert any("no se encontro el total" in a.lower() for a in c.avisos)
+
+
+def test_reconoce_los_rotulos_referencia_y_titular():
+    """Varios mayoristas llaman "Referencia" al numero de reserva y
+    "Titular" al pasajero principal, en vez de File/Legajo o Pasajeros."""
+    documento = _documento([
+        "FACTURA A Cod. 01",
+        "Referencia 49996",
+        "Titular JUAN PEREZ",
+        "Importe Total: $ 100,00",
+    ])
+    c = parsear(documento, "prueba.pdf")
+    assert c.referencia == "49996"
+    assert c.pasajeros == "JUAN PEREZ"
+
+
+def test_una_palabra_suelta_no_se_confunde_con_el_nombre_del_cliente():
+    """"cliente" en minuscula, en medio de una oracion, no es un rotulo:
+    solo cuenta cuando arranca con mayuscula de verdad."""
+    documento = _documento([
+        "FACTURA A Cod. 01",
+        "el cliente es responsable de todo lo que pase",
+        "Importe Total: $ 100,00",
+    ])
+    c = parsear(documento, "prueba.pdf")
+    assert c.razon_social_receptor == ""
+
+
+def test_el_nombre_del_cliente_no_se_busca_mas_alla_del_encabezado():
+    """Las condiciones generales, mas abajo en la factura, pueden traer
+    "Señor" sin que eso identifique al receptor real."""
+    documento = _documento(
+        ["FACTURA A Cod. 01", "Importe Total: $ 100,00"]
+        + [f"Relleno de condiciones generales {i}" for i in range(25)]
+        + ["Senor Pasajero debe presentarse con documento"]
+    )
+    c = parsear(documento, "prueba.pdf")
+    assert c.razon_social_receptor == ""
+
+
 def test_un_pdf_escaneado_explica_que_hacer(tmp_path):
     """Sin OCR disponible, el mensaje tiene que decir como resolverlo."""
     documento = pymupdf.open()

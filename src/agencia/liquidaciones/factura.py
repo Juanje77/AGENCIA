@@ -438,9 +438,19 @@ def _partes(c: Comprobante, texto: str, lineas: list[str], cuit_agencia: str) ->
                 c.razon_social_emisor = candidata
                 break
 
+    # El rotulo se busca sin distinguir mayusculas, pero el nombre capturado
+    # debe empezar con mayuscula de verdad: si "re.I" tambien se aplicara a
+    # "[A-ZÑ]", una palabra suelta como "cliente" en medio de un parrafo de
+    # condiciones generales ("...el cliente es el unico responsable...")
+    # quedaria mal interpretada como si fuera el nombre del receptor. Por la
+    # misma razon se busca solo en el encabezado (como la razon social del
+    # emisor): las facturas de varias paginas suelen traer condiciones
+    # generales mas abajo, con frases como "del Senor Pasajero" que no
+    # identifican a nadie en particular.
+    encabezado = "\n".join(lineas[:20])
     cliente = re.search(
-        r"(?:Cliente|Sr\.?/Sres\.?|Senor(?:es)?|Razon\s+Social)\s*:?\s*([A-ZÑ][^\n]{3,60})",
-        texto, re.I,
+        r"(?i:Cliente|Sr\.?/Sres\.?|Senor(?:es)?|Razon\s+Social)\s*:?\s*([A-ZÑ][^\n]{3,60})",
+        encabezado,
     )
     if cliente:
         c.razon_social_receptor = re.split(
@@ -718,6 +728,15 @@ def _buscar_importe(lineas: list[str], patron: str) -> Decimal | None:
 
     Los pies suelen traer varios pares por renglon ("Gravado 21%: 84.11
     Iva 21%: 17.66"), asi que se corta al llegar a la siguiente palabra.
+
+    Una etiqueta como "Importe total" tambien puede aparecer suelta en medio
+    de un parrafo de condiciones ("Importe total estimado de tasas y
+    recargos..."), sin ningun numero util cerca. Ahi el resto del renglon
+    trae texto corrido (no esta vacio como en un pie vertical real), asi que
+    la busqueda de respaldo en el renglon siguiente -pensada para una
+    etiqueta sola en su propio renglon- no se intenta: si se intentara,
+    podria toparse con un numero de otro contexto (un horario, por ejemplo)
+    y devolver cualquier cosa menos el total.
     """
     expresion = re.compile(patron, re.I)
     for indice, linea in enumerate(lineas):
@@ -733,11 +752,19 @@ def _buscar_importe(lineas: list[str], patron: str) -> Decimal | None:
         if candidatos:
             # Tres o mas importes seguidos son cantidad, unitario y subtotal:
             # el que corresponde es el ultimo.
-            return _num(candidatos[-1] if len(candidatos) >= 3 else candidatos[0])
-        if indice + 1 < len(lineas) and not re.search(r"[A-Za-z]{4,}", lineas[indice + 1]):
+            valor = _num(candidatos[-1] if len(candidatos) >= 3 else candidatos[0])
+            if valor != CERO:
+                return valor
+        elif (
+            not re.search(r"[A-Za-z0-9]", resto)
+            and indice + 1 < len(lineas)
+            and not re.search(r"[A-Za-z]{4,}", lineas[indice + 1])
+        ):
             for candidato in re.findall(IMPORTE, lineas[indice + 1]):
                 if _es_importe(candidato):
-                    return _num(candidato)
+                    valor = _num(candidato)
+                    if valor != CERO:
+                        return valor
     return None
 
 
@@ -794,21 +821,39 @@ def _conceptos(c: Comprobante, lineas: list[str]) -> None:
 
 
 def _referencias(c: Comprobante, texto: str) -> None:
-    file = re.search(r"\b(?:File|Legajo|Negocio|Expediente)\s*:?\s*([A-Z0-9\-]{3,15})", texto, re.I)
+    file = re.search(
+        r"\b(?i:File|Legajo|Negocio|Expediente|Referencia|Localizador|"
+        r"N[uú]mero\s+de\s+Reserva)\s*:?\s*([A-Z0-9\-]{3,15})",
+        texto,
+    )
     if file:
         c.referencia = file.group(1)
 
+    # Mismo cuidado que en _partes(): el nombre capturado tiene que empezar
+    # con mayuscula de verdad, por mas que el rotulo se busque sin
+    # distinguir mayusculas de minusculas.
     pax = re.search(
-        r"(?:Grupo\s+de\s+Pax|Pasajeros?|Pax)\s*:?\s*([A-ZÑ][A-ZÑ\s,/\.]{3,60})", texto, re.I
+        r"(?i:Grupo\s+de\s+Pax|Pasajeros?|Pax|Titular)\s*:?\s*([A-ZÑ][A-ZÑ\s,/\.]{3,60})", texto
     )
     if pax:
-        c.pasajeros = re.sub(r"\s+", " ", pax.group(1)).strip()
+        c.pasajeros = _limpiar_nombre(pax.group(1))
     elif c.referencia:
         contexto = re.search(
             rf"{re.escape(c.referencia)}\s*[-–]?\s*([A-ZÑ][A-ZÑ\s,/\.]{{5,60}})", texto
         )
         if contexto:
-            c.pasajeros = re.sub(r"\s+", " ", contexto.group(1)).strip()
+            c.pasajeros = _limpiar_nombre(contexto.group(1))
+
+
+def _limpiar_nombre(nombre: str) -> str:
+    """Normaliza un nombre capturado en mayusculas.
+
+    El patron corta recien al llegar a una minuscula, asi que puede llevarse
+    puesta la primera letra de la palabra siguiente ("JOSE ADRIAN PONZIO I"
+    de "...PONZIO Inicio: ..."). Esa letra suelta al final se descarta.
+    """
+    nombre = re.sub(r"\s+", " ", nombre).strip()
+    return re.sub(r"\s+[A-ZÑ]$", "", nombre)
 
 
 def _controlar(c: Comprobante) -> None:
@@ -823,6 +868,11 @@ def _controlar(c: Comprobante) -> None:
                 f"total dice {c.total} (diferencia {redondear(diferencia)}). "
                 "Revisa la factura antes de usarla."
             )
+    else:
+        c.confiable = False
+        c.avisos.append(
+            "No se encontro el total del comprobante: revisa la factura antes de usarla."
+        )
 
     if c.letra in ("B", "C") and c.iva_total == CERO and c.total != CERO:
         c.avisos.append(
