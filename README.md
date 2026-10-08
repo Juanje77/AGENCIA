@@ -96,7 +96,11 @@ estirarse en monitores grandes.
 (`SMTP_HOST` y las variables relacionadas, ver abajo). Mientras esas
 variables no estén cargadas en el hosting, el formulario sigue funcionando
 igual que antes: se abre el programa de correo del cliente con la consulta
-ya redactada.
+ya redactada. Además de nombre/email/teléfono/destino, pide lo mínimo para
+armar un presupuesto a medida sin ida y vuelta: tipo de viaje, fecha
+aproximada, cantidad de adultos y menores, y presupuesto aproximado — todos
+opcionales salvo nombre y email, para no frenar a alguien que todavía no
+tiene todos los datos.
 
 **La cotización del dólar** (`/api/dolar`, implementada en `dolar.py`)
 consulta [dolarapi.com](https://dolarapi.com) —pública, sin necesidad de

@@ -73,8 +73,29 @@
         <input id="f-email" name="email" type="email" required placeholder="tu@email.com"></div>
       <div class="campo"><label for="f-destino">Destino de interés</label>
         <input id="f-destino" name="destino" placeholder="¿A dónde te gustaría ir?"></div>
+      <div class="form-fila">
+        <div class="campo"><label for="f-tipo-viaje">Tipo de viaje</label>
+          <select id="f-tipo-viaje" name="tipo_viaje">
+            <option value="">Elegí una opción</option>
+            <option value="Salida grupal (fecha fija)">Salida grupal (fecha fija)</option>
+            <option value="Paquete a medida">Paquete a medida</option>
+            <option value="Solo vuelos">Solo vuelos</option>
+            <option value="Solo hotel">Solo hotel</option>
+            <option value="Otro">Otro</option>
+          </select></div>
+        <div class="campo"><label for="f-fecha-viaje">Fecha aproximada</label>
+          <input id="f-fecha-viaje" name="fecha_viaje" placeholder="Ej: primera quincena de enero"></div>
+      </div>
+      <div class="form-fila">
+        <div class="campo"><label for="f-adultos">Adultos</label>
+          <input id="f-adultos" name="adultos" type="number" min="0" placeholder="Ej: 2"></div>
+        <div class="campo"><label for="f-menores">Menores</label>
+          <input id="f-menores" name="menores" type="number" min="0" placeholder="Ej: 0"></div>
+      </div>
+      <div class="campo"><label for="f-presupuesto">Presupuesto aproximado</label>
+        <input id="f-presupuesto" name="presupuesto" placeholder="Opcional: por persona o total, o 'a definir'"></div>
       <div class="campo"><label for="f-mensaje">Contanos más</label>
-        <textarea id="f-mensaje" name="mensaje" placeholder="Fechas tentativas, cantidad de personas, presupuesto..."></textarea></div>
+        <textarea id="f-mensaje" name="mensaje" placeholder="Alojamiento, actividades o cualquier otra cosa que debamos saber..."></textarea></div>
       <button type="submit" class="boton boton-lleno">Enviar consulta</button>
       <p class="form-nota">Te vamos a contactar a la brevedad.</p>
     </form>

@@ -328,14 +328,23 @@ if (formulario) {
   const nota = formulario.querySelector(".form-nota");
   const boton = formulario.querySelector("button[type=submit]");
 
-  function mailtoDeRespaldo({ nombre, email, telefono, destino, mensaje }) {
+  function mailtoDeRespaldo({
+    nombre, email, telefono, destino, tipo_viaje, fecha_viaje, adultos, menores, presupuesto, mensaje,
+  }) {
     const destinatario = "hola@esplora.com.ar";
     const asunto = `Consulta de viaje${destino ? " · " + destino : ""}`;
+    const pax = [adultos ? `${adultos} adulto(s)` : "", menores ? `${menores} menor(es)` : ""]
+      .filter(Boolean)
+      .join(", ");
     const cuerpo = [
       `Nombre: ${nombre}`,
       `Email: ${email}`,
       telefono ? `Teléfono: ${telefono}` : "",
       destino ? `Destino de interés: ${destino}` : "",
+      tipo_viaje ? `Tipo de viaje: ${tipo_viaje}` : "",
+      fecha_viaje ? `Fecha aproximada: ${fecha_viaje}` : "",
+      pax ? `Pasajeros: ${pax}` : "",
+      presupuesto ? `Presupuesto aproximado: ${presupuesto}` : "",
       "",
       mensaje || "(sin mensaje adicional)",
     ]
@@ -347,12 +356,18 @@ if (formulario) {
   formulario.addEventListener("submit", async (evento) => {
     evento.preventDefault();
     const datos = new FormData(formulario);
+    const campo = (nombre) => (datos.get(nombre) || "").toString().trim();
     const consulta = {
-      nombre: (datos.get("nombre") || "").toString().trim(),
-      email: (datos.get("email") || "").toString().trim(),
-      telefono: (datos.get("telefono") || "").toString().trim(),
-      destino: (datos.get("destino") || "").toString().trim(),
-      mensaje: (datos.get("mensaje") || "").toString().trim(),
+      nombre: campo("nombre"),
+      email: campo("email"),
+      telefono: campo("telefono"),
+      destino: campo("destino"),
+      tipo_viaje: campo("tipo_viaje"),
+      fecha_viaje: campo("fecha_viaje"),
+      adultos: campo("adultos"),
+      menores: campo("menores"),
+      presupuesto: campo("presupuesto"),
+      mensaje: campo("mensaje"),
     };
 
     if (boton) boton.disabled = true;

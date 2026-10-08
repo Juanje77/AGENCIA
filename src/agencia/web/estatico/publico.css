@@ -516,6 +516,9 @@ p{margin:0 0 14px}
   border-radius:999px;padding:12px 18px;font-family:var(--f-cuerpo);font-size:14px;
   color:var(--texto);background:transparent}
 .campo textarea{min-height:100px;resize:vertical;border-radius:18px}
+.campo select{appearance:none;-webkit-appearance:none;padding-right:40px;cursor:pointer;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23918276' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;background-position:right 16px center;background-size:16px}
 .campo input:focus,.campo select:focus,.campo textarea:focus{outline:none;
   border-color:var(--acento)}
 .campo input::placeholder,.campo textarea::placeholder{color:var(--texto-tenue)}

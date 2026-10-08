@@ -419,8 +419,29 @@ def _consulta():
         "email": "juana@example.com",
         "telefono": "2954111111",
         "destino": "Bariloche",
+        "tipo_viaje": "Paquete a medida",
+        "fecha_viaje": "primera quincena de enero",
+        "adultos": "2",
+        "menores": "1",
+        "presupuesto": "$400.000 por persona",
         "mensaje": "Quisiera cotizar un viaje en enero.",
     }
+
+
+def test_el_formulario_de_contacto_pide_datos_especificos_para_cotizar(servidor):
+    """Ademas de nombre/email/destino, pide lo minimo para armar un
+    presupuesto a medida: tipo de viaje, fecha, pasajeros y presupuesto."""
+    _, cuerpo = _get(servidor, "/contacto")
+    assert 'name="tipo_viaje"' in cuerpo
+    assert "Salida grupal (fecha fija)" in cuerpo
+    assert "Paquete a medida" in cuerpo
+    assert 'name="fecha_viaje"' in cuerpo
+    assert 'name="adultos"' in cuerpo
+    assert 'name="menores"' in cuerpo
+    assert 'name="presupuesto"' in cuerpo
+    # Nombre y email siguen siendo los unicos obligatorios: no se le pone
+    # friccion de mas a alguien que todavia no tiene todos los datos.
+    assert cuerpo.count("required") == 2
 
 
 def test_contacto_sin_smtp_configurado_avisa_para_caer_al_mailto(servidor, monkeypatch):
@@ -476,6 +497,21 @@ def test_contacto_se_manda_por_smtp_si_esta_configurado(servidor, monkeypatch):
     mensaje = enviados[-1]
     assert mensaje["To"] == "hola@esplora.com.ar"
     assert mensaje["Reply-To"] == "juana@example.com"
+    cuerpo = mensaje.get_content()
+    assert "Tipo de viaje: Paquete a medida" in cuerpo
+    assert "Fecha aproximada: primera quincena de enero" in cuerpo
+    assert "Pasajeros: 2 adulto(s), 1 menor(es)" in cuerpo
+    assert "Presupuesto aproximado: $400.000 por persona" in cuerpo
+
+
+def test_contacto_sin_los_datos_nuevos_no_rompe(servidor, monkeypatch):
+    """Los campos nuevos son opcionales: sin ellos, la consulta se sigue
+    mandando igual (compatibilidad con el formulario corto de la home)."""
+    monkeypatch.delenv("SMTP_HOST", raising=False)
+    minima = {"nombre": "Juana Perez", "email": "juana@example.com"}
+    datos = json.loads(_post(servidor, "/api/contacto", minima)[1])
+    assert datos["enviado"] is False
+    assert "SMTP_HOST" in datos["aviso"]
 
 
 # --- chat con IA ---------------------------------------------------------------

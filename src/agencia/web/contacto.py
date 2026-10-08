@@ -27,6 +27,11 @@ class ConsultaContacto:
     email: str
     telefono: str = ""
     destino: str = ""
+    tipo_viaje: str = ""
+    fecha_viaje: str = ""
+    adultos: str = ""
+    menores: str = ""
+    presupuesto: str = ""
     mensaje: str = ""
 
 
@@ -46,6 +51,11 @@ def consulta_desde_dict(datos: dict) -> ConsultaContacto:
         email=email,
         telefono=str(datos.get("telefono") or "").strip(),
         destino=str(datos.get("destino") or "").strip(),
+        tipo_viaje=str(datos.get("tipo_viaje") or "").strip(),
+        fecha_viaje=str(datos.get("fecha_viaje") or "").strip(),
+        adultos=str(datos.get("adultos") or "").strip(),
+        menores=str(datos.get("menores") or "").strip(),
+        presupuesto=str(datos.get("presupuesto") or "").strip(),
         mensaje=str(datos.get("mensaje") or "").strip(),
     )
 
@@ -81,6 +91,19 @@ def _mensaje_de(consulta: ConsultaContacto, config: dict) -> EmailMessage:
         cuerpo.append(f"Telefono: {consulta.telefono}")
     if consulta.destino:
         cuerpo.append(f"Destino de interes: {consulta.destino}")
+    if consulta.tipo_viaje:
+        cuerpo.append(f"Tipo de viaje: {consulta.tipo_viaje}")
+    if consulta.fecha_viaje:
+        cuerpo.append(f"Fecha aproximada: {consulta.fecha_viaje}")
+    if consulta.adultos or consulta.menores:
+        pax = []
+        if consulta.adultos:
+            pax.append(f"{consulta.adultos} adulto(s)")
+        if consulta.menores:
+            pax.append(f"{consulta.menores} menor(es)")
+        cuerpo.append(f"Pasajeros: {', '.join(pax)}")
+    if consulta.presupuesto:
+        cuerpo.append(f"Presupuesto aproximado: {consulta.presupuesto}")
     cuerpo.append("")
     cuerpo.append(consulta.mensaje or "(sin mensaje adicional)")
     mensaje.set_content("\n".join(cuerpo))
