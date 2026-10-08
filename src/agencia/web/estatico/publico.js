@@ -189,32 +189,6 @@ if (heroSeccion && heroSlides.length > 1) {
   if (controles) controles.hidden = true;
 }
 
-// --- formulario corto de contacto -> WhatsApp (home) ------------------------
-// A diferencia del formulario completo de /contacto, este no tiene backend:
-// arma el mensaje en el momento y abre WhatsApp directo, sin backend que lo
-// reciba primero.
-const formRapido = $("#form-contacto-rapido");
-if (formRapido) {
-  const campoNombre = $("#rapido-nombre");
-  const campoDestino = $("#rapido-destino");
-  const campoCuando = $("#rapido-cuando");
-  const botonEnviar = $("#rapido-enviar");
-
-  function actualizarLinkWhatsappRapido() {
-    let mensaje = "Hola!";
-    if (campoNombre.value.trim()) mensaje += ` Soy ${campoNombre.value.trim()}.`;
-    mensaje += " Quiero armar un viaje";
-    if (campoDestino.value.trim()) mensaje += ` a ${campoDestino.value.trim()}`;
-    if (campoCuando.value.trim()) mensaje += ` para ${campoCuando.value.trim()}`;
-    mensaje += ".";
-    botonEnviar.href = `https://wa.me/5492954447929?text=${encodeURIComponent(mensaje)}`;
-  }
-  [campoNombre, campoDestino, campoCuando].forEach((campo) =>
-    campo.addEventListener("input", actualizarLinkWhatsappRapido)
-  );
-  actualizarLinkWhatsappRapido();
-}
-
 // --- chat con IA --------------------------------------------------------
 // Widget flotante en las 24 paginas publicas (lo inserta el servidor antes
 // de </body>, ver _pagina_publica() en rutas.py). El historial vive solo en
@@ -320,16 +294,19 @@ if (chatIa) {
 }
 
 // --- formulario de contacto -------------------------------------------------
-// Se manda al backend (/api/contacto), que lo envia por correo a la agencia.
-// Si todavia no hay SMTP configurado en el servidor, o la peticion falla por
-// conexion, se cae al mailto: de siempre para no perder la consulta.
+// El mismo formulario completo vive en /contacto y en el inicio (#contacto):
+// un solo markup, un solo handler. Se manda al backend (/api/contacto), que
+// lo envia por correo a la agencia. Si todavia no hay SMTP configurado en el
+// servidor, o la peticion falla por conexion, se cae al mailto: de siempre
+// para no perder la consulta.
 const formulario = $("#formulario-contacto");
 if (formulario) {
   const nota = formulario.querySelector(".form-nota");
   const boton = formulario.querySelector("button[type=submit]");
 
   function mailtoDeRespaldo({
-    nombre, email, telefono, destino, tipo_viaje, fecha_viaje, adultos, menores, presupuesto, mensaje,
+    nombre, email, telefono, destino, tipo_viaje, origen, fecha_viaje, noches,
+    adultos, menores, edades_menores, categoria_alojamiento, presupuesto, mensaje,
   }) {
     const destinatario = "hola@esplora.com.ar";
     const asunto = `Consulta de viaje${destino ? " · " + destino : ""}`;
@@ -342,8 +319,12 @@ if (formulario) {
       telefono ? `Teléfono: ${telefono}` : "",
       destino ? `Destino de interés: ${destino}` : "",
       tipo_viaje ? `Tipo de viaje: ${tipo_viaje}` : "",
-      fecha_viaje ? `Fecha aproximada: ${fecha_viaje}` : "",
+      origen ? `Ciudad de salida: ${origen}` : "",
+      fecha_viaje ? `Fecha de ida aproximada: ${fecha_viaje}` : "",
+      noches ? `Cantidad de noches: ${noches}` : "",
       pax ? `Pasajeros: ${pax}` : "",
+      edades_menores ? `Edades de los menores: ${edades_menores}` : "",
+      categoria_alojamiento ? `Categoría de alojamiento preferida: ${categoria_alojamiento}` : "",
       presupuesto ? `Presupuesto aproximado: ${presupuesto}` : "",
       "",
       mensaje || "(sin mensaje adicional)",
@@ -363,9 +344,13 @@ if (formulario) {
       telefono: campo("telefono"),
       destino: campo("destino"),
       tipo_viaje: campo("tipo_viaje"),
+      origen: campo("origen"),
       fecha_viaje: campo("fecha_viaje"),
+      noches: campo("noches"),
       adultos: campo("adultos"),
       menores: campo("menores"),
+      edades_menores: campo("edades_menores"),
+      categoria_alojamiento: campo("categoria_alojamiento"),
       presupuesto: campo("presupuesto"),
       mensaje: campo("mensaje"),
     };

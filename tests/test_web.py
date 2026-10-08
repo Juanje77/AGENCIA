@@ -105,8 +105,6 @@ def test_el_inicio_es_un_resumen_no_todo_apilado(servidor):
     assert 'href="/destinos"' in cuerpo
     assert 'href="/nosotros"' in cuerpo
     assert 'href="/contacto"' in cuerpo
-    # El formulario completo de contacto solo vive en /contacto.
-    assert 'id="formulario-contacto"' not in cuerpo
 
 
 def test_el_inicio_muestra_los_4_pasos_de_como_trabajamos(servidor):
@@ -190,18 +188,23 @@ def test_a_medida_y_destinos_del_inicio(servidor):
     assert "Metrópolis del mundo" in cuerpo
 
 
-def test_el_formulario_rapido_del_inicio_arma_whatsapp_sin_backend(servidor):
-    """A diferencia de /contacto, este formulario no tiene backend: lo arma
-    publico.js en el momento y abre WhatsApp."""
-    _, cuerpo = _get(servidor, "/")
-    assert 'id="form-contacto-rapido"' in cuerpo
-    assert 'id="rapido-nombre"' in cuerpo
-    assert 'id="rapido-destino"' in cuerpo
-    assert 'id="rapido-cuando"' in cuerpo
-    assert 'id="rapido-enviar"' in cuerpo
-    # No es un <form> (evita el submit implicito al apretar Enter): el
-    # formulario completo de /contacto tampoco aparece acá.
-    assert 'id="formulario-contacto"' not in cuerpo
+def test_el_contacto_del_inicio_es_el_mismo_formulario_completo_que_contacto(servidor):
+    """El inicio ya no tiene un formulario corto aparte: usa el mismo
+    formulario completo (mismos campos, mismo backend /api/contacto) que
+    /contacto, para pedir desde el primer contacto lo necesario para armar
+    un presupuesto a medida."""
+    _, inicio = _get(servidor, "/")
+    _, contacto = _get(servidor, "/contacto")
+    for campo in (
+        'name="nombre"', 'name="telefono"', 'name="email"', 'name="destino"',
+        'name="tipo_viaje"', 'name="origen"', 'name="fecha_viaje"', 'name="noches"',
+        'name="categoria_alojamiento"', 'name="adultos"', 'name="menores"',
+        'name="edades_menores"', 'name="presupuesto"', 'name="mensaje"',
+    ):
+        assert campo in inicio, campo
+        assert campo in contacto, campo
+    assert inicio.count('id="formulario-contacto"') == 1
+    assert contacto.count('id="formulario-contacto"') == 1
 
 
 def test_la_franja_de_servicios_esta_en_todas_las_paginas(servidor):
@@ -420,24 +423,35 @@ def _consulta():
         "telefono": "2954111111",
         "destino": "Bariloche",
         "tipo_viaje": "Paquete a medida",
+        "origen": "Santa Rosa, La Pampa",
         "fecha_viaje": "primera quincena de enero",
+        "noches": "7",
         "adultos": "2",
         "menores": "1",
+        "edades_menores": "9 años",
+        "categoria_alojamiento": "Superior (4 estrellas)",
         "presupuesto": "$400.000 por persona",
         "mensaje": "Quisiera cotizar un viaje en enero.",
     }
 
 
 def test_el_formulario_de_contacto_pide_datos_especificos_para_cotizar(servidor):
-    """Ademas de nombre/email/destino, pide lo minimo para armar un
-    presupuesto a medida: tipo de viaje, fecha, pasajeros y presupuesto."""
+    """Ademas de nombre/email/destino, pide lo necesario para armar un
+    presupuesto a medida sin ida y vuelta: tipo de viaje, origen, fechas,
+    duracion, categoria de alojamiento, pasajeros (con edades) y
+    presupuesto."""
     _, cuerpo = _get(servidor, "/contacto")
     assert 'name="tipo_viaje"' in cuerpo
     assert "Salida grupal (fecha fija)" in cuerpo
     assert "Paquete a medida" in cuerpo
+    assert 'name="origen"' in cuerpo
     assert 'name="fecha_viaje"' in cuerpo
+    assert 'name="noches"' in cuerpo
+    assert 'name="categoria_alojamiento"' in cuerpo
+    assert "Superior (4 estrellas)" in cuerpo
     assert 'name="adultos"' in cuerpo
     assert 'name="menores"' in cuerpo
+    assert 'name="edades_menores"' in cuerpo
     assert 'name="presupuesto"' in cuerpo
     # Nombre y email siguen siendo los unicos obligatorios: no se le pone
     # friccion de mas a alguien que todavia no tiene todos los datos.
@@ -499,8 +513,12 @@ def test_contacto_se_manda_por_smtp_si_esta_configurado(servidor, monkeypatch):
     assert mensaje["Reply-To"] == "juana@example.com"
     cuerpo = mensaje.get_content()
     assert "Tipo de viaje: Paquete a medida" in cuerpo
-    assert "Fecha aproximada: primera quincena de enero" in cuerpo
+    assert "Ciudad de salida: Santa Rosa, La Pampa" in cuerpo
+    assert "Fecha de ida aproximada: primera quincena de enero" in cuerpo
+    assert "Cantidad de noches: 7" in cuerpo
     assert "Pasajeros: 2 adulto(s), 1 menor(es)" in cuerpo
+    assert "Edades de los menores: 9 años" in cuerpo
+    assert "Categoria de alojamiento preferida: Superior (4 estrellas)" in cuerpo
     assert "Presupuesto aproximado: $400.000 por persona" in cuerpo
 
 

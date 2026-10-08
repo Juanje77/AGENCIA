@@ -28,9 +28,13 @@ class ConsultaContacto:
     telefono: str = ""
     destino: str = ""
     tipo_viaje: str = ""
+    origen: str = ""
     fecha_viaje: str = ""
+    noches: str = ""
     adultos: str = ""
     menores: str = ""
+    edades_menores: str = ""
+    categoria_alojamiento: str = ""
     presupuesto: str = ""
     mensaje: str = ""
 
@@ -52,9 +56,13 @@ def consulta_desde_dict(datos: dict) -> ConsultaContacto:
         telefono=str(datos.get("telefono") or "").strip(),
         destino=str(datos.get("destino") or "").strip(),
         tipo_viaje=str(datos.get("tipo_viaje") or "").strip(),
+        origen=str(datos.get("origen") or "").strip(),
         fecha_viaje=str(datos.get("fecha_viaje") or "").strip(),
+        noches=str(datos.get("noches") or "").strip(),
         adultos=str(datos.get("adultos") or "").strip(),
         menores=str(datos.get("menores") or "").strip(),
+        edades_menores=str(datos.get("edades_menores") or "").strip(),
+        categoria_alojamiento=str(datos.get("categoria_alojamiento") or "").strip(),
         presupuesto=str(datos.get("presupuesto") or "").strip(),
         mensaje=str(datos.get("mensaje") or "").strip(),
     )
@@ -93,8 +101,12 @@ def _mensaje_de(consulta: ConsultaContacto, config: dict) -> EmailMessage:
         cuerpo.append(f"Destino de interes: {consulta.destino}")
     if consulta.tipo_viaje:
         cuerpo.append(f"Tipo de viaje: {consulta.tipo_viaje}")
+    if consulta.origen:
+        cuerpo.append(f"Ciudad de salida: {consulta.origen}")
     if consulta.fecha_viaje:
-        cuerpo.append(f"Fecha aproximada: {consulta.fecha_viaje}")
+        cuerpo.append(f"Fecha de ida aproximada: {consulta.fecha_viaje}")
+    if consulta.noches:
+        cuerpo.append(f"Cantidad de noches: {consulta.noches}")
     if consulta.adultos or consulta.menores:
         pax = []
         if consulta.adultos:
@@ -102,6 +114,10 @@ def _mensaje_de(consulta: ConsultaContacto, config: dict) -> EmailMessage:
         if consulta.menores:
             pax.append(f"{consulta.menores} menor(es)")
         cuerpo.append(f"Pasajeros: {', '.join(pax)}")
+    if consulta.edades_menores:
+        cuerpo.append(f"Edades de los menores: {consulta.edades_menores}")
+    if consulta.categoria_alojamiento:
+        cuerpo.append(f"Categoria de alojamiento preferida: {consulta.categoria_alojamiento}")
     if consulta.presupuesto:
         cuerpo.append(f"Presupuesto aproximado: {consulta.presupuesto}")
     cuerpo.append("")

@@ -375,31 +375,93 @@
 </section>
 
 <!-- ============================ CONTACTO ============================
-     Formulario corto sin backend: arma el mensaje en publico.js y abre
-     WhatsApp. El formulario completo (mas campos) sigue viviendo en
-     /contacto para quien prefiera no usar WhatsApp. -->
+     Mismo formulario completo que /contacto (mismo markup, mismo handler en
+     publico.js): cuantos mas datos especificos del viaje deje quien
+     consulta, mas ajustado el presupuesto que le podemos armar. -->
 <section class="seccion seccion-clara" id="contacto">
-  <div class="envoltorio">
-    <div class="bloque-contacto">
-      <div class="bloque-contacto-info">
-        <h2 style="font-size:clamp(28px,3.6vw,38px);margin:0">Planeemos tu próximo viaje</h2>
-        <p>Completá tres datos y te escribimos por WhatsApp con la propuesta.</p>
-        <p class="telefono">O llamanos: <a href="tel:+5492954447929">+54 9 2954 44-7929</a></p>
-      </div>
-      <div class="bloque-contacto-form" id="form-contacto-rapido">
-        <label class="campo-rapido">Tu nombre
-          <input class="input-rapido" id="rapido-nombre" placeholder="Nombre y apellido">
-        </label>
-        <label class="campo-rapido">¿A dónde querés ir?
-          <input class="input-rapido" id="rapido-destino" placeholder="Destino o tipo de viaje">
-        </label>
-        <label class="campo-rapido">¿Cuándo?
-          <input class="input-rapido" id="rapido-cuando" placeholder="Mes o fechas aproximadas">
-        </label>
-        <a href="https://wa.me/5492954447929" target="_blank" rel="noopener"
-          class="boton boton-lleno boton-ancho" id="rapido-enviar">Enviar por WhatsApp</a>
+  <div class="envoltorio contacto">
+    <div class="contacto-datos">
+      <span class="ojo">Empecemos</span>
+      <h2 style="font-size:clamp(28px,3.6vw,38px);margin:12px 0 16px">
+        Planeemos tu próximo viaje</h2>
+      <p class="lead">Contanos los datos de tu viaje y te armamos una propuesta a
+        medida, no un presupuesto genérico.</p>
+      <ul>
+        <li><svg><use href="#icono-tel"/></svg>
+          <a href="tel:+5492954447929">+54 9 2954 44-7929</a></li>
+        <li><svg><use href="#icono-mail"/></svg>
+          <a href="mailto:hola@esplora.com.ar">hola@esplora.com.ar</a></li>
+        <li><svg><use href="#icono-pin"/></svg>
+          <span>Santa Rosa, La Pampa, Argentina</span></li>
+        <li><svg><use href="#icono-reloj"/></svg>
+          <span>Lunes a viernes, 9 a 18 h</span></li>
+      </ul>
+      <div class="redes">
+        <a href="#" aria-label="Instagram"><svg><use href="#icono-ig"/></svg></a>
+        <a href="#" aria-label="Facebook"><svg><use href="#icono-fb"/></svg></a>
+        <a href="https://wa.me/5492954447929" aria-label="WhatsApp" target="_blank" rel="noopener">
+          <svg><use href="#icono-wa"/></svg></a>
       </div>
     </div>
+
+    <form class="formulario" id="formulario-contacto">
+      <p class="form-subtitulo">Tus datos</p>
+      <div class="form-fila">
+        <div class="campo"><label for="f-nombre">Nombre</label>
+          <input id="f-nombre" name="nombre" required placeholder="Tu nombre"></div>
+        <div class="campo"><label for="f-telefono">Teléfono</label>
+          <input id="f-telefono" name="telefono" placeholder="Opcional"></div>
+      </div>
+      <div class="campo"><label for="f-email">Email</label>
+        <input id="f-email" name="email" type="email" required placeholder="tu@email.com"></div>
+
+      <p class="form-subtitulo">Tu viaje</p>
+      <div class="form-fila">
+        <div class="campo"><label for="f-destino">Destino de interés</label>
+          <input id="f-destino" name="destino" placeholder="¿A dónde te gustaría ir?"></div>
+        <div class="campo"><label for="f-tipo-viaje">Tipo de viaje</label>
+          <select id="f-tipo-viaje" name="tipo_viaje">
+            <option value="">Elegí una opción</option>
+            <option value="Salida grupal (fecha fija)">Salida grupal (fecha fija)</option>
+            <option value="Paquete a medida">Paquete a medida</option>
+            <option value="Solo vuelos">Solo vuelos</option>
+            <option value="Solo hotel">Solo hotel</option>
+            <option value="Otro">Otro</option>
+          </select></div>
+      </div>
+      <div class="form-fila">
+        <div class="campo"><label for="f-origen">Ciudad de salida</label>
+          <input id="f-origen" name="origen" placeholder="Ej: Santa Rosa, La Pampa"></div>
+        <div class="campo"><label for="f-fecha-viaje">Fecha de ida aproximada</label>
+          <input id="f-fecha-viaje" name="fecha_viaje" placeholder="Ej: primera quincena de enero"></div>
+      </div>
+      <div class="form-fila">
+        <div class="campo"><label for="f-noches">Cantidad de noches</label>
+          <input id="f-noches" name="noches" type="number" min="0" placeholder="Ej: 7"></div>
+        <div class="campo"><label for="f-categoria">Categoría de alojamiento</label>
+          <select id="f-categoria" name="categoria_alojamiento">
+            <option value="">Sin preferencia</option>
+            <option value="Económica">Económica</option>
+            <option value="Estándar (3 estrellas)">Estándar (3 estrellas)</option>
+            <option value="Superior (4 estrellas)">Superior (4 estrellas)</option>
+            <option value="Lujo (5 estrellas)">Lujo (5 estrellas)</option>
+          </select></div>
+      </div>
+      <div class="form-fila">
+        <div class="campo"><label for="f-adultos">Adultos</label>
+          <input id="f-adultos" name="adultos" type="number" min="0" placeholder="Ej: 2"></div>
+        <div class="campo"><label for="f-menores">Menores</label>
+          <input id="f-menores" name="menores" type="number" min="0" placeholder="Ej: 0"></div>
+      </div>
+      <div class="campo"><label for="f-edades-menores">Edades de los menores</label>
+        <input id="f-edades-menores" name="edades_menores" placeholder="Si viajan menores, Ej: 4 y 9 años"></div>
+      <div class="campo"><label for="f-presupuesto">Presupuesto aproximado</label>
+        <input id="f-presupuesto" name="presupuesto" placeholder="Opcional: por persona o total, o 'a definir'"></div>
+      <div class="campo"><label for="f-mensaje">Contanos más</label>
+        <textarea id="f-mensaje" name="mensaje" placeholder="Alguna otra preferencia que debamos saber..."></textarea></div>
+      <button type="submit" class="boton boton-lleno">Enviar consulta</button>
+      <p class="form-nota">Cuantos más datos nos dejes, más ajustado el presupuesto que te mandamos.</p>
+    </form>
   </div>
 </section>
 
