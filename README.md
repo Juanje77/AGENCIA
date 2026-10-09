@@ -25,7 +25,7 @@ Está repartido en varias páginas en vez de una sola muy larga:
 
 | Página | Contenido |
 |---|---|
-| `/` | Inicio: abre con un carrusel de 5 salidas grupales (Iguazú, Calafate, Punta Cana, Viña del Mar, Bariloche — actualizar a mano cuando cambie alguna) que rota sola cada 6s y se puede manejar con flechas/puntos, franja de confianza, salidas grupales con filtro Todas/Nacionales/Internacionales, viajes a medida, destinos, cómo trabajamos y el mismo formulario de contacto completo que `/contacto` |
+| `/` | Inicio: abre con un carrusel de 5 salidas grupales (Iguazú, Calafate, Punta Cana, Viña del Mar, Bariloche — actualizar a mano cuando cambie alguna) que rota sola cada 6s y se puede manejar con flechas/puntos, franja de confianza, salidas grupales con filtro Todas/Nacionales/Internacionales, viajes a medida, destinos, cómo trabajamos y un formulario corto que arma el mensaje de WhatsApp en `publico.js` (sin backend) |
 | `/servicios` | Grilla con los productos que se venden (espejo de la franja del header) + "Consejos para elegir tu viaje" |
 | `/servicios/aereos`, `/…/hoteles`, `/…/circuitos`, `/…/assist-card`, `/…/cruceros`, `/…/actividades`, `/…/autos`, `/…/traslados`, `/…/disney`, `/…/universal`, `/…/enjoy` | Una página propia por cada producto — misma lista y mismo orden que el menú de servicios de **ola.com.ar** (el mayorista con el que se trabaja), para que cada ítem de la franja del header lleve a su propia página en vez de todo apilado en `/servicios` |
 | `/destinos` | Las 4 categorías de "Para inspirarte" |
@@ -33,7 +33,7 @@ Está repartido en varias páginas en vez de una sola muy larga:
 | `/salidas-grupales/bariloche`, `/…/iguazu`, `/…/mendoza`, `/…/calafate`, `/…/punta-cana`, `/…/vina-del-mar` | Itinerario día por día de cada salida grupal, con horarios, incluye/no incluye y el botón de pago |
 | `/a-medida` | Los destinos de referencia sin fecha fija: el precio final se cotiza caso por caso |
 | `/nosotros` | Cómo trabajamos, paso a paso, y el testimonio |
-| `/contacto` | Datos de contacto y el formulario (mismo markup y mismo backend que el bloque de contacto del inicio) |
+| `/contacto` | Datos de contacto y el formulario |
 | `/panel` | Herramientas internas (protegidas por `AGENCIA_CLAVE`) |
 | `/robots.txt`, `/sitemap.xml` | Para buscadores — se generan solos a partir de `PAGINAS_PUBLICAS` en `rutas.py`, no hay archivos estáticos que tocar |
 
@@ -91,9 +91,7 @@ estirarse en monitores grandes.
 | `a-medida.html` | 4 destinos de ejemplo (Cancún, Río de Janeiro, París/Roma, Orlando) con precio de referencia — buscá el comentario arriba de `<div class="grilla-flyers">` |
 | `DOMINIO_PUBLICO` en `rutas.py` | Hoy dice `https://www.esplora.com.ar` de referencia — reemplazalo por el dominio real (propio, o el `*.vercel.app` del despliegue) una vez que lo tengas. Lo usan `/sitemap.xml`, `/robots.txt` y los tags Open Graph/Twitter Card de cada página (las imágenes que se comparten al pegar un link en WhatsApp o redes) |
 
-**El formulario de contacto** vive con el mismo markup (mismos campos,
-mismos `id`) en `/contacto` y en el bloque `#contacto` del inicio — un solo
-handler en `publico.js` para los dos. Manda la consulta al endpoint
+**El formulario de contacto** (`/contacto`) manda la consulta al endpoint
 `/api/contacto`, que la envía por correo a la agencia usando SMTP
 (`SMTP_HOST` y las variables relacionadas, ver abajo). Mientras esas
 variables no estén cargadas en el hosting, el formulario sigue funcionando

@@ -105,6 +105,8 @@ def test_el_inicio_es_un_resumen_no_todo_apilado(servidor):
     assert 'href="/destinos"' in cuerpo
     assert 'href="/nosotros"' in cuerpo
     assert 'href="/contacto"' in cuerpo
+    # El formulario completo de contacto solo vive en /contacto.
+    assert 'id="formulario-contacto"' not in cuerpo
 
 
 def test_el_inicio_muestra_los_4_pasos_de_como_trabajamos(servidor):
@@ -188,23 +190,18 @@ def test_a_medida_y_destinos_del_inicio(servidor):
     assert "Metrópolis del mundo" in cuerpo
 
 
-def test_el_contacto_del_inicio_es_el_mismo_formulario_completo_que_contacto(servidor):
-    """El inicio ya no tiene un formulario corto aparte: usa el mismo
-    formulario completo (mismos campos, mismo backend /api/contacto) que
-    /contacto, para pedir desde el primer contacto lo necesario para armar
-    un presupuesto a medida."""
-    _, inicio = _get(servidor, "/")
-    _, contacto = _get(servidor, "/contacto")
-    for campo in (
-        'name="nombre"', 'name="telefono"', 'name="email"', 'name="destino"',
-        'name="tipo_viaje"', 'name="origen"', 'name="fecha_viaje"', 'name="noches"',
-        'name="categoria_alojamiento"', 'name="adultos"', 'name="menores"',
-        'name="edades_menores"', 'name="presupuesto"', 'name="mensaje"',
-    ):
-        assert campo in inicio, campo
-        assert campo in contacto, campo
-    assert inicio.count('id="formulario-contacto"') == 1
-    assert contacto.count('id="formulario-contacto"') == 1
+def test_el_formulario_rapido_del_inicio_arma_whatsapp_sin_backend(servidor):
+    """A diferencia de /contacto, este formulario no tiene backend: lo arma
+    publico.js en el momento y abre WhatsApp."""
+    _, cuerpo = _get(servidor, "/")
+    assert 'id="form-contacto-rapido"' in cuerpo
+    assert 'id="rapido-nombre"' in cuerpo
+    assert 'id="rapido-destino"' in cuerpo
+    assert 'id="rapido-cuando"' in cuerpo
+    assert 'id="rapido-enviar"' in cuerpo
+    # No es un <form> (evita el submit implicito al apretar Enter): el
+    # formulario completo de /contacto tampoco aparece acá.
+    assert 'id="formulario-contacto"' not in cuerpo
 
 
 def test_la_franja_de_servicios_esta_en_todas_las_paginas(servidor):

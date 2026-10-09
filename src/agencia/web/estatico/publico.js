@@ -189,6 +189,32 @@ if (heroSeccion && heroSlides.length > 1) {
   if (controles) controles.hidden = true;
 }
 
+// --- formulario corto de contacto -> WhatsApp (home) ------------------------
+// A diferencia del formulario completo de /contacto, este no tiene backend:
+// arma el mensaje en el momento y abre WhatsApp directo, sin backend que lo
+// reciba primero.
+const formRapido = $("#form-contacto-rapido");
+if (formRapido) {
+  const campoNombre = $("#rapido-nombre");
+  const campoDestino = $("#rapido-destino");
+  const campoCuando = $("#rapido-cuando");
+  const botonEnviar = $("#rapido-enviar");
+
+  function actualizarLinkWhatsappRapido() {
+    let mensaje = "Hola!";
+    if (campoNombre.value.trim()) mensaje += ` Soy ${campoNombre.value.trim()}.`;
+    mensaje += " Quiero armar un viaje";
+    if (campoDestino.value.trim()) mensaje += ` a ${campoDestino.value.trim()}`;
+    if (campoCuando.value.trim()) mensaje += ` para ${campoCuando.value.trim()}`;
+    mensaje += ".";
+    botonEnviar.href = `https://wa.me/5492954447929?text=${encodeURIComponent(mensaje)}`;
+  }
+  [campoNombre, campoDestino, campoCuando].forEach((campo) =>
+    campo.addEventListener("input", actualizarLinkWhatsappRapido)
+  );
+  actualizarLinkWhatsappRapido();
+}
+
 // --- chat con IA --------------------------------------------------------
 // Widget flotante en las 24 paginas publicas (lo inserta el servidor antes
 // de </body>, ver _pagina_publica() en rutas.py). El historial vive solo en
@@ -294,11 +320,9 @@ if (chatIa) {
 }
 
 // --- formulario de contacto -------------------------------------------------
-// El mismo formulario completo vive en /contacto y en el inicio (#contacto):
-// un solo markup, un solo handler. Se manda al backend (/api/contacto), que
-// lo envia por correo a la agencia. Si todavia no hay SMTP configurado en el
-// servidor, o la peticion falla por conexion, se cae al mailto: de siempre
-// para no perder la consulta.
+// Se manda al backend (/api/contacto), que lo envia por correo a la agencia.
+// Si todavia no hay SMTP configurado en el servidor, o la peticion falla por
+// conexion, se cae al mailto: de siempre para no perder la consulta.
 const formulario = $("#formulario-contacto");
 if (formulario) {
   const nota = formulario.querySelector(".form-nota");

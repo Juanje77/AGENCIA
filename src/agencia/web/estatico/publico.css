@@ -380,6 +380,21 @@ p{margin:0 0 14px}
 .fila-a-medida-precio strong{font-weight:700;font-size:15px;font-family:var(--f-cuerpo)}
 .fila-a-medida-precio em{font-style:normal;font-weight:600;font-size:14px;color:var(--acento-oscuro)}
 
+/* --- home: formulario corto de contacto (manda a WhatsApp, sin backend) --- */
+.bloque-contacto{border-radius:28px;background:var(--superficie);
+  padding:clamp(28px,5vw,56px);display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr));gap:40px;align-items:center}
+.bloque-contacto-info{display:flex;flex-direction:column;gap:12px}
+.bloque-contacto-info p{font-size:17px;color:var(--texto-tenue);max-width:40ch;margin:0}
+.bloque-contacto-info p.telefono{font-size:15px}
+.bloque-contacto-info a{color:var(--texto);font-weight:600}
+.bloque-contacto-form{display:flex;flex-direction:column;gap:14px}
+.campo-rapido{display:flex;flex-direction:column;gap:6px;font-size:14px;font-weight:600}
+.input-rapido{border-radius:999px;padding:12px 18px;font:inherit;font-weight:400;font-size:14px;
+  border:1px solid var(--borde);background:var(--fondo);color:var(--texto)}
+.input-rapido:focus-visible{outline:2px solid var(--acento);outline-offset:1px}
+.boton-ancho{width:100%;justify-content:center;padding:14px;font-size:15px}
+
 /* --- itinerario de una salida grupal --- */
 .itinerario{max-width:820px}
 .itinerario-volver{display:inline-block;margin-bottom:26px;color:var(--acento);
